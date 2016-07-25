@@ -42,6 +42,7 @@ You can pass an object containing several options to `SVGSpritemapPlugin()`, thi
 | ------ | ------------- | ------------------------------------------------------------------------------------------------------ |
 | `src`  | `'**/*.svg'`  | [`glob`](http://npmjs.com/package/glob) used for finding the SVGs that should be in the spritemap      |
 | `svgo` | `{}`          | Options for [`SVG Optimizer`](http://npmjs.com/package/svgo). Note that `cleanupIDs` is always `false` |
+| `glob` | `{}`          | Options for [`glob`](http://npmjs.com/package/glob)                                                    |
 
 ## SVG4Everybody
 You probably want to combine the `svg-spritemap-webpack-plugin` with `svg4everybody`.
