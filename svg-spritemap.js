@@ -9,7 +9,8 @@ function SVGSpritemapPlugin(options) {
     // Merge specified options with default options
     this.options = _.merge({}, {
         src: '**/*.svg',
-        svgo: {}
+        svgo: {},
+        glob: {}
     }, options);
 
     // Make sure we always disable the `cleanupIDs` SVGO plugin since this would remove all symbols
@@ -22,7 +23,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
     var options = this.options;
 
     compiler.plugin('emit', function(compilation, callback) {
-        glob(options.src, {}, function(err, files) {
+        glob(options.src, options.glob, function(err, files) {
             if ( err ) throw err;
 
             // No point in generating when there are no files
