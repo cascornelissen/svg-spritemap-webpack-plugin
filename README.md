@@ -1,7 +1,7 @@
 # SVG Spritemap Webpack Plugin
 This [webpack](https://webpack.github.io/) plugin generates a single SVG spritemap containing multiple `<symbol>` elements from all `.svg` files in a directory. Chris Coyier has a good write-up about the why's and how's of this technique on [CSS Tricks](https://css-tricks.com/svg-symbol-good-choice-icons/). Use it in combination with the [`svg4everybody`](https://github.com/jonathantneal/svg4everybody) package to easily and correctly load SVGs from the spritemap in all browsers.
 
-NPM: [`svg-spritemap-webpack-plugin`](https://docs.npmjs.com/package/svg-spritemap-webpack-plugin)
+NPM: [`svg-spritemap-webpack-plugin`](https://npmjs.com/package/svg-spritemap-webpack-plugin)
 
 ## Installation
 ```shell
