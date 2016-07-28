@@ -10,7 +10,8 @@ function SVGSpritemapPlugin(options) {
     this.options = _.merge({}, {
         src: '**/*.svg',
         svgo: {},
-        glob: {}
+        glob: {},
+        filename: 'spritemap.svg'
     }, options);
 
     // Make sure we always disable the `cleanupIDs` SVGO plugin since this would remove all symbols
@@ -78,7 +79,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
             spritemap = XMLSerializer.serializeToString(spritemap);
             SVGOptimizer.optimize(spritemap, function(o) {
                 // Insert the spritemap into the Webpack build as a new file asset
-                compilation.assets['spritemap.svg'] = {
+                compilation.assets[options.filename] = {
                     source: function() {
                         return o.data;
                     },
