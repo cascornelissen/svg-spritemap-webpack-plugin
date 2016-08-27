@@ -54,7 +54,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 // Create symbol
                 var symbol = XMLDoc.createElement('symbol');
                 symbol.setAttribute('id', id);
-                symbol.setAttribute('viewBox', svg.getAttribute('viewbox'));
+                symbol.setAttribute('viewBox', svg.getAttribute('viewBox') || svg.getAttribute('viewbox'));
 
                 // Add title for improved accessability
                 var title = XMLDoc.createElement('title');
