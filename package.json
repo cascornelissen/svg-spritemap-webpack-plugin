@@ -1,6 +1,6 @@
 {
   "name": "svg-spritemap-webpack-plugin",
-  "version": "0.3.0",
+  "version": "0.2.1",
   "description": "Generates symbol-based SVG spritemap from all .svg files in a directory",
   "main": "svg-spritemap.js",
   "scripts": {
