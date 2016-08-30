@@ -11,6 +11,7 @@ function SVGSpritemapPlugin(options) {
         src: '**/*.svg',
         svgo: {},
         glob: {},
+        prefix: '',
         filename: 'spritemap.svg'
     }, options);
 
@@ -45,7 +46,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
             // Add symbol for each file
             files.forEach(function(file) {
-                var id = path.basename(file, path.extname(file));
+                var id = options.prefix + path.basename(file, path.extname(file));
 
                 // Parse source SVG
                 var contents = fs.readFileSync(file, 'utf8'),
