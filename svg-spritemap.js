@@ -41,7 +41,8 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 SVGOptimizer = new svgo(options.svgo);
 
             // Create SVG element
-            var spritemap = XMLDoc.createElement('svg');
+            var spritemap = XMLDoc.createElement('svg'),
+                defs = XMLDoc.createElement('defs');
             spritemap.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
             // Add symbol for each file
@@ -57,7 +58,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 symbol.setAttribute('id', id);
                 symbol.setAttribute('viewBox', svg.getAttribute('viewBox') || svg.getAttribute('viewbox'));
 
-                // Add title for improved accessability
+                // Add title for improved accessibility
                 var title = XMLDoc.createElement('title');
                 title.appendChild(XMLDoc.createTextNode(id));
                 symbol.appendChild(title);
@@ -67,8 +68,10 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                     symbol.appendChild(svg.childNodes[0]);
                 }
 
-                spritemap.appendChild(symbol);
+                defs.appendChild(symbol);
             });
+
+            spritemap.appendChild(defs);
 
             // No point in optimizing/saving when there are no SVGs
             if ( !spritemap.childNodes.length ) {
