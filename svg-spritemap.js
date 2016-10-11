@@ -42,8 +42,12 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
             // Create SVG element
             var spritemap = XMLDoc.createElement('svg'),
-                defs = XMLDoc.createElement('defs');
+                defs = XMLDoc.createElement('defs'),
+                sizes = { width: [], height: [] };
+
+            // Add namespaces
             spritemap.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+            spritemap.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
 
             // Add symbol for each file
             files.forEach(function(file) {
@@ -51,12 +55,14 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
                 // Parse source SVG
                 var contents = fs.readFileSync(file, 'utf8'),
-                    svg = DOMParser.parseFromString(contents).documentElement;
+                    svg = DOMParser.parseFromString(contents).documentElement,
+                    viewbox = (svg.getAttribute('viewBox') || svg.getAttribute('viewbox')).split(' ').map(function(a) { return parseFloat(a); }),
+                    width = parseFloat(svg.getAttribute('width')) || viewbox[2],
+                    height = parseFloat(svg.getAttribute('height')) || viewbox[3];
 
                 // Create symbol
                 var symbol = XMLDoc.createElement('symbol');
                 symbol.setAttribute('id', id);
-                symbol.setAttribute('viewBox', svg.getAttribute('viewBox') || svg.getAttribute('viewbox'));
 
                 // Add title for improved accessibility
                 var title = XMLDoc.createElement('title');
@@ -69,9 +75,22 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 }
 
                 defs.appendChild(symbol);
+
+                // Generate <use> elements within spritemap to allow usage within CSS
+                var sprite = XMLDoc.createElement('use');
+                sprite.setAttribute('xlink:href', '#' + id);
+                sprite.setAttribute('transform', 'translate(0, ' + sizes.height.reduce(function(a, b) { return a + b; }, 0) + ')');
+                spritemap.appendChild(sprite);
+
+                // Update sizes
+                sizes.width.push(width);
+                sizes.height.push(height);
             });
 
-            spritemap.appendChild(defs);
+            // Adds defs to spritemap
+            spritemap.insertBefore(defs, spritemap.firstChild);
+            spritemap.setAttribute('width', Math.max.apply(null, sizes.width));
+            spritemap.setAttribute('height', sizes.height.reduce(function(a, b) { return a + b; }, 0));
 
             // No point in optimizing/saving when there are no SVGs
             if ( !spritemap.childNodes.length ) {
