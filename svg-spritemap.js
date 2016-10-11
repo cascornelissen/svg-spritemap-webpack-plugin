@@ -10,9 +10,10 @@ function SVGSpritemapPlugin(options) {
     // Merge specified options with default options
     this.options = _.merge({}, {
         src: '**/*.svg',
-        svgo: {},
         glob: {},
+        svgo: {},
         prefix: '',
+        gutter: 2,
         filename: 'spritemap.svg'
     }, options);
 }
@@ -78,7 +79,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 var sprite = XMLDoc.createElement('use');
                 sprite.setAttribute('xlink:href', '#' + validId);
                 sprite.setAttribute('x', 0);
-                sprite.setAttribute('y', sizes.height.reduce(function(a, b) { return a + b; }, 0));
+                sprite.setAttribute('y', sizes.height.reduce(function(a, b) { return a + b; }, 0) + sizes.height.length * options.gutter);
                 sprite.setAttribute('width', width);
                 sprite.setAttribute('height', height);
                 spritemap.appendChild(sprite);
@@ -91,7 +92,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
             // Adds defs to spritemap
             spritemap.insertBefore(defs, spritemap.firstChild);
             spritemap.setAttribute('width', Math.max.apply(null, sizes.width));
-            spritemap.setAttribute('height', sizes.height.reduce(function(a, b) { return a + b; }, 0));
+            spritemap.setAttribute('height', sizes.height.reduce(function(a, b) { return a + b; }, 0) + (sizes.height.length - 1) * options.gutter);
 
             // No point in optimizing/saving when there are no SVGs
             if ( !spritemap.childNodes.length ) {

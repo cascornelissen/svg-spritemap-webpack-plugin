@@ -41,9 +41,10 @@ You can pass an object containing several options to `SVGSpritemapPlugin()`, thi
 | Option     | Default           | Description                                                                                       |
 | ---------- | ----------------- | ------------------------------------------------------------------------------------------------- |
 | `src`      | `'**/*.svg'`      | [`glob`](http://npmjs.com/package/glob) used for finding the SVGs that should be in the spritemap |
-| `svgo`     | `{}`              | Options for [`SVG Optimizer`](http://npmjs.com/package/svgo).                                     |
 | `glob`     | `{}`              | Options for [`glob`](http://npmjs.com/package/glob)                                               |
-| `prefix`   | `''`              | Prefix added to `<symbol>` id in the spritemap                                                    |
+| `svgo`     | `{}`              | Options for [`SVG Optimizer`](http://npmjs.com/package/svgo).                                     |
+| `prefix`   | `''`              | Prefix added to sprite identifier in the spritemap                                                |
+| `gutter`   | `2`               | Amount of pixels added between each sprite to prevent overlap                                     |
 | `filename` | `'spritemap.svg'` | Name for the generated file (located at the webpack `output.path`)                                |
 
 ## SVG4Everybody
