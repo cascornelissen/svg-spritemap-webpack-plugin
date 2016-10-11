@@ -39,7 +39,6 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
             // Create SVG element
             var spritemap = XMLDoc.createElement('svg'),
-                defs = XMLDoc.createElement('defs'),
                 sizes = { width: [], height: [] };
 
             // Add namespaces
@@ -73,7 +72,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                     symbol.appendChild(svg.childNodes[0]);
                 }
 
-                defs.appendChild(symbol);
+                spritemap.insertBefore(symbol, spritemap.firstChild);
 
                 // Generate <use> elements within spritemap to allow usage within CSS
                 var sprite = XMLDoc.createElement('use');
@@ -89,8 +88,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 sizes.height.push(height);
             });
 
-            // Adds defs to spritemap
-            spritemap.insertBefore(defs, spritemap.firstChild);
+            // Adds width/height to spritemap
             spritemap.setAttribute('width', Math.max.apply(null, sizes.width));
             spritemap.setAttribute('height', sizes.height.reduce(function(a, b) { return a + b; }, 0) + (sizes.height.length - 1) * options.gutter);
 
@@ -101,8 +99,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
             }
 
             // Transform Element to String and optimize SVG
-            spritemap = XMLSerializer.serializeToString(spritemap);
-            SVGOptimizer.optimize(spritemap, function(o) {
+            SVGOptimizer.optimize(XMLSerializer.serializeToString(spritemap), function(o) {
                 // Insert the spritemap into the Webpack build as a new file asset
                 compilation.assets[options.filename] = {
                     source: function() {
