@@ -12,7 +12,7 @@ function SVGSpritemapPlugin(options) {
         src: '**/*.svg',
         glob: {},
         svgo: {},
-        prefix: '',
+        prefix: 'sprite-',
         gutter: 2,
         filename: 'spritemap.svg'
     }, options);
