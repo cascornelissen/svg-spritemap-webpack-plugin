@@ -1,17 +1,17 @@
-var _ = require('lodash'),
-    fs = require('fs'),
+var fs = require('fs'),
     path = require('path'),
     glob = require('glob'),
     svgo = require('svgo'),
     idify = require('html4-id'),
+    extend = require('extend'),
     xmldom = require('xmldom');
 
 function SVGSpritemapPlugin(options) {
     // Merge specified options with default options
-    this.options = _.merge({}, {
+    this.options = extend({}, {
         src: '**/*.svg',
-        glob: {},
         svgo: {},
+        glob: {},
         prefix: 'sprite-',
         gutter: 2,
         filename: 'spritemap.svg'
