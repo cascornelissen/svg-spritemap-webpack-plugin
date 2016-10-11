@@ -65,7 +65,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
                 // Add title for improved accessibility
                 var title = XMLDoc.createElement('title');
-                title.appendChild(XMLDoc.createTextNode(id));
+                title.appendChild(XMLDoc.createTextNode(id.replace(options.prefix, '')));
                 symbol.appendChild(title);
 
                 // Clone the original contents of the SVG file into the new symbol
