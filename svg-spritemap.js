@@ -15,11 +15,6 @@ function SVGSpritemapPlugin(options) {
         prefix: '',
         filename: 'spritemap.svg'
     }, options);
-
-    // Make sure we always disable the `cleanupIDs` SVGO plugin since this would remove all symbols
-    // https://github.com/svg/svgo/issues/416
-    if ( !Array.isArray(this.options.svgo.plugins) ) this.options.svgo.plugins = [];
-    this.options.svgo.plugins.push({ cleanupIDs: false });
 }
 
 SVGSpritemapPlugin.prototype.apply = function(compiler) {
