@@ -60,6 +60,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 // Create symbol
                 var symbol = XMLDoc.createElement('symbol');
                 symbol.setAttribute('id', validId);
+                symbol.setAttribute('viewBox', viewbox.join(' '));
 
                 // Add title for improved accessibility
                 var title = XMLDoc.createElement('title');
@@ -76,7 +77,10 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 // Generate <use> elements within spritemap to allow usage within CSS
                 var sprite = XMLDoc.createElement('use');
                 sprite.setAttribute('xlink:href', '#' + validId);
-                sprite.setAttribute('transform', 'translate(0, ' + sizes.height.reduce(function(a, b) { return a + b; }, 0) + ')');
+                sprite.setAttribute('x', 0);
+                sprite.setAttribute('y', sizes.height.reduce(function(a, b) { return a + b; }, 0));
+                sprite.setAttribute('width', width);
+                sprite.setAttribute('height', height);
                 spritemap.appendChild(sprite);
 
                 // Update sizes
