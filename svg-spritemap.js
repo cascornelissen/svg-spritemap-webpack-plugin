@@ -3,6 +3,7 @@ var _ = require('lodash'),
     path = require('path'),
     glob = require('glob'),
     svgo = require('svgo'),
+    idify = require('html4-id'),
     xmldom = require('xmldom');
 
 function SVGSpritemapPlugin(options) {
@@ -51,7 +52,8 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
             // Add symbol for each file
             files.forEach(function(file) {
-                var id = options.prefix + path.basename(file, path.extname(file));
+                var id = options.prefix + path.basename(file, path.extname(file)),
+                    validId = idify(id);
 
                 // Parse source SVG
                 var contents = fs.readFileSync(file, 'utf8'),
@@ -62,7 +64,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
                 // Create symbol
                 var symbol = XMLDoc.createElement('symbol');
-                symbol.setAttribute('id', id);
+                symbol.setAttribute('id', validId);
 
                 // Add title for improved accessibility
                 var title = XMLDoc.createElement('title');
@@ -78,7 +80,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
                 // Generate <use> elements within spritemap to allow usage within CSS
                 var sprite = XMLDoc.createElement('use');
-                sprite.setAttribute('xlink:href', '#' + id);
+                sprite.setAttribute('xlink:href', '#' + validId);
                 sprite.setAttribute('transform', 'translate(0, ' + sizes.height.reduce(function(a, b) { return a + b; }, 0) + ')');
                 spritemap.appendChild(sprite);
 
