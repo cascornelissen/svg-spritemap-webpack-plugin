@@ -103,10 +103,10 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 // Insert the spritemap into the Webpack build as a new file asset
                 compilation.assets[options.filename] = {
                     source: function() {
-                        return o.data;
+                        return new Buffer(o.data);
                     },
                     size: function() {
-                        return o.data.length;
+                        return Buffer.byteLength(o.data, 'utf8');
                     }
                 };
 
