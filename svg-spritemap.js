@@ -22,6 +22,10 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
     var options = this.options;
 
     compiler.plugin('emit', function(compilation, callback) {
+        // Hash support for filenames
+        options.filename = options.filename.replace('[hash]', compilation.getStats().hash);
+
+        // Find files
         glob(options.src, options.glob, function(err, files) {
             if ( err ) throw err;
 
