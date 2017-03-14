@@ -41,15 +41,17 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
         compilation.plugin('optimize-chunk-assets', function optimizeChunkAssets(chunks, callback) {
             // Optimize spritemap using SVGO
             chunks.forEach(function(chunk) {
-                if ( chunk.name === options.chunkName ) {
-                    var SVGOptimizer = new svgo(options.svgo);
-                    var filename = chunk.files[1];
-
-                    SVGOptimizer.optimize(compilation.assets[filename].source(), function(o) {
-                        compilation.assets[filename] = new RawSource(o.data);
-                        callback();
-                    });
+                if ( chunk.name !== options.chunkName ) {
+                    return;
                 }
+
+                var SVGOptimizer = new svgo(options.svgo);
+                var filename = chunk.files[1];
+
+                SVGOptimizer.optimize(compilation.assets[filename].source(), function(o) {
+                    compilation.assets[filename] = new RawSource(o.data);
+                    callback();
+                });
             });
         });
 
@@ -128,6 +130,19 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
             return XMLSerializer.serializeToString(spritemap);
         }
+    });
+
+    compiler.plugin('emit', function(compilation, callback) {
+        compilation.chunks.forEach(function(chunk) {
+            if ( chunk.name !== options.chunkName ) {
+                return;
+            }
+
+            // Remove entry (.js file) from compilation assets since it's empty
+            delete compilation.assets[chunk.files[0]]
+        });
+
+        callback();
     });
 };
 
