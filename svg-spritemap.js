@@ -5,6 +5,7 @@ var fs = require('fs'),
     idify = require('html4-id'),
     extend = require('extend'),
     xmldom = require('xmldom'),
+    loaderUtils = require('loader-utils'),
     RawSource = require('webpack-sources').RawSource;
 
 function SVGSpritemapPlugin(options) {
@@ -15,7 +16,7 @@ function SVGSpritemapPlugin(options) {
         glob: {},
         prefix: 'sprite-',
         gutter: 2,
-        filename: 'spritemap.[hash].svg',
+        filename: 'spritemap.svg',
         chunk: 'spritemap'
     }, options);
 }
@@ -30,12 +31,17 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
         });
 
         compilation.plugin('additional-chunk-assets', function additionalChunkAssets(chunks) {
+            var source = new RawSource(generateSVG());
             var sourceChunk = compilation.namedChunks[options.chunk];
-            var filename = options.filename.replace('[hash]', compilation.getStats().hash);
+            var filename = options.filename
+                               .replace(/\[hash]/ig, compilation.getStats().hash)
+                               .replace(/\[contenthash]/ig, function() {
+                                   return loaderUtils.getHashDigest(source.source(), 'sha1', 'hex', 16);
+                               });
 
             // Add actual (unoptimized) SVG to spritemap chunk
             compilation.additionalChunkAssets.push(filename);
-            compilation.assets[filename] = new RawSource(generateSVG());
+            compilation.assets[filename] = source;
             sourceChunk.files.push(filename);
         });
 
