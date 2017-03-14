@@ -15,7 +15,8 @@ function SVGSpritemapPlugin(options) {
         glob: {},
         prefix: 'sprite-',
         gutter: 2,
-        chunkName: 'spritemap'
+        filename: 'spritemap.[hash].svg',
+        chunk: 'spritemap'
     }, options);
 }
 
@@ -25,12 +26,12 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
     compiler.plugin('compilation', function(compilation, callback) {
         compilation.plugin('optimize-chunks', function optmizeChunks(chunks) {
             // Add new chunk for spritemap
-            compilation.addChunk(options.chunkName);
+            compilation.addChunk(options.chunk);
         });
 
         compilation.plugin('additional-chunk-assets', function additionalChunkAssets(chunks) {
-            var sourceChunk = compilation.namedChunks[options.chunkName];
-            var filename = sourceChunk.files[0].replace(/\.js$/, '.svg');
+            var sourceChunk = compilation.namedChunks[options.chunk];
+            var filename = options.filename.replace('[hash]', compilation.getStats().hash);
 
             // Add actual (unoptimized) SVG to spritemap chunk
             compilation.additionalChunkAssets.push(filename);
@@ -41,7 +42,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
         compilation.plugin('optimize-chunk-assets', function optimizeChunkAssets(chunks, callback) {
             // Optimize spritemap using SVGO
             chunks.forEach(function(chunk) {
-                if ( chunk.name !== options.chunkName ) {
+                if ( chunk.name !== options.chunk ) {
                     return;
                 }
 
@@ -134,7 +135,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
     compiler.plugin('emit', function(compilation, callback) {
         compilation.chunks.forEach(function(chunk) {
-            if ( chunk.name !== options.chunkName ) {
+            if ( chunk.name !== options.chunk ) {
                 return;
             }
 
