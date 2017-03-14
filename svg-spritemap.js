@@ -4,7 +4,8 @@ var fs = require('fs'),
     svgo = require('svgo'),
     idify = require('html4-id'),
     extend = require('extend'),
-    xmldom = require('xmldom');
+    xmldom = require('xmldom'),
+    RawSource = require('webpack-sources').RawSource;
 
 function SVGSpritemapPlugin(options) {
     // Merge specified options with default options
@@ -14,32 +15,56 @@ function SVGSpritemapPlugin(options) {
         glob: {},
         prefix: 'sprite-',
         gutter: 2,
-        filename: 'spritemap.svg'
+        chunkName: 'spritemap'
     }, options);
 }
 
 SVGSpritemapPlugin.prototype.apply = function(compiler) {
     var options = this.options;
 
-    compiler.plugin('emit', function(compilation, callback) {
-        // Hash support for filenames
-        options.filename = options.filename.replace('[hash]', compilation.getStats().hash);
+    compiler.plugin('compilation', function(compilation, callback) {
+        compilation.plugin('optimize-chunks', function optmizeChunks(chunks) {
+            // Add new chunk for spritemap
+            compilation.addChunk(options.chunkName);
+        });
 
-        // Find files
-        glob(options.src, options.glob, function(err, files) {
-            if ( err ) throw err;
+        compilation.plugin('additional-chunk-assets', function additionalChunkAssets(chunks) {
+            var sourceChunk = compilation.namedChunks[options.chunkName];
+            var filename = sourceChunk.files[0].replace(/\.js$/, '.svg');
+
+            // Add actual (unoptimized) SVG to spritemap chunk
+            compilation.additionalChunkAssets.push(filename);
+            compilation.assets[filename] = new RawSource(generateSVG());
+            sourceChunk.files.push(filename);
+        });
+
+        compilation.plugin('optimize-chunk-assets', function optimizeChunkAssets(chunks, callback) {
+            // Optimize spritemap using SVGO
+            chunks.forEach(function(chunk) {
+                if ( chunk.name === options.chunkName ) {
+                    var SVGOptimizer = new svgo(options.svgo);
+                    var filename = chunk.files[1];
+
+                    SVGOptimizer.optimize(compilation.assets[filename].source(), function(o) {
+                        compilation.assets[filename] = new RawSource(o.data);
+                        callback();
+                    });
+                }
+            });
+        });
+
+        var generateSVG = function() {
+            var files = glob.sync(options.src, options.glob);
 
             // No point in generating when there are no files
             if ( !files.length ) {
-                callback();
                 return false;
             }
 
             // Initialize DOM/XML classes and SVGO
             var DOMParser = new xmldom.DOMParser(),
                 XMLSerializer = new xmldom.XMLSerializer(),
-                XMLDoc = new xmldom.DOMImplementation().createDocument(null, null, null), // `document` alternative for NodeJS environments
-                SVGOptimizer = new svgo(options.svgo);
+                XMLDoc = new xmldom.DOMImplementation().createDocument(null, null, null); // `document` alternative for NodeJS environments
 
             // Create SVG element
             var spritemap = XMLDoc.createElement('svg'),
@@ -98,25 +123,11 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
             // No point in optimizing/saving when there are no SVGs
             if ( !spritemap.childNodes.length ) {
-                callback();
                 return false;
             }
 
-            // Transform Element to String and optimize SVG
-            SVGOptimizer.optimize(XMLSerializer.serializeToString(spritemap), function(o) {
-                // Insert the spritemap into the Webpack build as a new file asset
-                compilation.assets[options.filename] = {
-                    source: function() {
-                        return new Buffer(o.data);
-                    },
-                    size: function() {
-                        return Buffer.byteLength(o.data, 'utf8');
-                    }
-                };
-
-                callback();
-            });
-        });
+            return XMLSerializer.serializeToString(spritemap);
+        }
     });
 };
 
