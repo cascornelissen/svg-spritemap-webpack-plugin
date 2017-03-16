@@ -24,14 +24,19 @@ function SVGSpritemapPlugin(options) {
 SVGSpritemapPlugin.prototype.apply = function(compiler) {
     var options = this.options;
 
-    compiler.plugin('compilation', function(compilation, callback) {
+    compiler.plugin('compilation', function(compilation) {
         compilation.plugin('optimize-chunks', function optmizeChunks(chunks) {
             // Add new chunk for spritemap
             compilation.addChunk(options.chunk);
         });
 
         compilation.plugin('additional-chunk-assets', function additionalChunkAssets(chunks) {
-            var source = new RawSource(generateSVG());
+            var svg = generateSVG();
+            if ( !svg ) {
+                return;
+            }
+
+            var source = new RawSource(svg);
             var sourceChunk = compilation.namedChunks[options.chunk];
             var filename = options.filename
                                .replace(/\[hash]/ig, compilation.getStats().hash)
