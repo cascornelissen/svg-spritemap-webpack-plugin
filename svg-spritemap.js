@@ -22,12 +22,15 @@ function SVGSpritemapPlugin(options) {
 }
 
 SVGSpritemapPlugin.prototype.apply = function(compiler) {
-    var options = this.options;
+    var options = this.options,
+        files = glob.sync(options.src, options.glob);
 
     compiler.plugin('compilation', function(compilation) {
         compilation.plugin('optimize-chunks', function optmizeChunks(chunks) {
-            // Add new chunk for spritemap
-            compilation.addChunk(options.chunk);
+            if ( files.length ) {
+                // Add new chunk for spritemap
+                compilation.addChunk(options.chunk);
+            }
         });
 
         compilation.plugin('additional-chunk-assets', function additionalChunkAssets(chunks) {
@@ -52,14 +55,18 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
         compilation.plugin('optimize-chunk-assets', function optimizeChunkAssets(chunks, callback) {
             // Optimize spritemap using SVGO
-            chunks.forEach(function(chunk) {
-                if ( chunk.name !== options.chunk ) {
-                    return;
-                }
+            chunks = chunks.filter(function(chunk) {
+                return chunk.name === options.chunk;
+            });
 
+            if ( !chunks.length ) {
+                callback();
+                return;
+            }
+
+            chunks.forEach(function(chunk) {
                 var SVGOptimizer = new svgo(options.svgo);
                 var filename = chunk.files[1];
-
                 SVGOptimizer.optimize(compilation.assets[filename].source(), function(o) {
                     compilation.assets[filename] = new RawSource(o.data);
                     callback();
@@ -68,8 +75,6 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
         });
 
         var generateSVG = function() {
-            var files = glob.sync(options.src, options.glob);
-
             // No point in generating when there are no files
             if ( !files.length ) {
                 return false;
@@ -151,7 +156,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
             }
 
             // Remove entry (.js file) from compilation assets since it's empty
-            delete compilation.assets[chunk.files[0]]
+            delete compilation.assets[chunk.files[0]];
         });
 
         callback();
