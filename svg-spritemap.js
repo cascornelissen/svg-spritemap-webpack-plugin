@@ -59,7 +59,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 return chunk.name === options.chunk;
             });
 
-            if ( !chunks.length ) {
+            if ( !options.svgo || !chunks.length ) {
                 callback();
                 return;
             }
