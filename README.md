@@ -38,18 +38,19 @@ modules.exports = {
 ## Options
 You can pass an object containing several options to `SVGSpritemapPlugin()`, this object can contain the following keys.
 
-| Option     | Default           | Description                                                                                                    |
-| ---------- | ----------------- | -------------------------------------------------------------------------------------------------------------- |
-| `src`      | `'**/*.svg'`      | [`glob`](http://npmjs.com/package/glob) used for finding the SVGs that should be in the spritemap              |
-| `glob`     | `{}`              | Options for [`glob`](http://npmjs.com/package/glob)                                                            |
-| `svgo`     | `{}`              | Options for [`SVG Optimizer`](http://npmjs.com/package/svgo), pass `false` to disable                          |
-| `prefix`   | `''`              | Prefix added to sprite identifier in the spritemap                                                             |
-| `gutter`   | `2`               | Amount of pixels added between each sprite to prevent overlap                                                  |
-| `filename` | `'spritemap.svg'` | Name for the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported |
-| `chunk`    | `'spritemap'`     | Name of the generated chunk                                                                                    |
+| Option          | Default           | Description                                                                                                    |
+| --------------- | ----------------- | -------------------------------------------------------------------------------------------------------------- |
+| `src`           | `'**/*.svg'`      | [`glob`](http://npmjs.com/package/glob) used for finding the SVGs that should be in the spritemap              |
+| `glob`          | `{}`              | Options for [`glob`](http://npmjs.com/package/glob)                                                            |
+| `svgo`          | `{}`              | Options for [`SVG Optimizer`](http://npmjs.com/package/svgo), pass `false` to disable                          |
+| `svg4everybody` | `false`           | Add SVG4Everybody helper to all entries                                                                        |
+| `gutter`        | `2`               | Amount of pixels added between each sprite to prevent overlap                                                  |
+| `prefix`        | `''`              | Prefix added to sprite identifier in the spritemap                                                             |
+| `filename`      | `'spritemap.svg'` | Name for the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported |
+| `chunk`         | `'spritemap'`     | Name of the generated chunk                                                                                    |
 
 ## SVG4Everybody
-You probably want to combine the `svg-spritemap-webpack-plugin` with `svg4everybody`.
+You probably want to combine the `svg-spritemap-webpack-plugin` with `svg4everybody`. This can be done by passing `true` to the `svg4everybody` configuration key, adding `node_modules/svg-spritemap-webpack-plugin/svg4everybody-helper.js` to a specific entry, or by executing SVG4Everybody yourself.
 
 > [SVG for Everybody](https://github.com/jonathantneal/svg4everybody) adds [SVG External Content](http://css-tricks.com/svg-sprites-use-better-icon-fonts/##Browser+Support) support to [all browsers](http://caniuse.com/svg).
 

@@ -17,7 +17,8 @@ function SVGSpritemapPlugin(options) {
         prefix: 'sprite-',
         gutter: 2,
         filename: 'spritemap.svg',
-        chunk: 'spritemap'
+        chunk: 'spritemap',
+        svg4everybody: false
     }, options);
 }
 
@@ -42,10 +43,10 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
             var source = new RawSource(svg);
             var sourceChunk = compilation.namedChunks[options.chunk];
             var filename = options.filename
-                               .replace(/\[hash]/ig, compilation.getStats().hash)
-                               .replace(/\[contenthash]/ig, function() {
-                                   return loaderUtils.getHashDigest(source.source(), 'sha1', 'hex', 16);
-                               });
+                .replace(/\[hash]/ig, compilation.getStats().hash)
+                .replace(/\[contenthash]/ig, function() {
+                    return loaderUtils.getHashDigest(source.source(), 'sha1', 'hex', 16);
+                });
 
             // Add actual (unoptimized) SVG to spritemap chunk
             compilation.additionalChunkAssets.push(filename);
@@ -59,7 +60,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 return chunk.name === options.chunk;
             });
 
-            if ( !options.svgo || !chunks.length ) {
+            if ( !chunks.length ) {
                 callback();
                 return;
             }
@@ -155,11 +156,26 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 return;
             }
 
-            // Remove entry (.js file) from compilation assets since it's empty
+            // Remove entry (.js file) from compilation assets since it's empty anyway
             delete compilation.assets[chunk.files[0]];
         });
 
         callback();
+    });
+
+    compiler.plugin('entry-option', function(context, entry) {
+        if ( options.svg4everybody ) {
+            var newEntry = path.join(__dirname, '/svg4everybody-helper.js');
+            if ( typeof entry === 'string' ) {
+                entry = [entry, newEntry]
+            } else if ( Array.isArray(entry) ) {
+                entry.push(newEntry)
+            } else {
+                Object.keys(entry).forEach(function(item) {
+                    entry[item].push(newEntry);
+                });
+            }
+        }
     });
 };
 
