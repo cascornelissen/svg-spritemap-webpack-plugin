@@ -23,44 +23,24 @@ module.exports = {
 }
 ```
 
-Since [`svg4everybody`](https://github.com/jonathantneal/svg4everybody) requires you to execute the `svg4everybody()` function in your JavaScript this package comes with a helper. Adding the helper to your webpack `entry` will automagically execute this function for you. Read more in the [SVG4Everybody](#svg4everybody) section.
-
-```js
-// webpack.config.js
-modules.exports = {
-    entry: [
-        // Your own CSS and JS
-        'node_modules/svg-spritemap-webpack-plugin/svg4everybody-helper.js'
-    ]
-}
-```
-
 ## Options
 You can pass an object containing several options to `SVGSpritemapPlugin()`, this object can contain the following keys.
 
 | Option          | Default           | Description                                                                                                    |
 | --------------- | ----------------- | -------------------------------------------------------------------------------------------------------------- |
 | `src`           | `'**/*.svg'`      | [`glob`](http://npmjs.com/package/glob) used for finding the SVGs that should be in the spritemap              |
-| `glob`          | `{}`              | Options for [`glob`](http://npmjs.com/package/glob)                                                            |
-| `svgo`          | `{}`              | Options for [`SVG Optimizer`](http://npmjs.com/package/svgo), pass `false` to disable                          |
-| `svg4everybody` | `false`           | Add SVG4Everybody helper to all entries                                                                        |
+| `glob`          | `{}`              | Options object for [`glob`](http://npmjs.com/package/glob#options)                                             |
+| `svgo`          | `{}`              | Options object for [`SVG Optimizer`](http://npmjs.com/package/svgo), pass `false` to disable                   |
+| `svg4everybody` | `false`           | Options object for [`SVG4Everybody`](https://www.npmjs.com/package/svg4everybody#usage)                        |
 | `gutter`        | `2`               | Amount of pixels added between each sprite to prevent overlap                                                  |
 | `prefix`        | `''`              | Prefix added to sprite identifier in the spritemap                                                             |
 | `filename`      | `'spritemap.svg'` | Name for the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported |
 | `chunk`         | `'spritemap'`     | Name of the generated chunk                                                                                    |
 
 ## SVG4Everybody
-You probably want to combine the `svg-spritemap-webpack-plugin` with `svg4everybody`. This can be done by passing `true` to the `svg4everybody` configuration key, adding `node_modules/svg-spritemap-webpack-plugin/svg4everybody-helper.js` to a specific entry, or by executing SVG4Everybody yourself.
-
 > [SVG for Everybody](https://github.com/jonathantneal/svg4everybody) adds [SVG External Content](http://css-tricks.com/svg-sprites-use-better-icon-fonts/##Browser+Support) support to [all browsers](http://caniuse.com/svg).
 
-The helper included in this package has the following default options. If you want anything else you'll have to execute the `svg4everybody()` function yourself. More information about the options is available in the [SVG for Everybody README](https://github.com/jonathantneal/svg4everybody/blob/master/README.md).
-
-```js
-{
-    polyfill: true // Force inline SVG
-}
-```
+You'll probably want to combine the `svg-spritemap-webpack-plugin` with [`svg4everybody`](https://github.com/jonathantneal/svg4everybody). This can be done by passing an options object to the `svg4everybody` configuration key or by executing SVG4Everybody yourself.
 
 ## TODO
 - PNG fallback

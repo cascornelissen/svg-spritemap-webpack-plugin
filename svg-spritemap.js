@@ -165,11 +165,16 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
     compiler.plugin('entry-option', function(context, entry) {
         if ( options.svg4everybody ) {
+            // This is a little hacky but there's no other way since Webpack
+            // doesn't support virtual files (https://github.com/rmarscher/virtual-module-webpack-plugin)
+            var helper = fs.readFileSync(path.join(__dirname, '/helpers/svg4everybody.template.js'), 'utf8');
+            fs.writeFileSync(path.join(__dirname, '/svg4everybody-helper.js'), helper.replace('{/* PLACEHOLDER */}', JSON.stringify(options.svg4everybody)), 'utf8');
+
             var newEntry = path.join(__dirname, '/svg4everybody-helper.js');
             if ( typeof entry === 'string' ) {
-                entry = [entry, newEntry]
+                entry = [entry, newEntry];
             } else if ( Array.isArray(entry) ) {
-                entry.push(newEntry)
+                entry.push(newEntry);
             } else {
                 Object.keys(entry).forEach(function(item) {
                     entry[item].push(newEntry);
