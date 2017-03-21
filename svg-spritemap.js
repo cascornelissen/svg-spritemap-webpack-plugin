@@ -4,7 +4,9 @@ var fs = require('fs'),
     svgo = require('svgo'),
     idify = require('html4-id'),
     extend = require('extend'),
-    xmldom = require('xmldom');
+    xmldom = require('xmldom'),
+    loaderUtils = require('loader-utils'),
+    RawSource = require('webpack-sources').RawSource;
 
 function SVGSpritemapPlugin(options) {
     // Merge specified options with default options
@@ -14,28 +16,75 @@ function SVGSpritemapPlugin(options) {
         glob: {},
         prefix: 'sprite-',
         gutter: 2,
-        filename: 'spritemap.svg'
+        filename: 'spritemap.svg',
+        chunk: 'spritemap',
+        svg4everybody: false
     }, options);
 }
 
 SVGSpritemapPlugin.prototype.apply = function(compiler) {
-    var options = this.options;
+    var options = this.options,
+        files = glob.sync(options.src, options.glob);
 
-    compiler.plugin('emit', function(compilation, callback) {
-        glob(options.src, options.glob, function(err, files) {
-            if ( err ) throw err;
+    compiler.plugin('compilation', function(compilation) {
+        compilation.plugin('optimize-chunks', function optmizeChunks(chunks) {
+            if ( files.length ) {
+                // Add new chunk for spritemap
+                compilation.addChunk(options.chunk);
+            }
+        });
 
+        compilation.plugin('additional-chunk-assets', function additionalChunkAssets(chunks) {
+            var svg = generateSVG();
+            if ( !svg ) {
+                return;
+            }
+
+            var source = new RawSource(svg);
+            var sourceChunk = compilation.namedChunks[options.chunk];
+            var filename = options.filename
+                .replace(/\[hash]/ig, compilation.getStats().hash)
+                .replace(/\[contenthash]/ig, function() {
+                    return loaderUtils.getHashDigest(source.source(), 'sha1', 'hex', 16);
+                });
+
+            // Add actual (unoptimized) SVG to spritemap chunk
+            compilation.additionalChunkAssets.push(filename);
+            compilation.assets[filename] = source;
+            sourceChunk.files.push(filename);
+        });
+
+        compilation.plugin('optimize-chunk-assets', function optimizeChunkAssets(chunks, callback) {
+            // Optimize spritemap using SVGO
+            chunks = chunks.filter(function(chunk) {
+                return chunk.name === options.chunk;
+            });
+
+            if ( !chunks.length ) {
+                callback();
+                return;
+            }
+
+            chunks.forEach(function(chunk) {
+                var SVGOptimizer = new svgo(options.svgo);
+                var filename = chunk.files[1];
+                SVGOptimizer.optimize(compilation.assets[filename].source(), function(o) {
+                    compilation.assets[filename] = new RawSource(o.data);
+                    callback();
+                });
+            });
+        });
+
+        var generateSVG = function() {
             // No point in generating when there are no files
             if ( !files.length ) {
-                callback();
                 return false;
             }
 
             // Initialize DOM/XML classes and SVGO
             var DOMParser = new xmldom.DOMParser(),
                 XMLSerializer = new xmldom.XMLSerializer(),
-                XMLDoc = new xmldom.DOMImplementation().createDocument(null, null, null), // `document` alternative for NodeJS environments
-                SVGOptimizer = new svgo(options.svgo);
+                XMLDoc = new xmldom.DOMImplementation().createDocument(null, null, null); // `document` alternative for NodeJS environments
 
             // Create SVG element
             var spritemap = XMLDoc.createElement('svg'),
@@ -94,25 +143,44 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
             // No point in optimizing/saving when there are no SVGs
             if ( !spritemap.childNodes.length ) {
-                callback();
                 return false;
             }
 
-            // Transform Element to String and optimize SVG
-            SVGOptimizer.optimize(XMLSerializer.serializeToString(spritemap), function(o) {
-                // Insert the spritemap into the Webpack build as a new file asset
-                compilation.assets[options.filename] = {
-                    source: function() {
-                        return new Buffer(o.data);
-                    },
-                    size: function() {
-                        return Buffer.byteLength(o.data, 'utf8');
-                    }
-                };
+            return XMLSerializer.serializeToString(spritemap);
+        }
+    });
 
-                callback();
-            });
+    compiler.plugin('emit', function(compilation, callback) {
+        compilation.chunks.forEach(function(chunk) {
+            if ( chunk.name !== options.chunk ) {
+                return;
+            }
+
+            // Remove entry (.js file) from compilation assets since it's empty anyway
+            delete compilation.assets[chunk.files[0]];
         });
+
+        callback();
+    });
+
+    compiler.plugin('entry-option', function(context, entry) {
+        if ( options.svg4everybody ) {
+            // This is a little hacky but there's no other way since Webpack
+            // doesn't support virtual files (https://github.com/rmarscher/virtual-module-webpack-plugin)
+            var helper = fs.readFileSync(path.join(__dirname, '/helpers/svg4everybody.template.js'), 'utf8');
+            fs.writeFileSync(path.join(__dirname, '/svg4everybody-helper.js'), helper.replace('{/* PLACEHOLDER */}', JSON.stringify(options.svg4everybody)), 'utf8');
+
+            var newEntry = path.join(__dirname, '/svg4everybody-helper.js');
+            if ( typeof entry === 'string' ) {
+                entry = [entry, newEntry];
+            } else if ( Array.isArray(entry) ) {
+                entry.push(newEntry);
+            } else {
+                Object.keys(entry).forEach(function(item) {
+                    entry[item].push(newEntry);
+                });
+            }
+        }
     });
 };
 
