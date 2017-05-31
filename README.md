@@ -26,16 +26,16 @@ module.exports = {
 ## Options
 You can pass an object containing several options to `SVGSpritemapPlugin()`, this object can contain the following keys.
 
-| Option          | Default           | Description                                                                                                                                      |
-| --------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `src`           | `'**/*.svg'`      | [`glob`](http://npmjs.com/package/glob) used for finding the SVGs that should be in the spritemap                                                |
-| `glob`          | `{}`              | Options object for [`glob`](http://npmjs.com/package/glob#options)                                                                               |
-| `svgo`          | `{}`              | Options object for [`SVG Optimizer`](http://npmjs.com/package/svgo), pass `false` to disable - note that `plugins.cleanupIDs` is always disabled |
-| `svg4everybody` | `false`           | Options object for [`SVG4Everybody`](https://www.npmjs.com/package/svg4everybody#usage)                                                          |
-| `gutter`        | `2`               | Amount of pixels added between each sprite to prevent overlap                                                                                    |
-| `prefix`        | `'sprite-'`       | Prefix added to sprite identifier in the spritemap                                                                                               |
-| `filename`      | `'spritemap.svg'` | Name for the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported                                   |
-| `chunk`         | `'spritemap'`     | Name of the generated chunk                                                                                                                      |
+| Option          | Default           | Description                                                                                                                                         |
+| --------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src`           | `'**/*.svg'`      | [`glob`](http://npmjs.com/package/glob) used for finding the SVGs that should be in the spritemap                                                   |
+| `glob`          | `{}`              | Options object for [`glob`](http://npmjs.com/package/glob#options)                                                                                  |
+| `svgo`          | `{}`              | Options object for [`SVG Optimizer`](http://npmjs.com/package/svgo), pass `false` to disable - note that the `cleanupIDs` plugin is always disabled |
+| `svg4everybody` | `false`           | Options object for [`SVG4Everybody`](https://www.npmjs.com/package/svg4everybody#usage)                                                             |
+| `gutter`        | `2`               | Amount of pixels added between each sprite to prevent overlap                                                                                       |
+| `prefix`        | `'sprite-'`       | Prefix added to sprite identifier in the spritemap                                                                                                  |
+| `filename`      | `'spritemap.svg'` | Name for the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported                                      |
+| `chunk`         | `'spritemap'`     | Name of the generated chunk                                                                                                                         |
 
 ## SVG4Everybody
 > [SVG for Everybody](https://github.com/jonathantneal/svg4everybody) adds [SVG External Content](http://css-tricks.com/svg-sprites-use-better-icon-fonts/##Browser+Support) support to [all browsers](http://caniuse.com/svg).
