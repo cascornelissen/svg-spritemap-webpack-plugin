@@ -33,7 +33,7 @@ You can pass an object containing several options to `SVGSpritemapPlugin()`, thi
 | `svgo`          | `{}`              | Options object for [`SVG Optimizer`](http://npmjs.com/package/svgo), pass `false` to disable                   |
 | `svg4everybody` | `false`           | Options object for [`SVG4Everybody`](https://www.npmjs.com/package/svg4everybody#usage)                        |
 | `gutter`        | `2`               | Amount of pixels added between each sprite to prevent overlap                                                  |
-| `prefix`        | `''`              | Prefix added to sprite identifier in the spritemap                                                             |
+| `prefix`        | `'sprite-'`       | Prefix added to sprite identifier in the spritemap                                                             |
 | `filename`      | `'spritemap.svg'` | Name for the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported |
 | `chunk`         | `'spritemap'`     | Name of the generated chunk                                                                                    |
 
