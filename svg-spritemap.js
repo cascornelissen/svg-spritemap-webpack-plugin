@@ -56,6 +56,11 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
 
         compilation.plugin('optimize-chunk-assets', function optimizeChunkAssets(chunks, callback) {
             // Optimize spritemap using SVGO
+            if ( options.svgo === false ) {
+                callback();
+                return;
+            }
+
             chunks = chunks.filter(function(chunk) {
                 return chunk.name === options.chunk;
             });
@@ -68,6 +73,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
             chunks.forEach(function(chunk) {
                 var SVGOptimizer = new svgo(options.svgo);
                 var filename = chunk.files[1];
+
                 SVGOptimizer.optimize(compilation.assets[filename].source(), function(o) {
                     compilation.assets[filename] = new RawSource(o.data);
                     callback();
