@@ -19,7 +19,13 @@ function SVGSpritemapPlugin(options) {
         filename: 'spritemap.svg',
         chunk: 'spritemap',
         svg4everybody: false
-    }, options);
+    }, options, {
+        svgo: {
+            plugins: [{
+                cleanupIDs: false
+            }]
+        }
+    });
 }
 
 SVGSpritemapPlugin.prototype.apply = function(compiler) {
