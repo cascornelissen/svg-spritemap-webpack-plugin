@@ -32,7 +32,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
     var options = this.options,
         files = glob.sync(options.src, options.glob);
 
-    compiler.plugin('compilation', function(compilation) {
+    compiler.plugin('this-compilation', function(compilation) {
         compilation.plugin('optimize-chunks', function optmizeChunks(chunks) {
             if ( files.length ) {
                 // Add new chunk for spritemap
