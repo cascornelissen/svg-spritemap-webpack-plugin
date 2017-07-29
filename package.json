@@ -44,6 +44,7 @@
     "loader-utils": "^1.0.4",
     "svg4everybody": "^2.1.0",
     "svgo": "^0.6.6",
+    "webpack-merge": "^4.1.0",
     "webpack-sources": "^0.2.0",
     "xmldom": "^0.1.22"
   }
