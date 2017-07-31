@@ -3,14 +3,14 @@ var fs = require('fs'),
     glob = require('glob'),
     svgo = require('svgo'),
     idify = require('html4-id'),
-    extend = require('extend'),
     xmldom = require('xmldom'),
+    merge = require('webpack-merge'),
     loaderUtils = require('loader-utils'),
     RawSource = require('webpack-sources').RawSource;
 
 function SVGSpritemapPlugin(options) {
     // Merge specified options with default options
-    this.options = extend({}, {
+    this.options = merge({
         src: '**/*.svg',
         svgo: {},
         glob: {},

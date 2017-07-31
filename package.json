@@ -38,12 +38,12 @@
   },
   "homepage": "https://github.com/freshheads/svg-spritemap-webpack-plugin#readme",
   "dependencies": {
-    "extend": "^3.0.0",
     "glob": "^7.0.5",
     "html4-id": "^1.0.0",
     "loader-utils": "^1.0.4",
     "svg4everybody": "^2.1.0",
     "svgo": "^0.6.6",
+    "webpack-merge": "^4.1.0",
     "webpack-sources": "^0.2.0",
     "xmldom": "^0.1.22"
   }
