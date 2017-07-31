@@ -3,8 +3,8 @@ var fs = require('fs'),
     glob = require('glob'),
     svgo = require('svgo'),
     idify = require('html4-id'),
-    xmldom = require('xmldom'),
     merge = require('webpack-merge'),
+    xmldom = require('xmldom'),
     loaderUtils = require('loader-utils'),
     RawSource = require('webpack-sources').RawSource;
 
