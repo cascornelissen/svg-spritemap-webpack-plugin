@@ -115,8 +115,25 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 var contents = fs.readFileSync(file, 'utf8'),
                     svg = DOMParser.parseFromString(contents).documentElement,
                     viewbox = (svg.getAttribute('viewBox') || svg.getAttribute('viewbox')).split(' ').map(function(a) { return parseFloat(a); }),
-                    width = parseFloat(svg.getAttribute('width')) || viewbox[2],
-                    height = parseFloat(svg.getAttribute('height')) || viewbox[3];
+                    width = parseFloat(svg.getAttribute('width')),
+                    height = parseFloat(svg.getAttribute('height'));
+
+                if ( viewbox.length !== 4 && ( isNaN(width) || isNaN(height) ) ) {
+                    console.error('Skipping sprite \'%s\' since it\'s lacking both a viewBox and width/height attributes...', id.replace(options.prefix, ''));
+                    return;
+                }
+
+                if ( viewbox.length !== 4 ) {
+                    viewbox = [0, 0, width, height];
+                }
+
+                if ( isNaN(width) ) {
+                    width = viewbox[2];
+                }
+
+                if ( isNaN(height) ) {
+                    height = viewbox[3];
+                }
 
                 // Create symbol
                 var symbol = XMLDoc.createElement('symbol');
