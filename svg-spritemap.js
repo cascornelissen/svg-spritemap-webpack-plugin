@@ -123,10 +123,20 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 symbol.setAttribute('id', validId);
                 symbol.setAttribute('viewBox', viewbox.join(' '));
 
+                // Make sure we don't overwrite the existing title
+                var hasTitle = false;
+                for ( var i = 0; i < svg.childNodes.length; i++ ) {
+                    if ( svg.childNodes[i].tagName && svg.childNodes[i].tagName.toLowerCase() === 'title' ) {
+                        var hasTitle = true;
+                    }
+                }
+
                 // Add title for improved accessibility
-                var title = XMLDoc.createElement('title');
-                title.appendChild(XMLDoc.createTextNode(id.replace(options.prefix, '')));
-                symbol.appendChild(title);
+                if ( !hasTitle ) {
+                    var title = XMLDoc.createElement('title');
+                    title.appendChild(XMLDoc.createTextNode(id.replace(options.prefix, '')));
+                    symbol.appendChild(title);
+                }
 
                 // Clone the original contents of the SVG file into the new symbol
                 while ( svg.childNodes.length > 0 ) {
