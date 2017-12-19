@@ -36,6 +36,8 @@ You can pass an object containing several options to `SVGSpritemapPlugin()`, thi
 | `prefix`        | `'sprite-'`       | Prefix added to sprite identifier in the spritemap                                                                                                  |
 | `filename`      | `'spritemap.svg'` | Name for the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported                                      |
 | `chunk`         | `'spritemap'`     | Name of the generated chunk                                                                                                                         |
+| `deleteChunk`   | `true`            | Deletes the chunked file `chunk` after packing is complete                                                                                          |
+
 
 ## SVG4Everybody
 > [SVG for Everybody](https://github.com/jonathantneal/svg4everybody) adds [SVG External Content](http://css-tricks.com/svg-sprites-use-better-icon-fonts/##Browser+Support) support to [all browsers](http://caniuse.com/svg).
