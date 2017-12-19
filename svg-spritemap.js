@@ -18,6 +18,7 @@ function SVGSpritemapPlugin(options) {
         gutter: 2,
         filename: 'spritemap.svg',
         chunk: 'spritemap',
+        deleteChunk: true,
         svg4everybody: false
     }, options, {
         svgo: {
@@ -196,7 +197,9 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
             }
 
             // Remove entry (.js file) from compilation assets since it's empty anyway
-            delete compilation.assets[chunk.files[0]];
+            if (options.deleteChunk) {
+                delete compilation.assets[chunk.files[0]];
+            }
         });
 
         callback();
