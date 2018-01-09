@@ -6,6 +6,7 @@ var fs = require('fs'),
     merge = require('webpack-merge'),
     xmldom = require('xmldom'),
     loaderUtils = require('loader-utils'),
+    isPlainObject = require('is-plain-object'),
     RawSource = require('webpack-sources').RawSource;
 
 function SVGSpritemapPlugin(options) {
@@ -216,11 +217,17 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
             if ( typeof entry === 'string' ) {
                 entry = [entry, newEntry];
             } else if ( Array.isArray(entry) ) {
-                entry.push(newEntry);
-            } else {
+                if ( !entry.includes(newEntry) ) {
+                    entry.push(newEntry);
+                }
+            } else if ( isPlainObject(entry) ) {
                 Object.keys(entry).forEach(function(item) {
-                    entry[item].push(newEntry);
+                    if ( !entry[item].includes(newEntry) ) {
+                        entry[item].push(newEntry);
+                    }
                 });
+            } else {
+                console.log('Unsupported entry type:', entry);
             }
         }
     });

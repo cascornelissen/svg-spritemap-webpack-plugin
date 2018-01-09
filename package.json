@@ -40,6 +40,7 @@
   "dependencies": {
     "glob": "^7.0.5",
     "html4-id": "^1.0.0",
+    "is-plain-object": "^2.0.4",
     "loader-utils": "^1.0.4",
     "svg4everybody": "^2.1.0",
     "svgo": "^0.6.6",
