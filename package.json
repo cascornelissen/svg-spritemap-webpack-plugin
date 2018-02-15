@@ -1,51 +1,52 @@
 {
-  "name": "svg-spritemap-webpack-plugin",
-  "version": "1.1.1",
-  "description": "Generates symbol-based SVG spritemap from all .svg files in a directory",
-  "main": "svg-spritemap.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/freshheads/svg-spritemap-webpack-plugin.git"
-  },
-  "keywords": [
-    "svg",
-    "sprite",
-    "sprites",
-    "spritemap",
-    "symbols",
-    "icons",
-    "webpack",
-    "plugin"
-  ],
-  "author": {
-    "name": "Cas Cornelissen",
-    "email": "cas.cornelissen@onefinity.io",
-    "url": "https://www.onefinity.io/"
-  },
-  "contributors": [
-    {
-      "name": "Gijs van Zon",
-      "email": "gijs@freshheads.com",
-      "url": "https://www.freshheads.com"
+    "name": "svg-spritemap-webpack-plugin",
+    "version": "1.1.1",
+    "description": "Generates symbol-based SVG spritemap from all .svg files in a directory",
+    "main": "svg-spritemap.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/freshheads/svg-spritemap-webpack-plugin.git"
+    },
+    "keywords": [
+        "svg",
+        "sprite",
+        "sprites",
+        "spritemap",
+        "symbols",
+        "icons",
+        "webpack",
+        "plugin"
+    ],
+    "author": {
+        "name": "Cas Cornelissen",
+        "email": "cas.cornelissen@onefinity.io",
+        "url": "https://www.onefinity.io/"
+    },
+    "contributors": [{
+        "name": "Gijs van Zon",
+        "email": "gijs@freshheads.com",
+        "url": "https://www.freshheads.com"
+    }],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/freshheads/svg-spritemap-webpack-plugin/issues"
+    },
+    "homepage": "https://github.com/freshheads/svg-spritemap-webpack-plugin#readme",
+    "engines": {
+        "node": ">= 6.9.0 || >= 8.9.0"
+    },
+    "dependencies": {
+        "glob": "^7.0.5",
+        "html4-id": "^1.0.0",
+        "is-plain-object": "^2.0.4",
+        "loader-utils": "^1.0.4",
+        "svg4everybody": "^2.1.0",
+        "svgo": "^0.6.6",
+        "webpack-merge": "^4.1.0",
+        "webpack-sources": "^0.2.0",
+        "xmldom": "^0.1.22"
+    },
+    "peerDependencies": {
+        "webpack": "^4.0.0"
     }
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/freshheads/svg-spritemap-webpack-plugin/issues"
-  },
-  "homepage": "https://github.com/freshheads/svg-spritemap-webpack-plugin#readme",
-  "dependencies": {
-    "glob": "^7.0.5",
-    "html4-id": "^1.0.0",
-    "is-plain-object": "^2.0.4",
-    "loader-utils": "^1.0.4",
-    "svg4everybody": "^2.1.0",
-    "svgo": "^0.6.6",
-    "webpack-merge": "^4.1.0",
-    "webpack-sources": "^0.2.0",
-    "xmldom": "^0.1.22"
-  }
 }
