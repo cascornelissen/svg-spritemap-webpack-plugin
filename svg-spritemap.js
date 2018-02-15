@@ -66,7 +66,7 @@ export default class ExtractTextPlugin {
                 sourceChunk.files.push(filename);
             });
 
-            compilation.hooks.optimizeChunkAssets(plugin, (chunks, callback) => {
+            compilation.hooks.optimizeChunkAssets.tapAsync(plugin, (chunks, callback) => {
                 // Optimize spritemap using SVGO
                 if ( options.svgo === false ) {
                     return callback();
@@ -89,7 +89,7 @@ export default class ExtractTextPlugin {
             });
         });
 
-        compiler.hooks.emit.tap(plugin, (compilation, callback) => {
+        compiler.hooks.emit.tapAsync(plugin, (compilation, callback) => {
             compilation.chunks.forEach((chunk) => {
                 if ( chunk.name !== options.chunk ) {
                     return;
