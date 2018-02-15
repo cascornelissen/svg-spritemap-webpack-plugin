@@ -162,7 +162,7 @@ module.exports = class ExtractTextPlugi {
         spritemap.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
 
         // Add symbol for each file
-        files.reverse().forEach((file) => {
+        files.forEach((file) => {
             const id = `${options.prefix}${path.basename(file, path.extname(file))}`;
             const validId = idify(id);
 
