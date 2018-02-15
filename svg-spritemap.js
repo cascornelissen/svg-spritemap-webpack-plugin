@@ -190,7 +190,7 @@ module.exports = class ExtractTextPlugi {
             let height = parseFloat(svg.getAttribute('height'));
 
             if ( viewbox.length !== 4 && ( isNaN(width) || isNaN(height) ) ) {
-                return console.error('Skipping sprite \'%s\' since it\'s lacking both a viewBox and width/height attributes...', id.replace(options.prefix, ''));
+                throw new Error(`Invalid SVG '${file}'; it's lacking both a viewBox and width/height attributes...`);
             }
 
             if ( viewbox.length !== 4 ) {
