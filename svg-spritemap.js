@@ -55,7 +55,7 @@ module.exports = class ExtractTextPlugi {
                 }
 
                 const source = new RawSource(svg);
-                const sourceChunk = compilation.namedChunks[options.chunk];
+                const sourceChunk = compilation.namedChunks.get(options.chunk);
                 const filename = options.filename
                     .replace(/\[hash]/ig, compilation.getStats().hash)
                     .replace(/\[contenthash]/ig, () => loaderUtils.getHashDigest(source.source(), 'sha1', 'hex', 16));
