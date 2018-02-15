@@ -15,7 +15,21 @@ const plugin = {
 
 module.exports = class ExtractTextPlugi {
     constructor(options) {
+        if ( typeof options !== 'undefined' && !isPlainObject(options) ) {
+            throw new Error(`${plugin.name} options should be an object`);
+        }
+
         this.options = merge({
+            customizeArray(a, b, key) {
+                // Prevent the SVGO cleanupIDs plugin from being overwritten
+                if ( key === 'svgo.plugins' ) {
+                    return [...a.map((plugins) => {
+                        delete plugins.cleanupIDs;
+                        return plugins;
+                    }).filter((plugins) => Object.getOwnPropertyNames(plugins).length > 0), ...b];
+                }
+            }
+        })({
             src: '**/*.svg',
             svgo: {},
             glob: {},
