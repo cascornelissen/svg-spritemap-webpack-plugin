@@ -8,7 +8,7 @@ it('Returns \'undefined\' when no files are specified', () => {
     expect(plugin.generateSVG([])).toBeUndefined();
 });
 
-it(`Transforms a single file correctly`, () => {
+it('Transforms a single file correctly', () => {
     const plugin = new SVGSpritemapPlugin;
     const output = fs.readFileSync(path.join(__dirname, 'output/single.svg'), 'utf-8');
 
@@ -17,12 +17,21 @@ it(`Transforms a single file correctly`, () => {
     ])).toBe(output.trim());
 });
 
-it(`Transforms multiple files correctly`, () => {
+it('Transforms multiple files correctly', () => {
     const plugin = new SVGSpritemapPlugin;
     const output = fs.readFileSync(path.join(__dirname, 'output/multiple.svg'), 'utf-8');
 
     expect(plugin.generateSVG([
         path.join(__dirname, 'input/multiple-a.svg'),
         path.join(__dirname, 'input/multiple-b.svg')
+    ])).toBe(output.trim());
+});
+
+it('Does not overwrite an existing title tag', () => {
+    const plugin = new SVGSpritemapPlugin;
+    const output = fs.readFileSync(path.join(__dirname, 'output/title-tag.svg'), 'utf-8');
+
+    expect(plugin.generateSVG([
+        path.join(__dirname, 'input/title-tag.svg')
     ])).toBe(output.trim());
 });
