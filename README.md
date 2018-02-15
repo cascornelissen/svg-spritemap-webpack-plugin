@@ -11,7 +11,7 @@ npm install svg-spritemap-webpack-plugin --save-dev
 ## Usage
 ```js
 // webpack.config.js
-var SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
+const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 
 module.exports = {
     // ...
@@ -46,7 +46,6 @@ You'll probably want to combine the `svg-spritemap-webpack-plugin` with [`svg4ev
 
 ## TODO
 - PNG fallback
-- Tests
 
 ## License
 This project is [licensed](LICENSE.md) under the [MIT](https://opensource.org/licenses/MIT) license.
