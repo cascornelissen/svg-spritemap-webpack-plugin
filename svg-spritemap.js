@@ -3,17 +3,17 @@ const path = require('path');
 const glob = require('glob');
 const svgo = require('svgo');
 const idify = require('html4-id');
-const merge = require('webpack-m;rge');
+const merge = require('webpack-merge');
 const xmldom = require('xmldom');
 const loaderUtils = require('loader-utils');
 const isPlainObject = require('is-plain-object');
-const RawSource = require('webpack-sources').RawSource;
+const { RawSource } = require('webpack-sources');
 
 const plugin = {
     name: 'SVGSpritemapPlugin'
 };
 
-export default class ExtractTextPlugin {
+module.exports = class ExtractTextPlugi {
     constructor(options) {
         this.options = merge({
             src: '**/*.svg',
@@ -34,12 +34,12 @@ export default class ExtractTextPlugin {
         });
     }
 
-    apply() {
+    apply(compiler) {
         const options = this.options;
         const files = glob.sync(options.src, options.glob);
 
         compiler.hooks.thisCompilation.tap(plugin, (compilation) => {
-            compilation.plugin('optimize-chunks', () => {
+            compilation.hooks.optimizeChunks.tap(plugin, () => {
                 if ( !files.length ) {
                     return;
                 }
@@ -49,7 +49,7 @@ export default class ExtractTextPlugin {
             });
 
             compilation.hooks.additionalChunkAssets.tap(plugin, () => {
-                const svg = this.generateSVG(files, options);
+                const svg = this.generateSVG(files);
                 if ( !svg ) {
                     return;
                 }
@@ -137,13 +137,15 @@ export default class ExtractTextPlugin {
         });
     }
 
-    generateSVG(files, options) {
+    generateSVG(files) {
+        const options = this.options;
+
         // No point in generating when there are no files
         if ( !files.length ) {
-            return false;
+            return;
         }
 
-        // Initialize DOM/XML classes and SVGO
+        // Initialize DOM/XML
         const DOMParser = new xmldom.DOMParser();
         const XMLSerializer = new xmldom.XMLSerializer();
         const XMLDoc = new xmldom.DOMImplementation().createDocument(null, null, null); // `document` alternative for NodeJS environments
@@ -160,7 +162,7 @@ export default class ExtractTextPlugin {
         spritemap.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
 
         // Add symbol for each file
-        files.forEach((file) => {
+        files.reverse().forEach((file) => {
             const id = `${options.prefix}${path.basename(file, path.extname(file))}`;
             const validId = idify(id);
 

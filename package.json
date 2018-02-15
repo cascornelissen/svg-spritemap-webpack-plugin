@@ -3,6 +3,7 @@
     "version": "1.1.1",
     "description": "Generates symbol-based SVG spritemap from all .svg files in a directory",
     "main": "svg-spritemap.js",
+    "homepage": "https://github.com/freshheads/svg-spritemap-webpack-plugin#readme",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/freshheads/svg-spritemap-webpack-plugin.git"
@@ -22,16 +23,12 @@
         "email": "cas.cornelissen@onefinity.io",
         "url": "https://www.onefinity.io/"
     },
-    "contributors": [{
-        "name": "Gijs van Zon",
-        "email": "gijs@freshheads.com",
-        "url": "https://www.freshheads.com"
-    }],
     "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/freshheads/svg-spritemap-webpack-plugin/issues"
+    "scripts": {
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --collectCoverageFrom='svg-spritemap.js' --coverage"
     },
-    "homepage": "https://github.com/freshheads/svg-spritemap-webpack-plugin#readme",
     "engines": {
         "node": ">= 6.9.0 || >= 8.9.0"
     },
@@ -48,5 +45,9 @@
     },
     "peerDependencies": {
         "webpack": "^4.0.0"
+    },
+    "devDependencies": {
+        "babel-preset-env": "^1.6.1",
+        "jest": "^22.3.0"
     }
 }
