@@ -249,11 +249,6 @@ module.exports = class ExtractTextPlugin {
         spritemap.setAttribute('width', Math.max.apply(null, sizes.width).toString());
         spritemap.setAttribute('height', (sizes.height.reduce((a, b) => a + b, 0) + ((sizes.height.length - 1) * options.gutter)).toString());
 
-        // No point in optimizing/saving when there are no SVGs
-        if ( !spritemap.childNodes.length ) {
-            return false;
-        }
-
         return XMLSerializer.serializeToString(spritemap);
     }
 }
