@@ -36,7 +36,7 @@ it('Does not overwrite an existing title tag', () => {
     ])).toBe(output.trim());
 });
 
-it('Throws an error when the width/height of an SVG can not be calculated', () => {
+it('Throws when the width/height of an SVG can not be calculated', () => {
     const plugin = new SVGSpritemapPlugin;
 
     expect(() => {
