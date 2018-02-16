@@ -27,6 +27,15 @@ it('Transforms multiple files correctly', () => {
     ])).toBe(output.trim());
 });
 
+it('Transforms files with an incorrect \'viewBox\' attribute correctly', () => {
+    const plugin = new SVGSpritemapPlugin;
+    const output = fs.readFileSync(path.join(__dirname, 'output/viewbox.svg'), 'utf-8');
+
+    expect(plugin.generateSVG([
+        path.join(__dirname, 'input/viewbox.svg')
+    ])).toBe(output.trim());
+});
+
 it('Does not overwrite an existing title tag', () => {
     const plugin = new SVGSpritemapPlugin;
     const output = fs.readFileSync(path.join(__dirname, 'output/title-tag.svg'), 'utf-8');
