@@ -14,16 +14,14 @@ it('Merges supplied options into the options object', () => {
     expect(plugin.options.a).toBe('a');
 });
 
-it('Does not overwrite the SVGO cleanupIDs plugin', () => {
-    const plugin = new SVGSpritemapPlugin({
-        svgo: {
-            plugins: [{
-                cleanupIDs: 'a'
-            }]
-        }
-    });
-
-    expect(plugin.options.svgo.plugins).not.toContainEqual({
-        cleanupIDs: 'a'
-    });
+it('Throws when the SVGO cleanupIDs plugin gets overwritten', () => {
+    expect(() => {
+        new SVGSpritemapPlugin({
+            svgo: {
+                plugins: [{
+                    cleanupIDs: true
+                }]
+            }
+        });
+    }).toThrow();
 });

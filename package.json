@@ -33,6 +33,7 @@
         "node": ">= 6.9.0 || >= 8.9.0"
     },
     "dependencies": {
+        "get-value": "^3.0.0",
         "glob": "^7.0.5",
         "html4-id": "^1.0.0",
         "is-plain-object": "^2.0.4",

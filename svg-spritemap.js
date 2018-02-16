@@ -1,4 +1,5 @@
 const fs = require('fs');
+const get = require('get-value');
 const path = require('path');
 const glob = require('glob');
 const svgo = require('svgo');
@@ -19,18 +20,12 @@ module.exports = class ExtractTextPlugin {
             throw new Error(`${plugin.name} options should be an object`);
         }
 
+        // Make sure the SVGO cleanupIDs plugin is not being overwritten
+        if ( [].concat(...get(options, 'svgo.plugins', { default: [] }).map((plugins) => Object.keys(plugins))).includes('cleanupIDs') ) {
+            throw new Error('The SVGO cleanupIDs plugin can not be overwritten as the id attributes are required for spritemaps');
+        }
+
         this.options = merge({
-            customizeArray(a, b, key) {
-                // Prevent the SVGO cleanupIDs plugin from being overwritten
-                // TODO: Change this to throw an error when someone still tries to do that instead of failing/removing silently
-                if ( key === 'svgo.plugins' ) {
-                    return [...a.map((plugins) => {
-                        delete plugins.cleanupIDs;
-                        return plugins;
-                    }).filter((plugins) => Object.getOwnPropertyNames(plugins).length > 0), ...b];
-                }
-            }
-        })({
             src: '**/*.svg',
             svgo: {},
             glob: {},
