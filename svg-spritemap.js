@@ -82,7 +82,7 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 var SVGOptimizer = new svgo(options.svgo);
                 var filename = chunk.files[1];
 
-                SVGOptimizer.optimize(compilation.assets[filename].source(), function(o) {
+                SVGOptimizer.optimize(compilation.assets[filename].source()).then(function(o) {
                     compilation.assets[filename] = new RawSource(o.data);
                     callback();
                 });
@@ -117,45 +117,18 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 var contents = fs.readFileSync(file, 'utf8'),
                     svg = DOMParser.parseFromString(contents).documentElement,
                     viewbox = (svg.getAttribute('viewBox') || svg.getAttribute('viewbox')).split(' ').map(function(a) { return parseFloat(a); }),
-                    width = parseFloat(svg.getAttribute('width')),
-                    height = parseFloat(svg.getAttribute('height'));
-
-                if ( viewbox.length !== 4 && ( isNaN(width) || isNaN(height) ) ) {
-                    console.error('Skipping sprite \'%s\' since it\'s lacking both a viewBox and width/height attributes...', id.replace(options.prefix, ''));
-                    return;
-                }
-
-                if ( viewbox.length !== 4 ) {
-                    viewbox = [0, 0, width, height];
-                }
-
-                if ( isNaN(width) ) {
-                    width = viewbox[2];
-                }
-
-                if ( isNaN(height) ) {
-                    height = viewbox[3];
-                }
+                    width = parseFloat(svg.getAttribute('width')) || viewbox[2],
+                    height = parseFloat(svg.getAttribute('height')) || viewbox[3];
 
                 // Create symbol
                 var symbol = XMLDoc.createElement('symbol');
                 symbol.setAttribute('id', validId);
                 symbol.setAttribute('viewBox', viewbox.join(' '));
 
-                // Make sure we don't overwrite the existing title
-                var hasTitle = false;
-                for ( var i = 0; i < svg.childNodes.length; i++ ) {
-                    if ( svg.childNodes[i].tagName && svg.childNodes[i].tagName.toLowerCase() === 'title' ) {
-                        var hasTitle = true;
-                    }
-                }
-
                 // Add title for improved accessibility
-                if ( !hasTitle ) {
-                    var title = XMLDoc.createElement('title');
-                    title.appendChild(XMLDoc.createTextNode(id.replace(options.prefix, '')));
-                    symbol.appendChild(title);
-                }
+                var title = XMLDoc.createElement('title');
+                title.appendChild(XMLDoc.createTextNode(id.replace(options.prefix, '')));
+                symbol.appendChild(title);
 
                 // Clone the original contents of the SVG file into the new symbol
                 while ( svg.childNodes.length > 0 ) {
