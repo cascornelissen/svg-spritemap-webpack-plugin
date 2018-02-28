@@ -91,7 +91,7 @@ module.exports = class ExtractTextPlugin {
                     const SVGOptimizer = new svgo(options.svgo);
                     const filename = chunk.files[1];
 
-                    SVGOptimizer.optimize(compilation.assets[filename].source(), (output) => {
+                    SVGOptimizer.optimize(compilation.assets[filename].source()).then((output) => {
                         compilation.assets[filename] = new RawSource(output.data);
                         callback();
                     });
