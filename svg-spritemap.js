@@ -14,7 +14,7 @@ const plugin = {
     name: 'SVGSpritemapPlugin'
 };
 
-module.exports = class ExtractTextPlugin {
+module.exports = class SVGSpritemapPlugin {
     constructor(options) {
         if ( typeof options !== 'undefined' && !isPlainObject(options) ) {
             throw new Error(`${plugin.name} options should be an object`);
