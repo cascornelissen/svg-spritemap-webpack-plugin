@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import SVGSpritemapPlugin from '../svg-spritemap';
+import SVGSpritemapPlugin from '../lib/';
 
 it('Returns \'undefined\' when no files are specified', () => {
     const plugin = new SVGSpritemapPlugin;

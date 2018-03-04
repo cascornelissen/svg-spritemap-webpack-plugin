@@ -1,4 +1,4 @@
-import SVGSpritemapPlugin from '../svg-spritemap';
+import SVGSpritemapPlugin from '../lib/';
 
 it('Throws when something other than a plain object is supplied for the options parameter', () => {
     expect(() => {

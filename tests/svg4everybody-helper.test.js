@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import SVGSpritemapPlugin from '../svg-spritemap';
+import SVGSpritemapPlugin from '../lib/';
 
 it('Throws when the entry to which the svg4everybody helper will be added is of an unsupported type', () => {
     expect(() => {
