@@ -27,7 +27,7 @@
     "scripts": {
         "test": "jest --verbose",
         "test:watch": "jest --watch",
-        "test:coverage": "jest --collectCoverageFrom='svg-spritemap.js' --coverage"
+        "test:coverage": "jest --collectCoverageFrom='lib/index.js' --coverage"
     },
     "engines": {
         "node": ">= 6.9.0 || >= 8.9.0"
