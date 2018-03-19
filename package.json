@@ -38,6 +38,7 @@
         "html4-id": "^1.0.0",
         "is-plain-object": "^2.0.4",
         "loader-utils": "^1.1.0",
+        "mini-svg-data-uri": "^1.0.0",
         "svg4everybody": "^2.1.9",
         "svgo": "^1.0.5",
         "webpack-merge": "^4.1.2",
