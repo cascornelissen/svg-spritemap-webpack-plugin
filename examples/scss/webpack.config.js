@@ -7,8 +7,8 @@ module.exports = {
             src: 'src/**/*.svg',
             svgo: false,
             svg4everybody: true,
-            filename: 'spritemap.[hash].svg',
-            styles: 'test.css',
+            filename: 'spritemap.[hash].[contenthash].svg',
+            styles: 'test.[hash].[contenthash].css',
             // styles: path.join(__dirname, 'src/scss/test.css')
         })
     ]
