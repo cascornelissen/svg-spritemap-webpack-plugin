@@ -6,9 +6,8 @@ module.exports = {
         new SVGSpritemapPlugin({
             src: 'src/**/*.svg',
             svgo: false,
-            svg4everybody: true,
-            filename: 'spritemap.[hash].[contenthash].svg',
-            styles: 'test.[hash].[contenthash].css',
+            filename: 'spritemap.svg',
+            styles: 'styles.css',
             // styles: path.join(__dirname, 'src/scss/test.css')
         })
     ]
