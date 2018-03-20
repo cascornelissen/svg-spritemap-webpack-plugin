@@ -7,7 +7,7 @@ module.exports = {
             src: 'src/**/*.svg',
             svgo: false,
             filename: 'spritemap.svg',
-            styles: 'styles.css',
+            styles: 'styles.scss',
             // styles: path.join(__dirname, 'src/scss/test.css')
         })
     ]
