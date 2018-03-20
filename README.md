@@ -50,7 +50,7 @@ You can pass an object containing several options to `SVGSpritemapPlugin()`, thi
 You'll probably want to combine the `svg-spritemap-webpack-plugin` with [`svg4everybody`](https://github.com/jonathantneal/svg4everybody). This can be done by passing an options object to the `svg4everybody` configuration key or by executing SVG4Everybody yourself.
 
 ## TODO
-- [ ] Creation of CSS file with base64-encoded SVGs
+- [ ] Creation of styles file (CSS, SCSS, LESS) with encoded SVGs (in progress)
 - [ ] PNG fallback
 
 ## License
