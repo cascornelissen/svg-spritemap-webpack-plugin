@@ -4,5 +4,5 @@ $sprites: (
 
 @mixin sprite($name) {
     $sprite: map-get($sprites, $name);
-    background-image: url($sprite);
+    background: url($sprite) center no-repeat;
 }

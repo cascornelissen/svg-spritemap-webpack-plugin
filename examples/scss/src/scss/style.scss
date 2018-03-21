@@ -1,0 +1,5 @@
+@import 'sprites';
+
+html {
+    @include sprite('sprite-1');
+}

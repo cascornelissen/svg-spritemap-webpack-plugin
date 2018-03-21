@@ -1,1 +1,1 @@
-// This file is intentionally left blank
+require('./scss/style.scss');
