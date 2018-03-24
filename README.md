@@ -14,8 +14,9 @@ npm install svg-spritemap-webpack-plugin --save-dev
 ```
 
 ## Usage
+**Webpack configuration**  
+This plugin can be added to webpack like any other, the options are listed down below.
 ```js
-// webpack.config.js
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 
 module.exports = {
@@ -28,20 +29,75 @@ module.exports = {
 }
 ```
 
-## Options
-You can pass an object containing several options to `SVGSpritemapPlugin()`, this object can contain the following keys.
+**SVG element**  
+Say you have a sprite named `phone.svg` in your source directory and the `prefix` option is set to `sprite-` (default), you can then include the sprite in your HTML like so: 
+```html
+<svg>
+    <use xlink:href="/path/to/spritemap.svg#sprite-phone"></use>
+</svg>
+```
 
-| Option          | Default           | Description                                                                                                                                         |
-| --------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `src`           | `'**/*.svg'`      | [`glob`](http://npmjs.com/package/glob) used for finding the SVGs that should be in the spritemap                                                   |
-| `glob`          | `{}`              | Options object for [`glob`](http://npmjs.com/package/glob#options)                                                                                  |
-| `svgo`          | `{}`              | Options object for [`SVG Optimizer`](http://npmjs.com/package/svgo), pass `false` to disable - note that the `cleanupIDs` plugin is always disabled |
-| `svg4everybody` | `false`           | Options object for [`SVG4Everybody`](https://www.npmjs.com/package/svg4everybody#usage)                                                             |
-| `gutter`        | `2`               | Amount of pixels added between each sprite to prevent overlap                                                                                       |
-| `prefix`        | `'sprite-'`       | Prefix added to sprite identifier in the spritemap                                                                                                  |
-| `filename`      | `'spritemap.svg'` | Name for the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported                                      |
-| `chunk`         | `'spritemap'`     | Name of the generated chunk                                                                                                                         |
-| `deleteChunk`   | `true`            | Deletes the chunked file `chunk` after packing is complete                                                                                          |
+
+## Options
+You can pass an object containing several options to `SVGSpritemapPlugin()`, this object can contain the following keys, the default values for these options are listed behind the option name.
+
+**`src`** – `'**/*.svg'`  
+Pattern for [`glob`](http://npmjs.com/package/glob) used to find the SVGs that should be in the spritemap.
+
+**`filename`** – `'spritemap.svg'`  
+Filename of the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported.
+
+**`prefix`** – `'sprite-'`  
+Prefix added to sprite `id` in the spritemap. It will be used for the class/spritename in the generated styles as well. 
+
+**`gutter`** – `2`  
+Amount of pixels added between each sprite to prevent overlap.
+
+**`styles`** – `false`  
+Filename for the generated styles file (CSS, SCSS, LESS). This options should end in a supported styles extension (`.css`, `.scss`, `.sass`, `.less`) and the file that's generated will be placed in a different location depending on the value you specify. 
+
+- `false`  
+  Disable generating the styles file.
+- `'filename.ext'`  
+  Add the styles file to the webpack assets, this will result in the file being written to the webpack `output.path`.
+- `'/path/to/filename.ext'`  
+  Write the styles file to a specific directory.
+- `'~filename.ext'`  
+  Write the styles file to the plugin directory. This allows you to import it from your JavaScript bundle or Sass very easily:
+  
+  ```js
+  // Import it from your JavaScript bundle
+  // filename: '~sprites.css'
+  require('svg-spritemap-webpack-plugin/sprites.css');
+  ```
+  ```scss
+  // Import it through Sass
+  // filename: '~sprites.scss'
+  @import '~svg-spritemap-webpack-plugin/sprites';
+  ```
+
+**`svgo`** – `true`  
+Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo). Note that the `cleanupIDs` plugin will always be enabled because it's required for this kind of SVG spritemap setup.
+
+- `false`  
+  Disable the optimizer.
+- `true`  
+  Enable optimizer with the default SVG Optimizer config.
+- `{ ... }`  
+  Enable optimizer with your own options object.
+
+**`svg4everybody`** – `false`  
+Whether to include the [`SVG4Everybody`](https://www.npmjs.com/package/svg4everybody#usage) helper in your entries.
+
+- `false`  
+  Don't add the helper.
+- `true`  
+  Add the helper with a configuration object of `{}`.
+- `{ ... }`  
+  Add the helper with your own options object.
+
+**`glob`** – `{}`  
+Options object to pass to [`glob`](http://npmjs.com/package/glob) to find the sprites.
 
 
 ## SVG4Everybody
