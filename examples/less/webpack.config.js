@@ -5,10 +5,10 @@ const SVGSpritemapPlugin = require('../../lib');
 module.exports = {
     module: {
         rules: [{
-            test: /\.scss$/,
+            test: /\.less$/,
             use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
-                use: ['css-loader', 'sass-loader']
+                use: ['css-loader', 'less-loader']
             })
         }]
     },
@@ -17,7 +17,7 @@ module.exports = {
         new ExtractTextPlugin('styles.css'),
         new SVGSpritemapPlugin({
             src: 'src/**/*.svg',
-            styles: path.join(__dirname, 'src/scss/_sprites.scss')
+            styles: path.join(__dirname, 'src/less/sprites.less')
         })
     ]
 }

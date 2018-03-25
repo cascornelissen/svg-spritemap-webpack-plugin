@@ -85,7 +85,7 @@ The value for this option should end in a supported styles extension and the gen
   
   ```scss
   .example {
-      // Using the included sprite mixin
+      // Using the included sprite() mixin
       @include sprite('phone');
     
       // Using the SVG from the map directly
@@ -93,7 +93,17 @@ The value for this option should end in a supported styles extension and the gen
   }
   ```
 - `.less`  
-  TODO
+  Generates [LESS variables](http://lesscss.org/features/#variables-feature-overview) for each sprite based on the spritename (including prefix) with the sprite as value, comes with a `.sprite()` [mixin](http://lesscss.org/features/#mixins-feature).
+  
+  ```less
+    .example {
+        // Using the included .sprite() mixin
+        .sprite(@sprite-phone);
+      
+        // Using the SVG variable directly
+        background-image: url(@sprite-phone);
+    }
+    ```
 
 ### `svgo` – `true`  
 Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo). Note that the `cleanupIDs` plugin will always be disabled because it's required for this kind of SVG spritemap setup.
@@ -125,7 +135,6 @@ Options object to pass to [`glob`](http://npmjs.com/package/glob) to find the sp
 You'll probably want to combine the `svg-spritemap-webpack-plugin` with [`svg4everybody`](https://github.com/jonathantneal/svg4everybody). This can be done by passing an options object to the `svg4everybody` configuration key or by executing SVG4Everybody yourself.
 
 ## TODO
-- [ ] Creation of styles file (CSS, SCSS, LESS) with encoded SVGs (in progress)
 - [ ] PNG fallback
 
 ## License
