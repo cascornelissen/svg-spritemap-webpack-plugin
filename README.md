@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/dm/svg-spritemap-webpack-plugin.svg?style=flat-square)](https://www.npmjs.com/package/svg-spritemap-webpack-plugin)
 [![license](https://img.shields.io/github/license/cascornelissen/svg-spritemap-webpack-plugin.svg?style=flat-square)](LICENSE.md)
 
-This [webpack](https://webpack.github.io/) plugin generates a single SVG spritemap containing multiple `<symbol>` elements from all `.svg` files in a directory. Chris Coyier has a good write-up about the why's and how's of this technique on [CSS Tricks](https://css-tricks.com/svg-symbol-good-choice-icons/). Use it in combination with the [`svg4everybody`](https://github.com/jonathantneal/svg4everybody) package to easily and correctly load SVGs from the spritemap in all browsers.
+This [webpack](https://webpack.github.io/) plugin generates a single SVG spritemap containing multiple `<symbol>` elements from all `.svg` files in a directory. In addition, it can also generate a stylesheet containing the sprites to be used directly in your CSS. Chris Coyier has a good write-up about the why's and how's of this technique on [CSS Tricks](https://css-tricks.com/svg-symbol-good-choice-icons/). Use it in combination with the [`svg4everybody`](https://github.com/jonathantneal/svg4everybody) package to easily and correctly load SVGs from the spritemap in all browsers.
 
 **Compatibility**  
 Version `^2.0.0` of this plugin is compatible with webpack `^4.0.0`. If you're using an older version of webpack, make sure to install the `^1.0.0` (`svg-spritemap-webpack-plugin@^1.0.0`) release of this plugin.
@@ -65,25 +65,35 @@ The file that's generated will be placed in a different location depending on th
 - `'/path/to/filename.ext'`  
   Write the styles file to a specific directory.
 - `'~filename.ext'`  
-  Write the styles file to the plugin directory. This allows you to import it from your JavaScript bundle or Sass very easily:
+  Write the styles file to the plugin directory. This allows you to import it from a JavaScript bundle or Sass very easily:
   
   ```js
-  // Import it from your JavaScript bundle (styles: '~sprites.css')
+  // Import it from a JavaScript bundle (styles: '~sprites.css')
   require('svg-spritemap-webpack-plugin/sprites.css');
   ```
   ```scss
-  // Import it through Sass (styles: '~sprites.scss')
+  // Import it from Sass (styles: '~sprites.scss')
   @import '~svg-spritemap-webpack-plugin/sprites';
   ```
 
 The value for this option should end in a supported styles extension and the generated file will have language-specific content:
 
-- `.css`
+- `.css`  
+  Generates a class-based stylesheet where the classnames are equal to the spritename (including prefix) containing the sprite as a `background-image`.
+- `.scss`/`.sass`  
+  Generates a [Sass map](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps) containing the spritenames (excluding prefix) as keys and the sprite as values, comes with a `sprite()` [mixin](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins).
+  
+  ```scss
+  .example {
+      // Using the included sprite mixin
+      @include sprite('phone');
+    
+      // Using the SVG from the map directly
+      background-image: url(map-get($sprites, 'phone'));
+  }
+  ```
+- `.less`  
   TODO
-- `.scss`/`.sass`
-  TODO
-- `.less`
-  TODO 
 
 ### `svgo` – `true`  
 Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo). Note that the `cleanupIDs` plugin will always be disabled because it's required for this kind of SVG spritemap setup.
