@@ -3,4 +3,7 @@
 
 # Generated files
 /svg4everybody-helper.js
+/*.css
 /*.scss
+/*.sass
+/*.less
