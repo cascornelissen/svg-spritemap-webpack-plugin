@@ -41,20 +41,22 @@ Say you have a sprite named `phone.svg` in your source directory and the `prefix
 ## Options
 You can pass an object containing several options to `SVGSpritemapPlugin()`, this object can contain the following keys, the default values for these options are listed behind the option name.
 
-**`src`** – `'**/*.svg'`  
+### `src` – `'**/*.svg'`  
 Pattern for [`glob`](http://npmjs.com/package/glob) used to find the SVGs that should be in the spritemap.
 
-**`filename`** – `'spritemap.svg'`  
+### `filename` – `'spritemap.svg'`  
 Filename of the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported.
 
-**`prefix`** – `'sprite-'`  
+### `prefix` – `'sprite-'`  
 Prefix added to sprite `id` in the spritemap. It will be used for the class/spritename in the generated styles as well. 
 
-**`gutter`** – `2`  
+### `gutter` – `2`  
 Amount of pixels added between each sprite to prevent overlap.
 
-**`styles`** – `false`  
-Filename for the generated styles file (CSS, SCSS, LESS). This options should end in a supported styles extension (`.css`, `.scss`, `.sass`, `.less`) and the file that's generated will be placed in a different location depending on the value you specify. 
+### `styles` – `false`  
+Filename for the generated styles file (CSS, SCSS, LESS). This allows you to use the sprites within your CSS instead of via a `<svg>` element in your HTML. Although the latter method is preferred, you might come across situations where extra HTML elements are not feasible. 
+
+The file that's generated will be placed in a different location depending on the value you specify.
 
 - `false`  
   Disable generating the styles file.
@@ -66,18 +68,25 @@ Filename for the generated styles file (CSS, SCSS, LESS). This options should en
   Write the styles file to the plugin directory. This allows you to import it from your JavaScript bundle or Sass very easily:
   
   ```js
-  // Import it from your JavaScript bundle
-  // filename: '~sprites.css'
+  // Import it from your JavaScript bundle (styles: '~sprites.css')
   require('svg-spritemap-webpack-plugin/sprites.css');
   ```
   ```scss
-  // Import it through Sass
-  // filename: '~sprites.scss'
+  // Import it through Sass (styles: '~sprites.scss')
   @import '~svg-spritemap-webpack-plugin/sprites';
   ```
 
-**`svgo`** – `true`  
-Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo). Note that the `cleanupIDs` plugin will always be enabled because it's required for this kind of SVG spritemap setup.
+The value for this option should end in a supported styles extension and the generated file will have language-specific content:
+
+- `.css`
+  TODO
+- `.scss`/`.sass`
+  TODO
+- `.less`
+  TODO 
+
+### `svgo` – `true`  
+Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo). Note that the `cleanupIDs` plugin will always be disabled because it's required for this kind of SVG spritemap setup.
 
 - `false`  
   Disable the optimizer.
@@ -86,7 +95,7 @@ Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo). Note
 - `{ ... }`  
   Enable optimizer with your own options object.
 
-**`svg4everybody`** – `false`  
+### `svg4everybody` – `false`  
 Whether to include the [`SVG4Everybody`](https://www.npmjs.com/package/svg4everybody#usage) helper in your entries.
 
 - `false`  
@@ -96,7 +105,7 @@ Whether to include the [`SVG4Everybody`](https://www.npmjs.com/package/svg4every
 - `{ ... }`  
   Add the helper with your own options object.
 
-**`glob`** – `{}`  
+### `glob` – `{}`  
 Options object to pass to [`glob`](http://npmjs.com/package/glob) to find the sprites.
 
 

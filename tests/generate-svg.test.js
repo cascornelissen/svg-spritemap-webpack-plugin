@@ -1,56 +1,63 @@
 import fs from 'fs';
 import path from 'path';
-import SVGSpritemapPlugin from '../lib/';
+import generateSVG from '../lib/generate-svg';
 
 it('Returns \'undefined\' when no files are specified', () => {
-    const plugin = new SVGSpritemapPlugin;
-
-    expect(plugin.generateSVG([])).toBeUndefined();
+    expect(generateSVG([])).toBeUndefined();
 });
 
 it('Transforms a single file correctly', () => {
-    const plugin = new SVGSpritemapPlugin;
     const output = fs.readFileSync(path.join(__dirname, 'output/single.svg'), 'utf-8');
 
-    expect(plugin.generateSVG([
+    expect(generateSVG([
         path.join(__dirname, 'input/single.svg')
-    ])).toBe(output.trim());
+    ], {
+        gutter: 2,
+        prefix: 'sprite-'
+    })).toBe(output.trim());
 });
 
 it('Transforms multiple files correctly', () => {
-    const plugin = new SVGSpritemapPlugin;
     const output = fs.readFileSync(path.join(__dirname, 'output/multiple.svg'), 'utf-8');
 
-    expect(plugin.generateSVG([
+    expect(generateSVG([
         path.join(__dirname, 'input/multiple-a.svg'),
         path.join(__dirname, 'input/multiple-b.svg')
-    ])).toBe(output.trim());
+    ], {
+        gutter: 2,
+        prefix: 'sprite-'
+    })).toBe(output.trim());
 });
 
 it('Transforms files with an incorrect \'viewBox\' attribute correctly', () => {
-    const plugin = new SVGSpritemapPlugin;
     const output = fs.readFileSync(path.join(__dirname, 'output/viewbox.svg'), 'utf-8');
 
-    expect(plugin.generateSVG([
+    expect(generateSVG([
         path.join(__dirname, 'input/viewbox.svg')
-    ])).toBe(output.trim());
+    ], {
+        gutter: 2,
+        prefix: 'sprite-'
+    })).toBe(output.trim());
 });
 
 it('Does not overwrite an existing title tag', () => {
-    const plugin = new SVGSpritemapPlugin;
     const output = fs.readFileSync(path.join(__dirname, 'output/title-tag.svg'), 'utf-8');
 
-    expect(plugin.generateSVG([
+    expect(generateSVG([
         path.join(__dirname, 'input/title-tag.svg')
-    ])).toBe(output.trim());
+    ], {
+        gutter: 2,
+        prefix: 'sprite-'
+    })).toBe(output.trim());
 });
 
 it('Throws when the width/height of an SVG can not be calculated', () => {
-    const plugin = new SVGSpritemapPlugin;
-
     expect(() => {
-        plugin.generateSVG([
+        generateSVG([
             path.join(__dirname, 'input/invalid-svg.svg')
-        ])
+        ], {
+            gutter: 2,
+            prefix: 'sprite-'
+        });
     }).toThrow();
 });
