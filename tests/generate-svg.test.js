@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import generateSVG from '../lib/generate-svg';
 
-it('Returns \'undefined\' when no files are specified', () => {
+it('Returns undefined when no files are specified', () => {
     expect(generateSVG([])).toBeUndefined();
 });
 
