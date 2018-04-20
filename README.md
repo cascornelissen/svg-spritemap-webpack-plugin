@@ -130,6 +130,12 @@ Whether to include the [`SVG4Everybody`](https://www.npmjs.com/package/svg4every
 ### `glob` – `{}`  
 Options object to pass to [`glob`](http://npmjs.com/package/glob) to find the sprites.
 
+### `chunk` – `null`
+Pass a string to create a chunk as well as the spritemap asset.
+
+### `deleteChunk` – `true`
+Whether to delete the chunk after it's been emitted by webpack.
+
 
 ## SVG4Everybody
 > [SVG for Everybody](https://github.com/jonathantneal/svg4everybody) adds [SVG External Content](http://css-tricks.com/svg-sprites-use-better-icon-fonts/##Browser+Support) support to [all browsers](http://caniuse.com/svg).
