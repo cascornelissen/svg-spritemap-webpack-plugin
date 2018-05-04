@@ -44,7 +44,7 @@ When there's a file `phone.svg` in the source directory and the `prefix` option 
 The `SVGSpritemapPlugin()` supports multiple options passed as an object. This object can contain the following keys, the default values for these options are listed behind the option names.
 
 ### `src` – `'**/*.svg'`
-Pattern for [`glob`](http://npmjs.com/package/glob) used to find the SVGs that should be in the spritemap.
+Pattern (or an array of patterns) for [`glob`](http://npmjs.com/package/glob) used to find the SVGs that should be in the spritemap.
 
 ### `filename` – `'spritemap.svg'`
 Filename of the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported.
