@@ -4,10 +4,10 @@ This directory includes basic examples on how you could use the `svg-spritemap-w
 ```shell
 $ cd <path-to-repository>/examples/<example>
 $ ../../node_modules/.bin/webpack
-``` 
+```
 
-Since a couple of these examples require additional dependencies, make sure to install them: 
+Since a couple of these examples require additional dependencies, make sure to install them:
 
 ```shell
-$ npm install extract-text-webpack-plugin css-loader style-loader sass-loader node-sass less-loader less --no-save
+$ npm install mini-css-extract-plugin css-loader style-loader sass-loader node-sass less-loader less --no-save
 ```
