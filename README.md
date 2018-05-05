@@ -5,7 +5,7 @@
 
 This [webpack](https://webpack.github.io/) plugin generates a single SVG spritemap containing multiple `<symbol>` elements from all `.svg` files in a directory. In addition, it can optimize the output and can also generate a stylesheet containing the sprites to be used directly from CSS. Chris Coyier has a good write-up about the why's and how's of this technique on [CSS Tricks](https://css-tricks.com/svg-symbol-good-choice-icons/). Use it in combination with the [`svg4everybody`](https://github.com/jonathantneal/svg4everybody) package to easily and correctly load SVGs from the spritemap in all browsers.
 
-**Compatibility**
+**Compatibility**  
 Version `^2.0.0` of this plugin is compatible with webpack `^4.0.0`. When using an older version of webpack, make sure to install the `^1.0.0` (`svg-spritemap-webpack-plugin@^1.0.0`) release of this plugin.
 
 
@@ -16,7 +16,7 @@ npm install svg-spritemap-webpack-plugin --save-dev
 
 
 ## Usage
-**Webpack configuration**
+**Webpack configuration**  
 This plugin can be added to webpack like any other, the options are listed down below.
 ```js
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
@@ -31,7 +31,7 @@ module.exports = {
 }
 ```
 
-**SVG element**
+**SVG element**  
 When there's a file `phone.svg` in the source directory and the `prefix` option is set to `sprite-` (default), the sprite can be included in a HTML-file like so:
 ```html
 <svg>
@@ -60,13 +60,13 @@ Filename for the generated styles file (CSS, SCSS, LESS). This allows for using 
 
 The file that's generated will be placed in a different location depending on the value specified.
 
-- `false`
+- `false`  
   Disable generating the styles file.
-- `'filename.ext'`
+- `'filename.ext'`  
   Add the styles file to the webpack assets, this will result in the file being written to the webpack `output.path`, `[hash]` and `[contenthash]` are supported.
-- `'/path/to/filename.ext'`
+- `'/path/to/filename.ext'`  
   Write the styles file to a specific directory.
-- `'~filename.ext'`
+- `'~filename.ext'`  
   Write the styles file to the plugin directory. This allows for importing it from a JavaScript bundle or Sass very easily:
 
   ```js
@@ -80,9 +80,9 @@ The file that's generated will be placed in a different location depending on th
 
 The value for the `styles` option should end in a supported style extension and the generated file will have language-specific content:
 
-- `.css`
+- `.css`  
   Generates a class-based stylesheet where the classnames are equal to the spritename (including prefix) containing the sprite as a `background-image`.
-- `.scss`/`.sass`
+- `.scss`/`.sass`  
   Generates a [Sass map](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps) containing the spritenames (excluding prefix) as keys and the sprite as values, comes with a `sprite()` [mixin](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins).
 
   ```scss
@@ -94,7 +94,7 @@ The value for the `styles` option should end in a supported style extension and 
       background-image: url(map-get($sprites, 'phone'));
   }
   ```
-- `.less`
+- `.less`  
   Generates [LESS variables](http://lesscss.org/features/#variables-feature-overview) for each sprite based on the spritename (including prefix) with the sprite as value, comes with a `.sprite()` [mixin](http://lesscss.org/features/#mixins-feature).
 
   ```less
@@ -110,28 +110,28 @@ The value for the `styles` option should end in a supported style extension and 
 ### `svgo` – `true`
 Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo). Note that the `cleanupIDs` plugin will always be disabled because it's required for this kind of SVG spritemap setup.
 
-- `false`
+- `false`  
   Disable the optimizer.
-- `true`
+- `true`  
   Enable optimizer with the default SVG Optimizer config.
-- `{ ... }`
+- `{ ... }`  
   Enable optimizer with a custom options object.
 
 ### `svg4everybody` – `false`
 Whether to include the [`SVG4Everybody`](https://www.npmjs.com/package/svg4everybody#usage) helper in your entries.
 
-- `false`
+- `false`  
   Don't add the helper.
-- `true`
+- `true`  
   Add the helper with a configuration object of `{}`.
-- `{ ... }`
+- `{ ... }`  
   Add the helper with a custom options object.
 
 ### `glob` – `{}`
 Options object to pass to [`glob`](http://npmjs.com/package/glob) to find the sprites.
 
 ### `chunk` – `'spritemap'`
-Name of the chunk that will be generated
+Name of the chunk that will be generated.
 
 ### `deleteChunk` – `true`
 Whether to delete the chunk after it's been emitted by webpack.
