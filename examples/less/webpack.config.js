@@ -20,4 +20,4 @@ module.exports = {
             styles: path.join(__dirname, 'src/less/sprites.less')
         })
     ]
-}
+};
