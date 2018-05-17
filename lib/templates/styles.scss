@@ -6,6 +6,7 @@ $variables: (
     /* VARIABLES */
 );
 
+// https://github.com/waldemarfm/sass-svg-uri/blob/v1.0.0/_svg-uri.scss
 @function sprite-str-replace($string, $search, $replace: '') {
     $index: str-index($string, $search);
 
@@ -14,6 +15,25 @@ $variables: (
     }
 
     @return $string;
+}
+
+@function sprite-svg-uri($value) {
+    $encoded: '';
+    $slice: 2000;
+    $index: 0;
+
+    @for $i from 1 through ceil(str-length($value) / $slice) {
+        $chunk: str-slice($value, $index, $index + $slice - 1);
+        $chunk: sprite-str-replace($chunk, '"', "'");
+        $chunk: sprite-str-replace($chunk, '<', '%3C');
+        $chunk: sprite-str-replace($chunk, '>', '%3E');
+        $chunk: sprite-str-replace($chunk, '&', '%26');
+        $chunk: sprite-str-replace($chunk, '#', '%23');
+        $encoded: #{$encoded}#{$chunk};
+        $index: $index + $slice;
+    }
+
+    @return $encoded;
 }
 
 @mixin sprite($name, $user-variables: ()) {
@@ -26,7 +46,7 @@ $variables: (
             @warn 'Sprite \'#{$name}\' does not support variable named \'#{$key}\'';
         }
 
-        $sprite: sprite-str-replace($sprite, '___#{$key}___', $value);
+        $sprite: sprite-str-replace($sprite, '___#{$key}___', sprite-svg-uri(quote($value)));
     }
 
     background: url($sprite) center no-repeat;
