@@ -1,5 +1,7 @@
 @import 'sprites';
 
 html {
-    @include sprite('1');
+    @include sprite('1', (
+        'abc1': #f00123
+    ));
 }

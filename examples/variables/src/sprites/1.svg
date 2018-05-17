@@ -2,8 +2,8 @@
     <circle cx="10" cy="10" r="10" var:fill="#f00" />
     <circle cx="10" cy="30" r="10" var:fill="" />
     <g>
-        <circle cx="10" cy="50" r="10" var:abc1.fill="#0f0" />
-        <circle cx="10" cy="70" r="10" var:abc2.fill='#00f' />
+        <circle cx="10" cy="50" r="10" var:abc1.fill="#f00321" />
+        <circle cx="10" cy="70" r="10" var:abc2.fill='#00f123' />
         <circle cx="10" cy="90" r="10" fill="#00f" />
     </g>
 </svg>
