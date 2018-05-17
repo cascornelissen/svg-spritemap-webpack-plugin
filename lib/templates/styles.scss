@@ -6,25 +6,28 @@ $variables: (
     /* VARIABLES */
 );
 
-@mixin sprite($name, $user-variables: ()) {
-    $sprite: map-get($sprites, $name);
-
-    // TODO: Validate the $user-variables to make sure existing variable names are used
-
-    // Inject variables
-    @each $name, $value in map-merge(map-get($variables, $name), $user-variables) {
-        $sprite: str-replace($sprite, '___#{$name}___', $value);
-    }
-
-    background: url($sprite) center no-repeat;
-}
-
-@function str-replace($string, $search, $replace: '') {
+@function sprite-str-replace($string, $search, $replace: '') {
     $index: str-index($string, $search);
 
     @if ( $index ) {
-        @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+        @return str-slice($string, 1, $index - 1) + $replace + sprite-str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
     }
 
     @return $string;
+}
+
+@mixin sprite($name, $user-variables: ()) {
+    $sprite: map-get($sprites, $name);
+
+    // Inject variables
+    $default-variables: map-get($variables, $name);
+    @each $key, $value in map-merge($default-variables, $user-variables) {
+        @if ( not map-has-key($default-variables, $key) ) {
+            @warn 'Sprite \'#{$name}\' does not support variable named \'#{$key}\'';
+        }
+
+        $sprite: sprite-str-replace($sprite, '___#{$key}___', $value);
+    }
+
+    background: url($sprite) center no-repeat;
 }
