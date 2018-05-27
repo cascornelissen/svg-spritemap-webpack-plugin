@@ -143,13 +143,12 @@ SVGSpritemapPlugin.prototype.apply = function(compiler) {
                 symbol.setAttribute('id', validId);
                 symbol.setAttribute('viewBox', viewbox.join(' '));
 
-                // Generate a title or not ?
-                if( options.generateTitle ) {
+                if ( options.generateTitle ) {
                     // Make sure we don't overwrite the existing title
                     var hasTitle = false;
                     for ( var i = 0; i < svg.childNodes.length; i++ ) {
                         if ( svg.childNodes[i].tagName && svg.childNodes[i].tagName.toLowerCase() === 'title' ) {
-                            var hasTitle = true;
+                            hasTitle = true;
                         }
                     }
 
