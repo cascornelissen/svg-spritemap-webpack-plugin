@@ -15,6 +15,11 @@
         "spritemap",
         "symbols",
         "icons",
+        "sass",
+        "scss",
+        "less",
+        "css",
+        "variables",
         "webpack",
         "plugin"
     ],
