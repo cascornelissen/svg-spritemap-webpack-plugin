@@ -37,6 +37,7 @@ You can pass an object containing several options to `SVGSpritemapPlugin()`, thi
 | `filename`      | `'spritemap.svg'` | Name for the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported                                      |
 | `chunk`         | `'spritemap'`     | Name of the generated chunk                                                                                                                         |
 | `deleteChunk`   | `true`            | Deletes the chunked file `chunk` after packing is complete                                                                                          |
+| `generateTitle` | `true`            | Should a <title></title> be generated inside the SVG if one does not exist, or should the svg not be changed                                                                                       |
 
 
 ## SVG4Everybody
