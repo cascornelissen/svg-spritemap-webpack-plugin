@@ -4,7 +4,8 @@ import generateSVG from '../lib/generate-svg';
 
 const OPTIONS = {
     gutter: 2,
-    prefix: 'sprite-'
+    prefix: 'sprite-',
+    generateTitle: true
 };
 
 it('Returns undefined when no files are specified', () => {
@@ -42,6 +43,16 @@ it('Does not overwrite an existing title tag', () => {
     expect(generateSVG([
         path.join(__dirname, 'input/svg/title-tag.svg')
     ], OPTIONS)).toBe(output);
+});
+
+it('Does not generate a title element when \'options.generateTitle\' is \'false\'', () => {
+    const output = fs.readFileSync(path.join(__dirname, 'output/svg/no-title.svg'), 'utf-8').trim();
+
+    expect(generateSVG([
+        path.join(__dirname, 'input/svg/single.svg')
+    ], Object.assign({}, OPTIONS, {
+        generateTitle: false
+    }))).toBe(output);
 });
 
 it('Throws when the width/height of an SVG can not be calculated', () => {
