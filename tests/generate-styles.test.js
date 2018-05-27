@@ -3,6 +3,7 @@ import path from 'path';
 import generateSVG from '../lib/generate-svg';
 import generateStyles from '../lib/generate-styles';
 
+// Variables
 const PREFIX = 'sprite-';
 const SPRITEMAP = generateSVG([
     path.join(__dirname, 'input/svg/single.svg')
