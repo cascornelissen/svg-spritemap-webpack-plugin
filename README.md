@@ -136,6 +136,8 @@ Name of the chunk that will be generated.
 ### `deleteChunk` – `true`
 Whether to delete the chunk after it's been emitted by webpack.
 
+### `generateTitle` - `true`
+Should a <title></title> be generated inside the SVG if one does not exist, or should the svg not be changed.
 
 ## SVG4Everybody
 > [SVG for Everybody](https://github.com/jonathantneal/svg4everybody) adds [SVG External Content](http://css-tricks.com/svg-sprites-use-better-icon-fonts/##Browser+Support) support to [all browsers](http://caniuse.com/svg).
