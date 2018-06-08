@@ -1,8 +1,15 @@
 $sprites: (
     /* SPRITES */
 );
+$sprite-sizes: (
+    /* SPRITE SIZES */
+);
 
-@mixin sprite($name) {
+@mixin sprite($name, $orig-dims) {
     $sprite: map-get($sprites, $name);
     background: url($sprite) center no-repeat;
+    @if $orig-dims == true {
+        $size: map-get($sprite-sizes, $name);
+    background-size: map-get($size, width)px map-get($size, height)px;
+    }
 }
