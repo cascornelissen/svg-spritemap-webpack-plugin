@@ -5,6 +5,7 @@ A downside to using the sprite as a `background-image` is that you lose the abil
 
 Note that this feature only works when using [Sass](https://www.sass-lang.com/) since support for object-like variables in the language is required.
 
+
 ## Notation
 ```
 var:[$name.]$attribute="[$defaultvalue]"
@@ -15,6 +16,7 @@ Component           | Description
 **`$name`**         | Name of the variable that can be used to target this value
 **`$attribute`**    | Actual attribute (e.g. `fill` or `stroke-width`) that will be added, `var:[$name.]` will be stripped
 **`$defaultvalue`** | Optional default value for the attribute
+
 
 ## Examples
 ### Basics
@@ -36,13 +38,13 @@ All attributes namespaced with `var:` will be stripped from their `var:[$name.]`
     color: '#f00'
 ));
 
-// Result:
+// Output:
 // <path fill="#f00" .../>
 ```
 ```scss
 @include sprite('spritename');
 
-// Result:
+// Output:
 // <path fill="#fff" .../>
 ```
 
@@ -67,13 +69,13 @@ Values can be left empty when no default is needed. Attributes with an empty val
     color: '#f00'
 ));
 
-// Result:
+// Output:
 // <path fill="#f00" .../>
 ```
 ```scss
 @include sprite('spritename');
 
-// Result:
+// Output:
 // <path .../>
 ```
 
@@ -84,16 +86,16 @@ It's possible to use a single variable multiple times, this works across the ent
 
 **Input**
 ```xml
-<g var:color.id="">
-    <path var:color.fill="#fff" .../>
+<g var:color.fill="#fff">
+    <path .../>
     <path var:color.stroke="#fff" .../>
 </g>
 ```
 
 **Output (spritemap)**
 ```xml
-<g id="">
-    <path fill="#fff" .../>
+<g fill="#fff">
+    <path .../>
     <path stroke="#fff" .../>
 </g>
 ```
@@ -104,18 +106,18 @@ It's possible to use a single variable multiple times, this works across the ent
     color: '#f00'
 ));
 
-// Result:
-// <g id="#f00">
-//     <path fill="#f00" .../>
+// Output:
+// <g fill="#f00">
+//     <path .../>
 //     <path stroke="#f00" .../>
 // </g>
 ```
 ```scss
 @include sprite('spritename');
 
-// Result:
-// <g>
-//     <path fill="#fff" .../>
+// Output:
+// <g fill="#fff">
+//     <path .../>
 //     <path stroke="#fff" .../>
 // </g>
 ```
@@ -139,6 +141,14 @@ Skipping the `$name` in the notation forces the variable name to equal the value
 ```scss
 @include sprite('spritename');
 
-// Result:
+// Output:
 // <path fill="#fff" .../>
+```
+
+
+## Notes
+This feature introduces a `var` [XML namespace](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/Namespaces). While namespaces aren't required for the sprites to work you might run into issues with browsers or IDEs notifying you about invalid attributes. An XML namespace is identified by a unique name (called a URI, not a URL, even though it can look like a URL), meaning you could add an attribute like this to the root SVG element of the sprite:
+
+```xml
+<svg xmlns:var="https://github.com/cascornelissen/svg-spritemap-webpack-plugin/">
 ```
