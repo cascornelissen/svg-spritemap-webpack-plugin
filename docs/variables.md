@@ -84,7 +84,7 @@ It's possible to use a single variable multiple times, this works across the ent
 
 **Input**
 ```xml
-<g var:color.title="">
+<g var:color.id="">
     <path var:color.fill="#fff" .../>
     <path var:color.stroke="#fff" .../>
 </g>
@@ -92,7 +92,7 @@ It's possible to use a single variable multiple times, this works across the ent
 
 **Output (spritemap)**
 ```xml
-<g>
+<g id="">
     <path fill="#fff" .../>
     <path stroke="#fff" .../>
 </g>
@@ -105,7 +105,7 @@ It's possible to use a single variable multiple times, this works across the ent
 ));
 
 // Result:
-// <g title="#f00">
+// <g id="#f00">
 //     <path fill="#f00" .../>
 //     <path stroke="#f00" .../>
 // </g>
