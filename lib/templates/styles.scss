@@ -10,6 +10,10 @@ $variables: (
 @function sprite-str-replace($string, $search, $replace: '') {
     $index: str-index($string, $search);
 
+    @if type-of($replace) == 'null' {
+        $replace: '';
+    }
+
     @if ( $index ) {
         @return str-slice($string, 1, $index - 1) + $replace + sprite-str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
     }
@@ -41,12 +45,16 @@ $variables: (
 
     // Inject variables
     $default-variables: map-get($variables, $name);
-    @each $key, $value in map-merge($default-variables, $user-variables) {
-        @if ( not map-has-key($default-variables, $key) ) {
-            @warn 'Sprite \'#{$name}\' does not support variable named \'#{$key}\'';
-        }
+    @if type-of($default-variables) == 'map' {
+        @each $key, $value in map-merge($default-variables, $user-variables) {
+            @if ( not map-has-key($default-variables, $key) ) {
+                @warn 'Sprite \'#{$name}\' does not support variable named \'#{$key}\'';
+            }
 
-        $sprite: sprite-str-replace($sprite, '___#{$key}___', sprite-svg-uri(quote($value)));
+            $sprite: sprite-str-replace($sprite, '___#{$key}___', sprite-svg-uri(quote($value)));
+        }
+    } @else if type-of($user-variables) == 'map' {
+        @warn 'Sprite \'#{$name}\' does not contain any variables';
     }
 
     background: url($sprite) center no-repeat;
