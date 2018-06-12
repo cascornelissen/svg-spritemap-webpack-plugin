@@ -43,7 +43,7 @@ describe('Sass maps in styles', () => {
             extension: 'scss'
         }).content.trim();
 
-        expect(styles).toEqual(expect.stringContaining('"a": "red"'));
+        expect(styles).toEqual(expect.stringContaining(`'a': '#f00'`));
     });
 
     it('Parses variable with empty default value', () => {
@@ -58,7 +58,7 @@ describe('Sass maps in styles', () => {
             extension: 'scss'
         }).content.trim();
 
-        expect(styles).toEqual(expect.stringContaining('"a": ""'));
+        expect(styles).toEqual(expect.stringContaining(`'a': ''`));
     });
 
     it('Parses re-used variables', () => {
@@ -73,7 +73,7 @@ describe('Sass maps in styles', () => {
             extension: 'scss'
         }).content.trim();
 
-        expect(styles).toEqual(expect.stringContaining('"b": "2"'));
+        expect(styles).toEqual(expect.stringContaining(`'b': '2'`));
     });
 
     it('Parses variable short notation', () => {
@@ -88,6 +88,6 @@ describe('Sass maps in styles', () => {
             extension: 'scss'
         }).content.trim();
 
-        expect(styles).toEqual(expect.stringContaining('"stroke": "blue"'));
+        expect(styles).toEqual(expect.stringContaining(`'stroke': '#00f'`));
     });
 });
