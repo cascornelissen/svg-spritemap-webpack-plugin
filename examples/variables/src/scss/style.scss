@@ -2,7 +2,7 @@
 
 html {
     @include sprite('1', (
-        example-1: #0f0,
-        fill: #e2194d
+        example-1: #f00,
+        color: #00f
     ));
 }

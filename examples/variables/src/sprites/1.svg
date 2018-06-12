@@ -1,9 +1,9 @@
 <svg viewBox="0 0 20 100">
-    <circle cx="10" cy="10" r="10" var:example-1.fill="#f0f" />
-    <circle cx="10" cy="30" r="10" var:example-2.fill='#ff0' />
-    <circle cx="10" cy="50" r="10" fill="#00f" />
-    <g>
-        <circle cx="10" cy="70" r="10" var:fill="#f00" />
-        <circle cx="10" cy="90" r="10" var:fill="#f00" />
+    <circle cx="10" cy="10" r="10" var:example-1.fill="#f0f"/>
+    <circle cx="10" cy="30" r="10" var:example-2.fill='#ff0'/>
+    <circle cx="10" cy="50" r="10" fill="#0f0"/>
+    <g var:color.fill="#f00">
+        <circle cx="10" cy="70" r="10"/>
+        <circle cx="10" cy="90" r="10" var:color.stroke="#f00"/>
     </g>
 </svg>
