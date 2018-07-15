@@ -62,3 +62,13 @@ it('Throws when the width/height of an SVG can not be calculated', () => {
         ], OPTIONS);
     }).toThrow();
 });
+
+it('Generates without use tag when \'options.includeUse\' is \'false\'', () => {
+    const output = fs.readFileSync(path.join(__dirname, 'output/svg/no-use.svg'), 'utf-8').trim();
+
+    expect(generateSVG([
+        path.join(__dirname, 'input/svg/single.svg')
+    ], Object.assign({}, OPTIONS, {
+        includeUse: false
+    }))).toBe(output);
+})
