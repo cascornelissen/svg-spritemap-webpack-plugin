@@ -2,6 +2,10 @@ $sprites: (
     /* SPRITES */
 );
 
+$sizes: (
+    /* SIZES */
+);
+
 $variables: (
     /* VARIABLES */
 );
@@ -40,7 +44,7 @@ $variables: (
     @return $encoded;
 }
 
-@mixin sprite($name, $user-variables: ()) {
+@mixin sprite($name, $user-variables: (), $include-size: false) {
     $sprite: map-get($sprites, $name);
 
     // Inject variables
@@ -58,4 +62,9 @@ $variables: (
     }
 
     background: url($sprite) center no-repeat;
+
+    @if $include-size {
+        $size: map-get($sizes, $name);
+        background-size: map-get($size, width) map-get($size, height);
+    }
 }
