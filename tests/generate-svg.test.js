@@ -4,8 +4,7 @@ import generateSVG from '../lib/generate-svg';
 
 const OPTIONS = {
     gutter: 2,
-    prefix: 'sprite-',
-    generateTitle: true
+    prefix: 'sprite-'
 };
 
 it('Returns undefined when no files are specified', () => {
@@ -55,6 +54,16 @@ it('Does not generate a title element when \'options.generateTitle\' is \'false\
     }))).toBe(output);
 });
 
+it('Generates without use tag when \'options.generateUse\' is \'false\'', () => {
+    const output = fs.readFileSync(path.join(__dirname, 'output/svg/no-use.svg'), 'utf-8').trim();
+
+    expect(generateSVG([
+        path.join(__dirname, 'input/svg/single.svg')
+    ], Object.assign({}, OPTIONS, {
+        generateUse: false
+    }))).toBe(output);
+});
+
 it('Throws when the width/height of an SVG can not be calculated', () => {
     expect(() => {
         generateSVG([
@@ -62,13 +71,3 @@ it('Throws when the width/height of an SVG can not be calculated', () => {
         ], OPTIONS);
     }).toThrow();
 });
-
-it('Generates without use tag when \'options.includeUse\' is \'false\'', () => {
-    const output = fs.readFileSync(path.join(__dirname, 'output/svg/no-use.svg'), 'utf-8').trim();
-
-    expect(generateSVG([
-        path.join(__dirname, 'input/svg/single.svg')
-    ], Object.assign({}, OPTIONS, {
-        includeUse: false
-    }))).toBe(output);
-})

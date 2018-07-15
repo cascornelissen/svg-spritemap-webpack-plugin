@@ -141,7 +141,7 @@ Whether to delete the chunk after it's been emitted by webpack.
 ### `generateTitle` - `true`
 Whether to generate a `<title>` element containing the filename if no title is provided in the SVG.
 
-### `includeUse` - `true`
+### `generateUse` - `true`
 Whether to include `<use>` element within the generated spritemap to allow referencing symbols from CSS
 
 ## SVG4Everybody
