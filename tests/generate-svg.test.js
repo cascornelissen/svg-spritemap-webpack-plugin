@@ -71,3 +71,14 @@ it('Throws when the width/height of an SVG can not be calculated', () => {
         ], OPTIONS);
     }).toThrow();
 });
+
+it('Copies comments over to the output', () => {
+  const output = fs.readFileSync(path.join(__dirname, 'output/svg/attribute.svg'), 'utf-8').trim();
+
+   expect(generateSVG([
+        path.join(__dirname, 'input/svg/attribute.svg')
+   ], Object.assign({}, OPTIONS, {
+        preserveComments: true,
+        generateUse: false
+   }))).toBe(output);
+});
