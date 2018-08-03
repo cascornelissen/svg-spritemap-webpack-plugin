@@ -7,3 +7,13 @@
 /*.scss
 /*.sass
 /*.less
+
+# IDE
+.idea/
+
+# fs
+.DS_Store
+thumbs.db
+
+# logs
+*.log*
