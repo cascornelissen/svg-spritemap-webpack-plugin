@@ -1,6 +1,63 @@
 # Options
-The `SVGSpritemapPlugin()` supports multiple options passed as an object. This object can contain the following keys, the default values for these options are listed behind the option names.
+The `SVGSpritemapPlugin()` supports multiple options passed as an object, a single string, or an array of strings.
 
+**Simple usage**  
+Adding the plugin without passing any options will result in all the defaults being used.
+
+```js
+new SVGSpritemapPlugin();
+```
+
+Passing a string or an array of strings will result in the default options being used with the `input.pattern` option set to the passed value.
+
+```js
+new SVGSpritemapPlugin('images/sprites/**/*.svg');
+
+new SVGSpritemapPlugin([
+    'images/logos/**/*.svg',
+    'images/icons/**/*.svg'
+]);
+```
+
+**Advanced usage**  
+Passing an object allows you to change specific options, this `options` object can be described in a [Flow](https://flow.org/en/docs)-esque way as follows:
+
+```js
+new SVGSpritemapPlugin({
+    input?: {
+        pattern?: string | string[],
+        options?: object
+    },
+    output?: {
+        filename?: string,
+        chunk?: {
+            name?: string,
+            keep?: boolean
+        },
+        svg4everybody?: boolean | object,
+        svgo?: boolean | object
+    },
+    sprite?: {
+        prefix?: string | false,
+        gutter?: number | false,
+        generate?: {
+            title?: boolean,
+            use?: boolean,
+            view?: boolean
+        }
+    },
+    styles?: boolean | string | {
+        filename?: string,
+        format?: string,
+        variables?: {
+            sprites?: string,
+            variables?: string
+        }
+    }
+});
+```
+
+---
 
 ## Input
 The `input` object contains the configuration for the input of the plugin.
@@ -21,8 +78,8 @@ Filename of the generated file (located at the webpack `output.path`), `[hash]` 
 ### `output.chunk.name` – `'spritemap'`
 Name of the chunk that will be generated.
 
-### `output.chunk.delete` – `true`
-Whether to delete the chunk after it's been emitted by webpack.
+### `output.chunk.keep` – `false`
+Whether to keep the chunk after it's been emitted by webpack.
 
 ### `output.svg4everybody` – `false`
 Whether to include the [`SVG4Everybody`](https://www.npmjs.com/package/svg4everybody#usage) helper in your entries.
@@ -57,8 +114,11 @@ Amount of pixels added between each sprite to prevent overlap.
 ### `sprite.generate.title` - `true`
 Whether to generate a `<title>` element containing the filename if no title is provided in the SVG.
 
-### `sprite.generate.use` - `true`
+### `sprite.generate.use` - `false`
 Whether to include a `<use>` element for each sprite within the generated spritemap to allow referencing symbols from CSS.
+
+### `sprite.generate.view` - `false`
+Whether to include a `<view>` element for each sprite within the generated spritemap to allow referencing via [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/).
 
 
 ## Styles
@@ -115,6 +175,9 @@ The value for the `styles` option should end in a supported style extension and 
       background-image: url(@sprite-phone);
   }
   ```
+
+### `styles.format` – `'data'`
+TODO
 
 ### `styles.variables.sprites` – `'sprites'`
 TODO
