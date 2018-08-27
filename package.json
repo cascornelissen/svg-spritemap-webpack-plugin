@@ -41,7 +41,7 @@
         "get-value": "^3.0.1",
         "glob": "^7.1.2",
         "html4-id": "^1.0.0",
-        "is-plain-object": "^2.0.4",
+        "joi": "^13.6.0",
         "loader-utils": "^1.1.0",
         "mini-svg-data-uri": "^1.0.1",
         "mkdirp": "^0.5.1",
