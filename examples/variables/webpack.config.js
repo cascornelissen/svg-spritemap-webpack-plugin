@@ -16,8 +16,7 @@ module.exports = {
 
     plugins: [
         new MiniCssExtractPlugin('styles.css'),
-        new SVGSpritemapPlugin({
-            src: 'src/**/*.svg',
+        new SVGSpritemapPlugin('src/**/*.svg', {
             styles: path.join(__dirname, 'src/scss/_sprites.scss')
         })
     ]

@@ -50,7 +50,9 @@ new SVGSpritemapPlugin(string | string[], {
         format?: string,
         variables?: {
             sprites?: string,
-            variables?: string
+            sizes?: string,
+            variables?: string,
+            mixin?: string
         }
     }
 });
@@ -182,5 +184,11 @@ TODO
 #### `styles.variables.sprites` – `'sprites'`
 TODO
 
+#### `styles.variables.sizes` – `'sizes'`
+TODO
+
 #### `styles.variables.variables` – `'variables'`
+TODO
+
+#### `styles.variables.mixin` – `'sprite'`
 TODO

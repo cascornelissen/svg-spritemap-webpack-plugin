@@ -1,12 +1,12 @@
-$sprites: (
+$/* VAR_SPRITES */: (
     /* SPRITES */
 );
 
-$sizes: (
+$/* VAR_SIZES */: (
     /* SIZES */
 );
 
-$variables: (
+$/* VAR_VARIABLES */: (
     /* VARIABLES */
 );
 
@@ -44,11 +44,11 @@ $variables: (
     @return $encoded;
 }
 
-@mixin sprite($name, $user-variables: (), $include-size: false) {
-    $sprite: map-get($sprites, $name);
+@mixin /* VAR_MIXIN */($name, $user-variables: (), $include-size: false) {
+    $sprite: map-get($/* VAR_SPRITES */, $name);
 
     // Inject variables
-    $default-variables: map-get($variables, $name);
+    $default-variables: map-get($/* VAR_VARIABLES */, $name);
     @if type-of($default-variables) == 'map' {
         @each $key, $value in map-merge($default-variables, $user-variables) {
             @if ( not map-has-key($default-variables, $key) ) {
@@ -64,7 +64,7 @@ $variables: (
     background: url($sprite) center no-repeat;
 
     @if $include-size {
-        $size: map-get($sizes, $name);
+        $size: map-get($/* VAR_SIZES */, $name);
         background-size: map-get($size, width) map-get($size, height);
     }
 }
