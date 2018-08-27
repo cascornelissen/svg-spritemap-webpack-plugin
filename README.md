@@ -17,16 +17,14 @@ npm install svg-spritemap-webpack-plugin --save-dev
 
 ## Usage
 **Webpack configuration**  
-This plugin can be added to webpack like any other, the options are listed down below.
+This plugin can be added to webpack like any other, [documentation on all configuration options](/docs/options.md) is available.
 ```js
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 
 module.exports = {
     // ...
     plugins: [
-        new SVGSpritemapPlugin({
-            // Optional options object
-        })
+        new SVGSpritemapPlugin()
     ]
 }
 ```
