@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="50"><symbol id="sprite-multiple-a" viewBox="0 0 24 24"><title>multiple-a</title>
+<svg xmlns="http://www.w3.org/2000/svg"><symbol id="sprite-multiple-a" viewBox="0 0 24 24"><title>multiple-a</title>
     <path d="M0.41,13.41L6,19L7.41,17.58L1.83,12M22.24,5.58L11.66,16.17L7.5,12L6.07,13.41L11.66,19L23.66,7M18,7L16.59,5.58L10.24,11.93L11.66,13.34L18,7Z"/>
-</symbol><use xlink:href="#sprite-multiple-a" x="0" y="0" width="24" height="24"/><symbol id="sprite-multiple-b" viewBox="0 0 24 24"><title>multiple-b</title>
+</symbol><symbol id="sprite-multiple-b" viewBox="0 0 24 24"><title>multiple-b</title>
     <path d="M6.59,3.41L2,8L6.59,12.6L8,11.18L4.82,8L8,4.82L6.59,3.41M12.41,3.41L11,4.82L14.18,8L11,11.18L12.41,12.6L17,8L12.41,3.41M21.59,11.59L13.5,19.68L9.83,16L8.42,17.41L13.5,22.5L23,13L21.59,11.59Z"/>
-</symbol><use xlink:href="#sprite-multiple-b" x="0" y="26" width="24" height="24"/></svg>
+</symbol></svg>

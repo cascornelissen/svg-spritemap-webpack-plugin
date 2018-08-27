@@ -40,6 +40,10 @@ it('Generates SCSS styles', () => {
     const sizes = `'single': (\n        'width': 24px,\n        'height': 24px\n    )`;
     const variables = '';
     const output = template
+        .replace(/\/\* VAR_SPRITES \*\//g, 'sprites')
+        .replace(/\/\* VAR_SIZES \*\//g, 'sizes')
+        .replace(/\/\* VAR_VARIABLES \*\//g, 'variables')
+        .replace(/\/\* VAR_MIXIN \*\//g, 'sprite')
         .replace('/* SPRITES */', sprites)
         .replace('/* SIZES */', sizes)
         .replace('/* VARIABLES */', variables);
