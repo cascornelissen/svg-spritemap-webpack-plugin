@@ -2,16 +2,26 @@ import SVGSpritemapPlugin from '../lib/';
 
 it('Throws when something other than a plain object is supplied for the options parameter', () => {
     expect(() => {
-        new SVGSpritemapPlugin('')
+        new SVGSpritemapPlugin(null, null)
+    }).toThrow();
+});
+
+it('Throws when an invalid configuration is supplied', () => {
+    expect(() => {
+        new SVGSpritemapPlugin({
+            a: 'a'
+        })
     }).toThrow();
 });
 
 it('Merges supplied options into the options object', () => {
     const plugin = new SVGSpritemapPlugin({
-        a: 'a'
+        output: {
+            filename: 'a'
+        }
     });
 
-    expect(plugin.options.a).toBe('a');
+    expect(plugin.options.output.filename).toBe('a');
 });
 
 it('Throws when the SVGO cleanupIDs plugin gets overwritten', () => {

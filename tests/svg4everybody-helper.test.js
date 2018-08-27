@@ -7,7 +7,9 @@ it('Supports an entry type of \'string\'', () => {
             entry: './webpack/index.js',
             plugins: [
                 new SVGSpritemapPlugin({
-                    svg4everybody: true
+                    output: {
+                        svg4everybody: true
+                    }
                 })
             ]
         });
@@ -20,7 +22,9 @@ it('Supports an entry type of \'array\'', () => {
             entry: ['./webpack/index.js'],
             plugins: [
                 new SVGSpritemapPlugin({
-                    svg4everybody: true
+                    output: {
+                        svg4everybody: true
+                    }
                 })
             ]
         });
@@ -35,7 +39,9 @@ it('Supports an entry type of \'object\'', () => {
             },
             plugins: [
                 new SVGSpritemapPlugin({
-                    svg4everybody: true
+                    output: {
+                        svg4everybody: true
+                    }
                 })
             ]
         });
@@ -48,7 +54,9 @@ it('Throws when the entry to which the svg4everybody helper will be added is of 
             entry: () => {},
             plugins: [
                 new SVGSpritemapPlugin({
-                    svg4everybody: true
+                    output: {
+                        svg4everybody: true
+                    }
                 })
             ]
         });
@@ -63,7 +71,9 @@ it('Throws when a sub-entry to which the svg4everybody helper will be added is o
             },
             plugins: [
                 new SVGSpritemapPlugin({
-                    svg4everybody: true
+                    output: {
+                        svg4everybody: true
+                    }
                 })
             ]
         });
