@@ -182,13 +182,13 @@ The value for the `styles` option should end in a supported style extension and 
 TODO
 
 #### `styles.variables.sprites` – `'sprites'`
-TODO
+Name for the SCSS variable that is used for the Sass map containing sprites.
 
 #### `styles.variables.sizes` – `'sizes'`
-TODO
+Name for the SCSS variable that is used for the Sass map containing size information for each sprite.
 
 #### `styles.variables.variables` – `'variables'`
-TODO
+Name for the SCSS variable that is used for the Sass map containing [user-defined variables](variables.md).
 
 #### `styles.variables.mixin` – `'sprite'`
-TODO
+Name for the SCSS variable that is used for the Sass mixin.
