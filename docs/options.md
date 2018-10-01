@@ -124,7 +124,7 @@ Whether to include a `<view>` element for each sprite within the generated sprit
 
 
 ### Styles
-The `styles` object contains the configuration for the generated styles, it's disabled (`false`) by default.
+The `styles` object contains the configuration for the generated styles, it's disabled (`false`) by default. A string can be used as the value which will then be used for the `styles.filename` option.
 
 #### `styles.filename` – `'~sprites.css'`
 Filename for the generated styles file (CSS, SCSS, LESS). This allows for using the sprites within a CSS-file instead of through a `<svg>` element in HTML. Although the latter method is preferred, situations may arise where extra HTML elements are not feasible.
