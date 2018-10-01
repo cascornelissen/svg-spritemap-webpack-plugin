@@ -118,13 +118,13 @@ Amount of pixels added between each sprite to prevent overlap.
 Whether to generate a `<title>` element containing the filename if no title is provided in the SVG.
 
 #### `sprite.generate.symbol` - `true`
-Whether to include a `<symbol>` element for each sprite within the generated spritemap. Passing a string will use the value as a prefix for the `id` attribute.
+Whether to include a `<symbol>` element for each sprite within the generated spritemap. Passing a string will use the value as a postfix for the `id` attribute.
 
 #### `sprite.generate.use` - `false`
 Whether to include a `<use>` element for each sprite within the generated spritemap to allow referencing symbols from CSS.
 
 #### `sprite.generate.view` - `false`
-Whether to include a `<view>` element for each sprite within the generated spritemap to allow referencing via [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/). Passing a string will use the value as a prefix for the `id` attribute.
+Whether to include a `<view>` element for each sprite within the generated spritemap to allow referencing via [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/). Passing a string will use the value as a postfix for the `id` attribute.
 
 
 ### Styles
@@ -183,7 +183,7 @@ The value for the `styles` option should end in a supported style extension and 
   ```
 
 #### `styles.format` – `'data'`
-Format of the styles that will be generated. The following values are valid:
+Format of the styles that will be generated, the following values are valid:
 
 - `'data'`  
   Generates [data URIs](https://www.npmjs.com/package/mini-svg-data-uri) as background `url()`s.
