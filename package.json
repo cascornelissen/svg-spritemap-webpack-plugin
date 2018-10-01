@@ -29,6 +29,10 @@
         "url": "https://www.onefinity.io/"
     },
     "license": "MIT",
+    "files": [
+        "lib/",
+        "docs/"
+    ],
     "scripts": {
         "test": "jest --verbose",
         "test:watch": "jest --watch",
