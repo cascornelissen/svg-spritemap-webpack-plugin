@@ -41,13 +41,14 @@ new SVGSpritemapPlugin(string | string[], {
         gutter?: number | false,
         generate?: {
             title?: boolean,
+            symbol?: boolean | string,
             use?: boolean,
-            view?: boolean
+            view?: boolean | string
         }
     },
     styles?: boolean | string | {
         filename?: string,
-        format?: string,
+        format?: 'data' | 'fragment',
         variables?: {
             sprites?: string,
             sizes?: string,
@@ -116,11 +117,14 @@ Amount of pixels added between each sprite to prevent overlap.
 #### `sprite.generate.title` - `true`
 Whether to generate a `<title>` element containing the filename if no title is provided in the SVG.
 
+#### `sprite.generate.symbol` - `true`
+Whether to include a `<symbol>` element for each sprite within the generated spritemap. Passing a string will use the value as a prefix for the `id` attribute.
+
 #### `sprite.generate.use` - `false`
 Whether to include a `<use>` element for each sprite within the generated spritemap to allow referencing symbols from CSS.
 
 #### `sprite.generate.view` - `false`
-Whether to include a `<view>` element for each sprite within the generated spritemap to allow referencing via [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/).
+Whether to include a `<view>` element for each sprite within the generated spritemap to allow referencing via [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/). Passing a string will use the value as a prefix for the `id` attribute.
 
 
 ### Styles
@@ -179,7 +183,12 @@ The value for the `styles` option should end in a supported style extension and 
   ```
 
 #### `styles.format` – `'data'`
-TODO
+Format of the styles that will be generated. The following values are valid:
+
+- `'data'`  
+  Generates [data URIs](https://www.npmjs.com/package/mini-svg-data-uri) as background `url()`s.
+- `'fragment'`  
+  Generates URLs with [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/) as background `url()`s. This requires the `sprite.generate.view` option to be enabled and uses the webpack option [`output.publicPath`](https://webpack.js.org/configuration/output/#output-publicpath) to build a URL to the file.
 
 #### `styles.variables.sprites` – `'sprites'`
 Name for the SCSS variable that is used for the Sass map containing sprites.
