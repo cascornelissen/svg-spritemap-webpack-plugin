@@ -17,7 +17,23 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin('styles.css'),
         new SVGSpritemapPlugin('src/**/*.svg', {
-            styles: path.join(__dirname, 'src/scss/_sprites.scss')
+            output: {
+                // filename: path.join(svgSpritesPublicPath, 'sprites.svg'),
+                svg4everybody: true,
+            },
+            sprite: {
+                prefix: false,
+                generate: {
+                    use: true,
+                    view: '-VIEWPOSTFIX',
+                    symbol: '-SYMBOLPOSTFIX',
+                },
+            },
+            styles: {
+                format: 'fragment',
+                // filename: '~sprites.scss',
+                filename: path.join(__dirname, 'src/scss/_sprites.scss')
+            },
         })
     ]
 };
