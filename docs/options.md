@@ -117,7 +117,7 @@ Amount of pixels added between each sprite to prevent overlap.
 #### `sprite.generate.title` - `true`
 Whether to generate a `<title>` element containing the filename if no title is provided in the SVG.
 
-#### `sprite.generate.symbol` - `false`
+#### `sprite.generate.symbol` - `true`
 Whether to include a `<symbol>` element for each sprite within the generated spritemap. Passing a string will use the value as a postfix for the `id` attribute.
 
 #### `sprite.generate.use` - `false`
