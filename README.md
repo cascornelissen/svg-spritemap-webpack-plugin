@@ -7,6 +7,12 @@ This [webpack](https://webpack.github.io/) plugin generates a single SVG spritem
 
 **Compatibility**  
 Version `^2.0.0` of this plugin is compatible with webpack `^4.0.0`. When using an older version of webpack, make sure to install the `^1.0.0` (`svg-spritemap-webpack-plugin@^1.0.0`) release of this plugin.
+  
+---
+
+❗️ The documentation you're currently reading is for the upcoming [`3.0.0` release](https://github.com/cascornelissen/svg-spritemap-webpack-plugin/milestone/1), documentation for the current stable release can be [found here](https://github.com/cascornelissen/svg-spritemap-webpack-plugin/tree/v2.7.1).
+  
+---
 
 
 ## Installation
