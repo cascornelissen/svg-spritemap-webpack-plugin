@@ -111,7 +111,7 @@ The `sprite` object contains the configuration for the generated sprites in the 
 #### `sprite.prefix` – `'sprite-'`
 Prefix added to sprite `id` in the spritemap. It will be used for the class/spritename in the generated styles as well.
 
-#### `sprite.gutter` – `2`
+#### `sprite.gutter` – `0`
 Amount of pixels added between each sprite to prevent overlap.
 
 #### `sprite.generate.title` - `true`
