@@ -2,99 +2,90 @@ import fs from 'fs';
 import path from 'path';
 import generateSVG from '../lib/generate-svg';
 
-const OPTIONS = {
-    gutter: 2,
-    prefix: 'sprite-'
-};
+it('Returns undefined when no files are specified', async () => {
+    const svg = await generateSVG([]);
 
-it('Returns undefined when no files are specified', () => {
-    expect(generateSVG([])).toBeUndefined();
+    expect(svg).toBeUndefined();
 });
 
-it('Transforms a single file correctly', () => {
+it('Transforms a single file correctly', async () => {
     const output = fs.readFileSync(path.join(__dirname, 'output/svg/single.svg'), 'utf-8').trim();
-
-    expect(generateSVG([
+    const svg = await generateSVG([
         path.join(__dirname, 'input/svg/single.svg')
-    ], OPTIONS)).toBe(output);
+    ]);
+
+    expect(svg).toBe(output);
 });
 
-it('Transforms multiple files correctly', () => {
+it('Transforms multiple files correctly', async () => {
     const output = fs.readFileSync(path.join(__dirname, 'output/svg/multiple.svg'), 'utf-8').trim();
-
-    expect(generateSVG([
+    const svg = await generateSVG([
         path.join(__dirname, 'input/svg/multiple-a.svg'),
         path.join(__dirname, 'input/svg/multiple-b.svg')
-    ], OPTIONS)).toBe(output);
+    ]);
+
+    expect(svg).toBe(output);
 });
 
-it(`Transforms files with an incorrect 'viewBox' attribute correctly`, () => {
+it(`Transforms files with an incorrect 'viewBox' attribute correctly`, async () => {
     const output = fs.readFileSync(path.join(__dirname, 'output/svg/viewbox.svg'), 'utf-8').trim();
-
-    expect(generateSVG([
+    const svg = await generateSVG([
         path.join(__dirname, 'input/svg/viewbox.svg')
-    ], OPTIONS)).toBe(output);
+    ]);
+
+    expect(svg).toBe(output);
 });
 
-it('Does not overwrite an existing <title> tag', () => {
+it('Does not overwrite an existing <title> tag', async () => {
     const output = fs.readFileSync(path.join(__dirname, 'output/svg/title-tag.svg'), 'utf-8').trim();
-
-    expect(generateSVG([
+    const svg = await generateSVG([
         path.join(__dirname, 'input/svg/title-tag.svg')
-    ], OPTIONS)).toBe(output);
+    ]);
+
+    expect(svg).toBe(output);
 });
 
-it(`Does not generate a <title> element when 'options.generate.title' is 'false'`, () => {
+it(`Does not generate a <title> element when 'options.generate.title' is 'false'`, async () => {
     const output = fs.readFileSync(path.join(__dirname, 'output/svg/without-title.svg'), 'utf-8').trim();
-
-    expect(generateSVG([
+    const svg = await generateSVG([
         path.join(__dirname, 'input/svg/single.svg')
-    ], Object.assign({}, OPTIONS, {
+    ], {
         generate: {
             title: false
         }
-    }))).toBe(output);
+    });
+
+    expect(svg).toBe(output);
 });
 
-it(`Generates with <use> tag when 'options.generate.use' is 'true' TESTTESTTEST`, () => {
+it(`Generates with <use> tag when 'options.generate.use' is 'true'`, async () => {
     const output = fs.readFileSync(path.join(__dirname, 'output/svg/with-use.svg'), 'utf-8').trim();
-
-    console.log(
-        generateSVG([
-            path.join(__dirname, 'input/svg/single.svg')
-        ], Object.assign({}, OPTIONS, {
-            generate: {
-                use: true
-            }
-        }))
-    );
-
-    expect(generateSVG([
+    const svg = await generateSVG([
         path.join(__dirname, 'input/svg/single.svg')
-    ], Object.assign({}, OPTIONS, {
+    ], {
         generate: {
             use: true
         }
-    }))).toBe(output);
+    });
+
+    expect(svg).toBe(output);
 });
 
-// it(`Generates with <view> tag when 'options.generate.view' is 'true'`, () => {
-//     // TODO
-//     const output = fs.readFileSync(path.join(__dirname, 'output/svg/with-view.svg'), 'utf-8').trim();
-//
-//     expect(generateSVG([
-//         path.join(__dirname, 'input/svg/single.svg')
-//     ], Object.assign({}, OPTIONS, {
-//         generate: {
-//             view: true
-//         }
-//     }))).toBe(output);
-// });
+it(`Generates with <view> tag when 'options.generate.view' is 'true'`, async () => {
+    const output = fs.readFileSync(path.join(__dirname, 'output/svg/with-view.svg'), 'utf-8').trim();
+    const svg = await generateSVG([
+        path.join(__dirname, 'input/svg/single.svg')
+    ], {
+        generate: {
+            view: true
+        }
+    });
+
+    expect(svg).toBe(output);
+});
 
 it('Throws when the width/height of an SVG can not be calculated', () => {
-    expect(() => {
-        generateSVG([
-            path.join(__dirname, 'input/svg/invalid-svg.svg')
-        ], OPTIONS);
-    }).toThrow();
+    expect(generateSVG([
+        path.join(__dirname, 'input/svg/invalid-svg.svg')
+    ])).rejects.toMatch('Invalid SVG');
 });

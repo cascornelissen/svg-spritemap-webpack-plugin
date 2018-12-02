@@ -1,1 +1,1 @@
-.sprite-single { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e %3cpath d='M21%2c7L9%2c19L3.5%2c13.5L4.91%2c12.09L9%2c16.17L19.59%2c5.59L21%2c7Z'/%3e %3c/svg%3e"); }
+.single { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3cpath d='M21 7L9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7z'/%3e%3c/svg%3e"); }

@@ -8,9 +8,9 @@ import { stripVariables, findDefaultValueMismatches } from '../lib/variable-pars
 const PREFIX = 'sprite-';
 
 describe('General', () => {
-    it('Strips variables from spritemap SVG', () => {
+    it('Strips variables from spritemap SVG', async () => {
         const output = fs.readFileSync(path.join(__dirname, 'output/svg/variables.svg'), 'utf-8').trim();
-        const svg = generateSVG([
+        const svg = await generateSVG([
             path.join(__dirname, 'input/svg/variables-all.svg')
         ], {
             prefix: PREFIX
@@ -19,8 +19,8 @@ describe('General', () => {
         expect(stripVariables(svg)).toBe(output);
     });
 
-    it('Detects default value mismatches', () => {
-        const svg = generateSVG([
+    it('Detects default value mismatches', async () => {
+        const svg = await generateSVG([
             path.join(__dirname, 'input/svg/variables-default-value-mismatch.svg')
         ], {
             prefix: PREFIX
@@ -31,8 +31,8 @@ describe('General', () => {
 });
 
 describe('Sass maps in styles', () => {
-    it('Parses basic variables', () => {
-        const svg = generateSVG([
+    it('Parses basic variables', async () => {
+        const svg = await generateSVG([
             path.join(__dirname, 'input/svg/variables-basic.svg')
         ], {
             prefix: PREFIX
@@ -46,8 +46,8 @@ describe('Sass maps in styles', () => {
         expect(styles).toEqual(expect.stringContaining(`'a': '#f00'`));
     });
 
-    it('Parses variable with empty default value', () => {
-        const svg = generateSVG([
+    it('Parses variable with empty default value', async () => {
+        const svg = await generateSVG([
             path.join(__dirname, 'input/svg/variables-default-value-empty.svg')
         ], {
             prefix: PREFIX
@@ -61,8 +61,8 @@ describe('Sass maps in styles', () => {
         expect(styles).toEqual(expect.stringContaining(`'a': ''`));
     });
 
-    it('Parses re-used variables', () => {
-        const svg = generateSVG([
+    it('Parses re-used variables', async () => {
+        const svg = await generateSVG([
             path.join(__dirname, 'input/svg/variables-multiple.svg')
         ], {
             prefix: PREFIX
@@ -76,8 +76,8 @@ describe('Sass maps in styles', () => {
         expect(styles).toEqual(expect.stringContaining(`'b': '2'`));
     });
 
-    it('Parses variable short notation', () => {
-        const svg = generateSVG([
+    it('Parses variable short notation', async () => {
+        const svg = await generateSVG([
             path.join(__dirname, 'input/svg/variables-shorthand.svg')
         ], {
             prefix: PREFIX

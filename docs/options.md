@@ -95,7 +95,7 @@ Whether to include the [`SVG4Everybody`](https://www.npmjs.com/package/svg4every
   Add the helper with a custom options object.
 
 #### `output.svgo` – `true`
-Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo). Note that the `cleanupIDs` plugin will always be disabled because it's required for this kind of SVG spritemap setup.
+Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo).
 
 - `false`  
   Disable the optimizer.
