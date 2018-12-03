@@ -188,7 +188,7 @@ Format of the styles that will be generated, the following values are valid:
 - `'data'`  
   Generates [data URIs](https://www.npmjs.com/package/mini-svg-data-uri) as background `url()`s.
 - `'fragment'`  
-  Generates URLs with [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/) as background `url()`s. This requires the `sprite.generate.view` option to be enabled and uses the webpack option [`output.publicPath`](https://webpack.js.org/configuration/output/#output-publicpath) to build a URL to the file.
+  Generates URLs with [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/) as background `url()`s. This requires the `sprite.generate.view` option to be enabled and uses the webpack option [`output.publicPath`](https://webpack.js.org/configuration/output/#output-publicpath) to build a URL to the file. This type of setup requires some additional configuration, [see example](../examples/fragments) for more information.
 
 #### `styles.variables.sprites` – `'sprites'`
 Name for the SCSS variable that is used for the Sass map containing sprites.
