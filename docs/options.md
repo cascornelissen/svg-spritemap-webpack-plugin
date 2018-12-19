@@ -61,7 +61,7 @@ new SVGSpritemapPlugin(string | string[], {
 
 ---
 
-## `pattern`
+## `pattern` - `'**/*.svg'`
 Pattern (or an array of patterns) for [`glob`](http://npmjs.com/package/glob) used to find the SVGs that should be in the spritemap.
 
 ## `options`
