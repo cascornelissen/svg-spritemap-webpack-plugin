@@ -70,6 +70,19 @@ it(`Generates with <use> tag when 'options.generate.use' is 'true'`, async () =>
 
     expect(svg).toBe(output);
 });
+it(`Generates with <use> tag without sizes when 'options.generate.use' is 'true' and 'options.generate.useWithSizes' is 'false'`, async () => {
+    const output = fs.readFileSync(path.join(__dirname, 'output/svg/with-use-no-sizes.svg'), 'utf-8').trim();
+    const svg = await generateSVG([
+        path.join(__dirname, 'input/svg/single.svg')
+    ], {
+        generate: {
+            use: true,
+            useWithSizes: false
+        }
+    });
+
+    expect(svg).toBe(output);
+});
 
 it(`Generates with <view> tag when 'options.generate.view' is 'true'`, async () => {
     const output = fs.readFileSync(path.join(__dirname, 'output/svg/with-view.svg'), 'utf-8').trim();

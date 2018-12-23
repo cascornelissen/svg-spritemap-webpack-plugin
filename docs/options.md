@@ -43,6 +43,7 @@ new SVGSpritemapPlugin(string | string[], {
             title?: boolean,
             symbol?: boolean | string,
             use?: boolean,
+            useWithSizes?: boolean,
             view?: boolean | string
         }
     },
@@ -122,6 +123,9 @@ Whether to include a `<symbol>` element for each sprite within the generated spr
 
 #### `sprite.generate.use` - `false`
 Whether to include a `<use>` element for each sprite within the generated spritemap to allow referencing symbols from CSS.
+
+#### `sprite.generate.useWithSizes` - `true`
+Whether to add 'height' and 'width' to `<svg>`
 
 #### `sprite.generate.view` - `false`
 Whether to include a `<view>` element for each sprite within the generated spritemap to allow referencing via [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/). Passing a string will use the value as a postfix for the `id` attribute.
