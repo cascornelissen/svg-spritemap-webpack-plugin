@@ -29,6 +29,9 @@ new SVGSpritemapPlugin(string | string[], {
     },
     output?: {
         filename?: string,
+        svg?: {
+            sizes?: boolean
+        },
         chunk?: {
             name?: string,
             keep?: boolean
@@ -77,6 +80,9 @@ The `output` object contains the configuration for the main output (SVG) of the 
 
 #### `output.filename` – `'spritemap.svg'`
 Filename of the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported.
+
+#### `output.svg.sizes`
+Whether to include the `width` and `height` attributes on the root SVG element. The default value for this option is based on the value of the `sprite.generate.use` option.
 
 #### `output.chunk.name` – `'spritemap'`
 Name of the chunk that will be generated.

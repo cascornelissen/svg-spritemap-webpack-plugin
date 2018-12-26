@@ -1,5 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SVGSpritemapPlugin = require('../../lib');
 
 module.exports = {
@@ -15,8 +16,14 @@ module.exports = {
     },
 
     plugins: [
+        new HtmlWebpackPlugin(),
         new MiniCssExtractPlugin('styles.css'),
         new SVGSpritemapPlugin('src/**/*.svg', {
+            output: {
+                svg: {
+                    sizes: false
+                }
+            },
             sprite: {
                 generate: {
                     // Generate <use> tags within the spritemap as the <view> tag will use this

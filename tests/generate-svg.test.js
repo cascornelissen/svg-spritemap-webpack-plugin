@@ -50,8 +50,10 @@ it(`Does not generate a <title> element when 'options.generate.title' is 'false'
     const svg = await generateSVG([
         path.join(__dirname, 'input/svg/single.svg')
     ], {
-        generate: {
-            title: false
+        sprite: {
+            generate: {
+                title: false
+            }
         }
     });
 
@@ -63,8 +65,10 @@ it(`Generates with <use> tag when 'options.generate.use' is 'true'`, async () =>
     const svg = await generateSVG([
         path.join(__dirname, 'input/svg/single.svg')
     ], {
-        generate: {
-            use: true
+        sprite: {
+            generate: {
+                use: true
+            }
         }
     });
 
@@ -76,10 +80,29 @@ it(`Generates with <view> tag when 'options.generate.view' is 'true'`, async () 
     const svg = await generateSVG([
         path.join(__dirname, 'input/svg/single.svg')
     ], {
-        generate: {
-            view: true
+        sprite: {
+            generate: {
+                view: true
+            }
         }
     });
+
+    expect(svg).toBe(output);
+});
+
+it(`Adds the width and height attribute to the root SVG when required`, async () => {
+    const output = fs.readFileSync(path.join(__dirname, 'output/svg/sizes.svg'), 'utf-8').trim();
+    const svg = await generateSVG([
+        path.join(__dirname, 'input/svg/single.svg')
+    ], {
+        output: {
+            svg: {
+                sizes: true
+            }
+        }
+    });
+
+    console.log(svg);
 
     expect(svg).toBe(output);
 });
