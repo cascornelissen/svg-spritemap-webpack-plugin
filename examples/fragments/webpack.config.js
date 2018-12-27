@@ -21,6 +21,8 @@ module.exports = {
         new SVGSpritemapPlugin('src/**/*.svg', {
             output: {
                 svg: {
+                    // Disable `width` and `height` attributes on the root SVG element
+                    // as these will skew the sprites when using the <view> via fragment identifiers
                     sizes: false
                 }
             },

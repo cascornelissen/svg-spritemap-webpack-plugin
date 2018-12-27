@@ -65,6 +65,11 @@ it(`Generates with <use> tag when 'options.generate.use' is 'true'`, async () =>
     const svg = await generateSVG([
         path.join(__dirname, 'input/svg/single.svg')
     ], {
+        output: {
+            svg: {
+                sizes: true
+            }
+        },
         sprite: {
             generate: {
                 use: true
@@ -101,8 +106,6 @@ it(`Adds the width and height attribute to the root SVG when required`, async ()
             }
         }
     });
-
-    console.log(svg);
 
     expect(svg).toBe(output);
 });
