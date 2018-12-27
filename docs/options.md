@@ -82,7 +82,7 @@ The `output` object contains the configuration for the main output (SVG) of the 
 Filename of the generated file (located at the webpack `output.path`), `[hash]` and `[contenthash]` are supported.
 
 #### `output.svg.sizes`
-Whether to include the `width` and `height` attributes on the root SVG element. The default value for this option is based on the value of the `sprite.generate.use` option.
+Whether to include the `width` and `height` attributes on the root SVG element. The default value for this option is based on the value of the `sprite.generate.use` option but when specified will always overwrite it.
 
 #### `output.chunk.name` – `'spritemap'`
 Name of the chunk that will be generated.
