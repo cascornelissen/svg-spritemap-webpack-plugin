@@ -40,7 +40,7 @@ new SVGSpritemapPlugin(string | string[], {
         svgo?: boolean | object
     },
     sprite?: {
-        prefix?: string | false,
+        prefix?: string | function(file) | false,
         gutter?: number | false,
         generate?: {
             title?: boolean,
@@ -114,7 +114,7 @@ Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo).
 ### Sprite
 The `sprite` object contains the configuration for the generated sprites in the output spritemap.
 
-#### `sprite.prefix` – `'sprite-'`
+#### `sprite.prefix` – `'sprite-' | function(file){}`
 Prefix added to sprite `id` in the spritemap. It will be used for the class/spritename in the generated styles as well.
 
 #### `sprite.gutter` – `0`
