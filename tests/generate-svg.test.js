@@ -115,3 +115,24 @@ it('Throws when the width/height of an SVG can not be calculated', () => {
         path.join(__dirname, 'input/svg/invalid-svg.svg')
     ])).rejects.toMatch('Invalid SVG');
 });
+
+it(`Use prefix as function`, async () => {
+    const output = fs.readFileSync(path.join(__dirname, 'output/svg/prefixed.svg'), 'utf-8').trim();
+    const svg = await generateSVG([
+        path.join(__dirname, 'input/svg/single.svg')
+    ], {
+        sprite: {
+            prefix: function(file) {
+                return 'ico-';
+            },
+            generate: {
+                title: true,
+                symbol: true,
+                use: true,
+                view: '-view'
+            }
+        }
+    });
+
+    expect(svg).toBe(output);
+});
