@@ -40,7 +40,7 @@ new SVGSpritemapPlugin(string | string[], {
         svgo?: boolean | object
     },
     sprite?: {
-        prefix?: string | false,
+        prefix?: string | function(file) | false,
         gutter?: number | false,
         generate?: {
             title?: boolean,
