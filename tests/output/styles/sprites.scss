@@ -58,7 +58,7 @@ $variables: (
                 @warn 'Sprite \'#{$name}\' does not support variable named \'#{$key}\'';
             }
 
-            $sprite: sprite-str-replace($sprite, '___#{$key}___', sprite-svg-uri(quote($value)));
+            $sprite: sprite-str-replace($sprite, '___#{$key}___', sprite-svg-uri(quote(#{$value})));
         }
     } @else if type-of($user-variables) == 'map' {
         @warn 'Sprite \'#{$name}\' does not contain any variables';
