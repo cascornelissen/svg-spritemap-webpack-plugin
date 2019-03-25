@@ -115,7 +115,7 @@ Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo).
 The `sprite` object contains the configuration for the generated sprites in the output spritemap.
 
 #### `sprite.prefix` – `'sprite-'`
-Prefix added to sprite `id` in the spritemap. It will be used for the class/spritename in the generated styles as well.
+Prefix added to sprite `id` in the spritemap. It will be used for the class/spritename in the generated styles as well. It's possible to pass a function for more advanced situations, the full path to the current sprite will be passed as the first argument.
 
 #### `sprite.gutter` – `0`
 Amount of pixels added between each sprite to prevent overlap.

@@ -122,7 +122,7 @@ it(`Use prefix as function`, async () => {
         path.join(__dirname, 'input/svg/single.svg')
     ], {
         sprite: {
-            prefix: function(file) {
+            prefix: () => {
                 return 'ico-';
             },
             generate: {
