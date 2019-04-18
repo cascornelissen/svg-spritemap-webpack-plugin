@@ -136,3 +136,34 @@ it(`Use prefix as function`, async () => {
 
     expect(svg).toBe(output);
 });
+
+it(`Sets id attribute when given in options`, async () => {
+    expect.assertions(2)
+
+    const svg = await generateSVG([
+        path.join(__dirname, 'input/svg/single.svg')
+      ], {
+        sprite: {
+            attributes: {
+                id: 'testID'
+            }
+        }
+    });
+
+    expect(svg).toMatch(/<svg(.*)(id="testID")(.*?)>/)
+    expect(svg).not.toMatch(/<svg(.*)(id="NOMATCH")(.*?)/)
+});
+
+it(`Skips id attribute when not a string`, async () => {
+    const svg = await generateSVG([
+      path.join(__dirname, 'input/svg/single.svg')
+    ], {
+        sprite: {
+            attributes: {
+                id: 1
+            }
+        }
+    })
+
+    expect(svg).not.toMatch(/<svg(.*)(id="1")(.*?)>/)
+})
