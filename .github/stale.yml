@@ -1,6 +1,16 @@
 daysUntilStale: 21
 daysUntilClose: 7
-markComment: >
-    This issue has been automatically marked as stale because it has not had
-    recent activity. It will be closed if no further activity occurs.
 closeComment: false
+staleLabel: stale
+exemptProjects: false
+exemptMilestones: true
+exemptAssignees: true
+pulls:
+   markComment: >
+       This pull request has been automatically marked as stale because it has not had
+       recent activity. It will be closed if no further activity occurs. Thank you
+       for your contributions.
+issues:
+    markComment: >
+        This issue has been automatically marked as stale because it has not had
+        recent activity. It will be closed if no further activity occurs.
