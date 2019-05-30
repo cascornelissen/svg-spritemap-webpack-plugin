@@ -42,9 +42,9 @@
         "node": ">= 6.9.0 || >= 8.9.0"
     },
     "dependencies": {
+        "@hapi/joi": "^15.0.3",
         "glob": "^7.1.4",
         "html4-id": "^1.0.0",
-        "joi": "^14.3.1",
         "loader-utils": "^1.2.3",
         "mini-svg-data-uri": "^1.0.3",
         "mkdirp": "^0.5.1",
