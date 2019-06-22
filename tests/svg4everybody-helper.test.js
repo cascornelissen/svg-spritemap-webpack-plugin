@@ -1,4 +1,6 @@
 import webpack from 'webpack';
+
+// Library
 import SVGSpritemapPlugin from '../lib/';
 
 it('Supports an entry type of \'string\'', () => {

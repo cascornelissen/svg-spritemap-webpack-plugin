@@ -174,7 +174,7 @@ The value for the `styles` option should end in a supported style extension and 
   }
   ```
   
-  Basic support for [variables using a custom syntax](docs/variables.md) is available when using Sass, this feature allows developers to restyle their sprites on the fly using the `sprite()` mixin.
+  Basic support for [variables using a custom syntax](/docs/variables.md) is available when using Sass, this feature allows developers to restyle their sprites on the fly using the `sprite()` mixin.
 - `.less`  
   Generates [LESS variables](http://lesscss.org/features/#variables-feature-overview) for each sprite based on the spritename (including prefix) with the sprite as value, comes with a `.sprite()` [mixin](http://lesscss.org/features/#mixins-feature).
 

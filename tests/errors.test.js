@@ -1,9 +1,9 @@
-const {
+import {
     OptionsMismatchWarning,
     VariablesNotSupportedInLanguageWarning,
     VariablesNotSupportedWithFragmentsWarning,
     VariablesWithInvalidDefaultsWarning
-} = require('../lib/errors');
+} from '../lib/errors';
 
 it('Should generate a valid OptionsMismatchWarning class', () => {
     const message = 'Using a requires b to be enabled';

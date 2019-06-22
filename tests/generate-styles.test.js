@@ -1,9 +1,12 @@
 import fs from 'fs';
 import del from 'del';
 import path from 'path';
+
+// Library
 import generateSVG from '../lib/generate-svg';
 import generateStyles from '../lib/generate-styles';
 import SVGSpritemapPlugin from '../lib';
+import { VariablesWithInvalidDefaultsWarning } from '../lib/errors';
 
 it('Returns undefined when no spritemap is provided', () => {
     expect(generateStyles()).toBeUndefined();
@@ -21,37 +24,97 @@ it('Throws when an unsupported styles extension is provided', async () => {
     }).toThrow();
 });
 
-it('Generates CSS styles', async () => {
-    const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.css'), 'utf-8').trim();
-    const spritemap = await generateSVG([
-        path.resolve(__dirname, 'input/svg/single.svg')
-    ]);
+describe('CSS', () => {
+    it('Generates styles', async () => {
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.css'), 'utf-8').trim();
+        const spritemap = await generateSVG([
+            path.resolve(__dirname, 'input/svg/single.svg')
+        ]);
 
-    expect(generateStyles(spritemap, {
-        extension: 'css'
-    }).content.trim()).toBe(output);
+        expect(generateStyles(spritemap, {
+            extension: 'css'
+        }).content.trim()).toBe(output);
+    });
+
+    it('Generates styles with fragments', async () => {
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-fragments.css'), 'utf-8').trim();
+        const spritemap = await generateSVG([
+            path.resolve(__dirname, 'input/svg/single.svg')
+        ]);
+
+        expect(generateStyles(spritemap, {
+            extension: 'css',
+            format: {
+                type: 'fragment'
+            }
+        }).content.trim()).toBe(output);
+    });
 });
 
-it('Generates SCSS styles', async () => {
-    const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.scss'), 'utf-8').trim();
-    const spritemap = await generateSVG([
-        path.resolve(__dirname, 'input/svg/single.svg')
-    ]);
+describe('SCSS', () => {
+    it('Generates styles', async () => {
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.scss'), 'utf-8').trim();
+        const spritemap = await generateSVG([
+            path.resolve(__dirname, 'input/svg/single.svg')
+        ]);
 
-    expect(generateStyles(spritemap, {
-        extension: 'scss'
-    }).content.trim()).toBe(output);
+        expect(generateStyles(spritemap, {
+            extension: 'scss'
+        }).content.trim()).toBe(output);
+    });
+
+    it('Generates styles with fragments', async () => {
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-fragments.scss'), 'utf-8').trim();
+        const spritemap = await generateSVG([
+            path.resolve(__dirname, 'input/svg/single.svg')
+        ]);
+
+        expect(generateStyles(spritemap, {
+            extension: 'scss',
+            format: {
+                type: 'fragment'
+            }
+        }).content.trim()).toBe(output);
+    });
+
+    it('Includes a warning when an default value mismatch is found', async () => {
+        const sprite = 'variables-default-value-mismatch';
+        const warning = new VariablesWithInvalidDefaultsWarning(sprite, 'a', ['#f00', '#00f']);
+        const spritemap = await generateSVG([
+            path.resolve(__dirname, `input/svg/${sprite}.svg`)
+        ]);
+
+        expect(generateStyles(spritemap, {
+            extension: 'scss'
+        }).warnings).toEqual(expect.arrayContaining([warning]));
+    });
 });
 
-it('Generates LESS styles', async () => {
-    const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.less'), 'utf-8').trim();
-    const spritemap = await generateSVG([
-        path.resolve(__dirname, 'input/svg/single.svg')
-    ]);
+describe('LESS', () => {
+    it('Generates styles', async () => {
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.less'), 'utf-8').trim();
+        const spritemap = await generateSVG([
+            path.resolve(__dirname, 'input/svg/single.svg')
+        ]);
 
-    expect(generateStyles(spritemap, {
-        extension: 'less'
-    }).content.trim()).toBe(output);
+        expect(generateStyles(spritemap, {
+            extension: 'less'
+        }).content.trim()).toBe(output);
+    });
+
+    it('Generates styles with fragments', async () => {
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-fragments.less'), 'utf-8').trim();
+        const spritemap = await generateSVG([
+            path.resolve(__dirname, 'input/svg/single.svg')
+        ]);
+
+        expect(generateStyles(spritemap, {
+            extension: 'less',
+            format: {
+                type: 'fragment'
+            }
+        }).content.trim()).toBe(output);
+    });
 });
 
 it('Creates a directory that does not exist and write styles spritemap content', () => {

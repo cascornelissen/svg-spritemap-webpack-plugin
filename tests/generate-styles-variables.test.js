@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+
+// Library
 import generateSVG from '../lib/generate-svg';
 import generateStyles from '../lib/generate-styles';
 import { stripVariables, findDefaultValueMismatches } from '../lib/variable-parser';

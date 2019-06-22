@@ -10,7 +10,7 @@ import SVGSpritemapPlugin from '../lib/';
 const CHUNK_NAME = 'spritemap';
 
 it('Returns undefined when no files are specified', async () => {
-    const svg = await generateSVG([]);
+    const svg = await generateSVG();
 
     expect(svg).toBeUndefined();
 });
@@ -43,7 +43,7 @@ it(`Transforms files with an incorrect 'viewBox' attribute correctly`, async () 
     expect(svg).toBe(output);
 });
 
-it('Does not overwrite an existing <title> tag', async () => {
+it('Does not overwrite an existing title tag', async () => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/title-tag.svg'), 'utf-8').trim();
     const svg = await generateSVG([
         path.resolve(__dirname, 'input/svg/title-tag.svg')
@@ -52,7 +52,7 @@ it('Does not overwrite an existing <title> tag', async () => {
     expect(svg).toBe(output);
 });
 
-it(`Does not generate a <title> element when 'options.generate.title' is 'false'`, async () => {
+it('Does not generate a title element when \'options.generate.title\' is `false`', async () => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/without-title.svg'), 'utf-8').trim();
     const svg = await generateSVG([
         path.resolve(__dirname, 'input/svg/single.svg')
@@ -67,7 +67,7 @@ it(`Does not generate a <title> element when 'options.generate.title' is 'false'
     expect(svg).toBe(output);
 });
 
-it(`Generates with <use> tag when 'options.generate.use' is 'true'`, async () => {
+it('Generates with use tag when \'options.generate.use\' is `true`', async () => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/with-use.svg'), 'utf-8').trim();
     const svg = await generateSVG([
         path.resolve(__dirname, 'input/svg/single.svg')
@@ -87,7 +87,7 @@ it(`Generates with <use> tag when 'options.generate.use' is 'true'`, async () =>
     expect(svg).toBe(output);
 });
 
-it(`Generates with <view> tag when 'options.generate.view' is 'true'`, async () => {
+it('Generates with view tag when \'options.generate.view\' is `true`', async () => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/with-view.svg'), 'utf-8').trim();
     const svg = await generateSVG([
         path.resolve(__dirname, 'input/svg/single.svg')
