@@ -34,6 +34,7 @@
         "docs/"
     ],
     "scripts": {
+        "postversion": "npm run test:coverage && codecov",
         "test": "jest --verbose",
         "test:watch": "jest --watch",
         "test:coverage": "jest --collectCoverageFrom='lib/**/*.js' --collectCoverageFrom='!lib/templates/**' --coverage"
