@@ -6,9 +6,9 @@ import { stripVariables, findDefaultValueMismatches } from '../lib/variable-pars
 
 describe('General', () => {
     it('Strips variables from spritemap SVG', async () => {
-        const output = fs.readFileSync(path.join(__dirname, 'output/svg/variables.svg'), 'utf-8').trim();
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/variables.svg'), 'utf-8').trim();
         const svg = await generateSVG([
-            path.join(__dirname, 'input/svg/variables-all.svg')
+            path.resolve(__dirname, 'input/svg/variables-all.svg')
         ]);
 
         expect(stripVariables(svg)).toBe(output);
@@ -16,7 +16,7 @@ describe('General', () => {
 
     it('Detects default value mismatches', async () => {
         const svg = await generateSVG([
-            path.join(__dirname, 'input/svg/variables-default-value-mismatch.svg')
+            path.resolve(__dirname, 'input/svg/variables-default-value-mismatch.svg')
         ]);
 
         expect(findDefaultValueMismatches(svg)).toHaveLength(1);
@@ -26,7 +26,7 @@ describe('General', () => {
 describe('Sass maps in styles', () => {
     it('Parses basic variables', async () => {
         const svg = await generateSVG([
-            path.join(__dirname, 'input/svg/variables-basic.svg')
+            path.resolve(__dirname, 'input/svg/variables-basic.svg')
         ]);
 
         const styles = generateStyles(svg, {
@@ -38,7 +38,7 @@ describe('Sass maps in styles', () => {
 
     it('Parses variable with empty default value', async () => {
         const svg = await generateSVG([
-            path.join(__dirname, 'input/svg/variables-default-value-empty.svg')
+            path.resolve(__dirname, 'input/svg/variables-default-value-empty.svg')
         ]);
 
         const styles = generateStyles(svg, {
@@ -50,7 +50,7 @@ describe('Sass maps in styles', () => {
 
     it('Parses re-used variables', async () => {
         const svg = await generateSVG([
-            path.join(__dirname, 'input/svg/variables-multiple.svg')
+            path.resolve(__dirname, 'input/svg/variables-multiple.svg')
         ]);
 
         const styles = generateStyles(svg, {
@@ -62,7 +62,7 @@ describe('Sass maps in styles', () => {
 
     it('Parses variable short notation', async () => {
         const svg = await generateSVG([
-            path.join(__dirname, 'input/svg/variables-shorthand.svg')
+            path.resolve(__dirname, 'input/svg/variables-shorthand.svg')
         ]);
 
         const styles = generateStyles(svg, {

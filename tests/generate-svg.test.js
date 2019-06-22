@@ -1,10 +1,13 @@
 import fs from 'fs';
 import path from 'path';
-import generateSVG from '../lib/generate-svg';
-import SVGSpritemapPlugin from '../lib/';
 import webpack from 'webpack';
 
+// Library
+import generateSVG from '../lib/generate-svg';
+import SVGSpritemapPlugin from '../lib/';
 
+// Constants
+const CHUNK_NAME = 'spritemap';
 
 it('Returns undefined when no files are specified', async () => {
     const svg = await generateSVG([]);
@@ -13,46 +16,46 @@ it('Returns undefined when no files are specified', async () => {
 });
 
 it('Transforms a single file correctly', async () => {
-    const output = fs.readFileSync(path.join(__dirname, 'output/svg/single.svg'), 'utf-8').trim();
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/single.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.join(__dirname, 'input/svg/single.svg')
+        path.resolve(__dirname, 'input/svg/single.svg')
     ]);
 
     expect(svg).toBe(output);
 });
 
 it('Transforms multiple files correctly', async () => {
-    const output = fs.readFileSync(path.join(__dirname, 'output/svg/multiple.svg'), 'utf-8').trim();
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/multiple.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.join(__dirname, 'input/svg/multiple-a.svg'),
-        path.join(__dirname, 'input/svg/multiple-b.svg')
+        path.resolve(__dirname, 'input/svg/multiple-a.svg'),
+        path.resolve(__dirname, 'input/svg/multiple-b.svg')
     ]);
 
     expect(svg).toBe(output);
 });
 
 it(`Transforms files with an incorrect 'viewBox' attribute correctly`, async () => {
-    const output = fs.readFileSync(path.join(__dirname, 'output/svg/viewbox.svg'), 'utf-8').trim();
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/viewbox.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.join(__dirname, 'input/svg/viewbox.svg')
+        path.resolve(__dirname, 'input/svg/viewbox.svg')
     ]);
 
     expect(svg).toBe(output);
 });
 
 it('Does not overwrite an existing <title> tag', async () => {
-    const output = fs.readFileSync(path.join(__dirname, 'output/svg/title-tag.svg'), 'utf-8').trim();
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/title-tag.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.join(__dirname, 'input/svg/title-tag.svg')
+        path.resolve(__dirname, 'input/svg/title-tag.svg')
     ]);
 
     expect(svg).toBe(output);
 });
 
 it(`Does not generate a <title> element when 'options.generate.title' is 'false'`, async () => {
-    const output = fs.readFileSync(path.join(__dirname, 'output/svg/without-title.svg'), 'utf-8').trim();
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/without-title.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.join(__dirname, 'input/svg/single.svg')
+        path.resolve(__dirname, 'input/svg/single.svg')
     ], {
         sprite: {
             generate: {
@@ -65,9 +68,9 @@ it(`Does not generate a <title> element when 'options.generate.title' is 'false'
 });
 
 it(`Generates with <use> tag when 'options.generate.use' is 'true'`, async () => {
-    const output = fs.readFileSync(path.join(__dirname, 'output/svg/with-use.svg'), 'utf-8').trim();
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/with-use.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.join(__dirname, 'input/svg/single.svg')
+        path.resolve(__dirname, 'input/svg/single.svg')
     ], {
         output: {
             svg: {
@@ -85,9 +88,9 @@ it(`Generates with <use> tag when 'options.generate.use' is 'true'`, async () =>
 });
 
 it(`Generates with <view> tag when 'options.generate.view' is 'true'`, async () => {
-    const output = fs.readFileSync(path.join(__dirname, 'output/svg/with-view.svg'), 'utf-8').trim();
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/with-view.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.join(__dirname, 'input/svg/single.svg')
+        path.resolve(__dirname, 'input/svg/single.svg')
     ], {
         sprite: {
             generate: {
@@ -100,9 +103,9 @@ it(`Generates with <view> tag when 'options.generate.view' is 'true'`, async () 
 });
 
 it(`Adds the width and height attribute to the root SVG when required`, async () => {
-    const output = fs.readFileSync(path.join(__dirname, 'output/svg/sizes.svg'), 'utf-8').trim();
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/sizes.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.join(__dirname, 'input/svg/single.svg')
+        path.resolve(__dirname, 'input/svg/single.svg')
     ], {
         output: {
             svg: {
@@ -116,14 +119,14 @@ it(`Adds the width and height attribute to the root SVG when required`, async ()
 
 it('Throws when the width/height of an SVG can not be calculated', () => {
     expect(generateSVG([
-        path.join(__dirname, 'input/svg/invalid-svg.svg')
+        path.resolve(__dirname, 'input/svg/invalid-svg.svg')
     ])).rejects.toMatch('Invalid SVG');
 });
 
 it(`Use prefix as function`, async () => {
-    const output = fs.readFileSync(path.join(__dirname, 'output/svg/prefixed.svg'), 'utf-8').trim();
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/prefixed.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.join(__dirname, 'input/svg/single.svg')
+        path.resolve(__dirname, 'input/svg/single.svg')
     ], {
         sprite: {
             prefix: () => {
@@ -141,47 +144,42 @@ it(`Use prefix as function`, async () => {
     expect(svg).toBe(output);
 });
 
-it(`Deletes Javascipt file`, done => {
-    const chunkName = 'test';
-
+it(`Deletes JavaScript (.js) chunk file`, (done) => {
     webpack({
-        entry: './webpack/index.js',
+        entry: path.resolve(__dirname, 'webpack/index.js'),
         plugins: [
-            new SVGSpritemapPlugin(path.join(__dirname, 'input/svg/single.svg'), {
+            new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/single.svg'), {
                 output: {
                     chunk: {
-                        name: chunkName
+                        name: CHUNK_NAME
                     }
                 }
             })
         ]
     }, (err, stats) => {
-        const outputFiles = stats.toJson().assets.map(x => x.name);
-        expect(outputFiles.indexOf(`${chunkName}.js`) === -1).toBeTruthy();
+        const assets = stats.toJson().assets.map((asset) => asset.name);
+        expect(assets).toEqual(expect.not.arrayContaining([`${CHUNK_NAME}.js`]));
         done();
     });
 });
 
-
-it(`Deletes sourcemap file`, done => {
-    const chunkName = 'test';
-
+it(`Deletes sourcemap (.js.map) chunk file`, (done) => {
     webpack({
-        entry: './webpack/index.js',
+        entry: path.resolve(__dirname, 'webpack/index.js'),
         mode: 'development',
         devtool: 'hidden-source-map',
         plugins: [
-            new SVGSpritemapPlugin(path.join(__dirname, 'input/svg/single.svg'), {
+            new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/single.svg'), {
                 output: {
                     chunk: {
-                        name: chunkName
+                        name: CHUNK_NAME
                     }
                 }
             })
         ]
     }, (err, stats) => {
-        const outputFiles = stats.toJson().assets.map(x => x.name);
-        expect(outputFiles.indexOf(`${chunkName}.js.map`) === -1).toBeTruthy();
+        const assets = stats.toJson().assets.map((asset) => asset.name);
+        expect(assets).toEqual(expect.not.arrayContaining([`${CHUNK_NAME}.js.map`]));
         done();
     });
 });
