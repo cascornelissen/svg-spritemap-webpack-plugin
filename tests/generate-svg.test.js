@@ -1,6 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import generateSVG from '../lib/generate-svg';
+import SVGSpritemapPlugin from '../lib/';
+import webpack from 'webpack';
+
+
 
 it('Returns undefined when no files are specified', async () => {
     const svg = await generateSVG([]);
@@ -135,4 +139,49 @@ it(`Use prefix as function`, async () => {
     });
 
     expect(svg).toBe(output);
+});
+
+it(`Deletes Javascipt file`, done => {
+    const chunkName = 'test';
+
+    webpack({
+        entry: './webpack/index.js',
+        plugins: [
+            new SVGSpritemapPlugin(path.join(__dirname, 'input/svg/single.svg'), {
+                output: {
+                    chunk: {
+                        name: chunkName
+                    }
+                }
+            })
+        ]
+    }, (err, stats) => {
+        const outputFiles = stats.toJson().assets.map(x => x.name);
+        expect(outputFiles.indexOf(`${chunkName}.js`) === -1).toBeTruthy();
+        done();
+    });
+});
+
+
+it(`Deletes sourcemap file`, done => {
+    const chunkName = 'test';
+
+    webpack({
+        entry: './webpack/index.js',
+        mode: 'development',
+        devtool: 'hidden-source-map',
+        plugins: [
+            new SVGSpritemapPlugin(path.join(__dirname, 'input/svg/single.svg'), {
+                output: {
+                    chunk: {
+                        name: chunkName
+                    }
+                }
+            })
+        ]
+    }, (err, stats) => {
+        const outputFiles = stats.toJson().assets.map(x => x.name);
+        expect(outputFiles.indexOf(`${chunkName}.js.map`) === -1).toBeTruthy();
+        done();
+    });
 });
