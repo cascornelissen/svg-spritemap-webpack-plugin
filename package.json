@@ -58,6 +58,7 @@
     "devDependencies": {
         "@babel/preset-env": "^7.5.4",
         "babel-jest": "^24.8.0",
+        "codecov": "^3.5.0",
         "del": "^5.0.0",
         "jest": "^24.8.0",
         "webpack": "^4.35.3",
