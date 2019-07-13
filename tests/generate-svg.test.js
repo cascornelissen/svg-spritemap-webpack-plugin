@@ -34,11 +34,24 @@ it('Transforms multiple files correctly', async () => {
     expect(svg).toBe(output);
 });
 
-it(`Transforms files with an incorrect 'viewBox' attribute correctly`, async () => {
+it('Transforms files with an incorrect \'viewBox\' attribute correctly', async () => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/viewbox.svg'), 'utf-8').trim();
     const svg = await generateSVG([
         path.resolve(__dirname, 'input/svg/viewbox.svg')
     ]);
+
+    expect(svg).toBe(output);
+});
+
+it('Does not optimize sprites when the \'output.svgo\' option is `false`', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/single-without-svgo.svg'), 'utf-8').trim();
+    const svg = await generateSVG([
+        path.resolve(__dirname, 'input/svg/single.svg')
+    ], {
+        output: {
+            svgo: false
+        }
+    });
 
     expect(svg).toBe(output);
 });
@@ -102,7 +115,7 @@ it('Generates with view tag when \'options.generate.view\' is `true`', async () 
     expect(svg).toBe(output);
 });
 
-it(`Adds the width and height attribute to the root SVG when required`, async () => {
+it('Adds the width and height attribute to the root SVG when required', async () => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/sizes.svg'), 'utf-8').trim();
     const svg = await generateSVG([
         path.resolve(__dirname, 'input/svg/single.svg')
@@ -123,7 +136,7 @@ it('Throws when the width/height of an SVG can not be calculated', () => {
     ])).rejects.toMatch('Invalid SVG');
 });
 
-it(`Use prefix as function`, async () => {
+it('Use prefix as function', async () => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/prefixed.svg'), 'utf-8').trim();
     const svg = await generateSVG([
         path.resolve(__dirname, 'input/svg/single.svg')
@@ -144,7 +157,42 @@ it(`Use prefix as function`, async () => {
     expect(svg).toBe(output);
 });
 
-it(`Deletes JavaScript (.js) chunk file`, (done) => {
+it('Should not transfer non-xmlns:* attributes to the root SVG', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/attributes-no-transfer-root.svg'), 'utf-8').trim();
+    const svg = await generateSVG([
+        path.resolve(__dirname, 'input/svg/attributes-no-transfer-root.svg')
+    ], {
+        output: {
+            svgo: false
+        },
+        sprite: {
+            generate: {
+                symbol: true,
+                view: true
+            }
+        }
+    });
+
+    expect(svg).toBe(output);
+});
+
+it('Should transfer the preserveAspectRatio attribute', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/attributes-preserveaspectratio.svg'), 'utf-8').trim();
+    const svg = await generateSVG([
+        path.resolve(__dirname, 'input/svg/attributes-preserveaspectratio.svg')
+    ], {
+        sprite: {
+            generate: {
+                symbol: true,
+                view: true
+            }
+        }
+    });
+
+    expect(svg).toBe(output);
+});
+
+it('Deletes JavaScript (.js) chunk file', (done) => {
     webpack({
         entry: path.resolve(__dirname, 'webpack/index.js'),
         plugins: [
@@ -163,7 +211,7 @@ it(`Deletes JavaScript (.js) chunk file`, (done) => {
     });
 });
 
-it(`Deletes sourcemap (.js.map) chunk file`, (done) => {
+it('Deletes sourcemap (.js.map) chunk file', (done) => {
     webpack({
         entry: path.resolve(__dirname, 'webpack/index.js'),
         mode: 'development',
