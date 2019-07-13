@@ -33,7 +33,24 @@ it('Supports an entry type of \'array\'', () => {
     }).not.toThrow();
 });
 
-it('Supports an entry type of \'object\'', () => {
+it('Supports an entry type of \'object\' with string values', () => {
+    expect(() => {
+        webpack({
+            entry: {
+                a: './webpack/index.js'
+            },
+            plugins: [
+                new SVGSpritemapPlugin({
+                    output: {
+                        svg4everybody: true
+                    }
+                })
+            ]
+        });
+    }).not.toThrow();
+});
+
+it('Supports an entry type of \'object\' with array values', () => {
     expect(() => {
         webpack({
             entry: {
@@ -65,6 +82,21 @@ it('Throws when the entry to which the svg4everybody helper will be added is of 
     }).toThrow();
 });
 
+it('Throws when an entry to which the svg4everybody helper will be added is of an unsupported type ', () => {
+    expect(() => {
+        webpack({
+            entry: () => {},
+            plugins: [
+                new SVGSpritemapPlugin({
+                    output: {
+                        svg4everybody: true
+                    }
+                })
+            ]
+        });
+    }).toThrow('Unsupported entry type');
+});
+
 it('Throws when a sub-entry to which the svg4everybody helper will be added is of an unsupported type', () => {
     expect(() => {
         webpack({
@@ -79,5 +111,5 @@ it('Throws when a sub-entry to which the svg4everybody helper will be added is o
                 })
             ]
         });
-    }).toThrow();
+    }).toThrow(/(Unsupported sub-entry type|Invalid configuration object)/);
 });
