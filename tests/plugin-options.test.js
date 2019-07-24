@@ -1,4 +1,8 @@
 import formatOptions from '../lib/options-formatter';
+import fs from "fs";
+import path from "path";
+import webpack from 'webpack';
+import SVGSpritemapPlugin from '../lib';
 
 describe('Input rewriting', () => {
     it('Transforms a string pattern to an array with the single pattern', () => {
@@ -16,6 +20,17 @@ describe('Input rewriting', () => {
         });
 
         expect(output.sprite.prefix).toEqual('');
+    });
+
+    it('Updates the \'sprite.idify\' option value from `false` a function that returns the input value', () => {
+        const value = 'A b c';
+        const output = formatOptions({
+            sprite: {
+                idify: false
+            }
+        });
+
+        expect(output.sprite.idify(value)).toEqual(value);
     });
 
     it('Updates the \'sprite.gutter\' option value from `false` to `0`', () => {

@@ -192,26 +192,7 @@ it('Should transfer the preserveAspectRatio attribute', async () => {
     expect(svg).toBe(output);
 });
 
-it('Deletes JavaScript (.js) chunk file', (done) => {
-    webpack({
-        entry: path.resolve(__dirname, 'webpack/index.js'),
-        plugins: [
-            new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/single.svg'), {
-                output: {
-                    chunk: {
-                        name: CHUNK_NAME
-                    }
-                }
-            })
-        ]
-    }, (err, stats) => {
-        const assets = stats.toJson().assets.map((asset) => asset.name);
-        expect(assets).toEqual(expect.not.arrayContaining([`${CHUNK_NAME}.js`]));
-        done();
-    });
-});
-
-it('Deletes sourcemap (.js.map) chunk file', (done) => {
+it('Deletes the chunk files', (done) => {
     webpack({
         entry: path.resolve(__dirname, 'webpack/index.js'),
         mode: 'development',
@@ -227,7 +208,31 @@ it('Deletes sourcemap (.js.map) chunk file', (done) => {
         ]
     }, (err, stats) => {
         const assets = stats.toJson().assets.map((asset) => asset.name);
+        expect(assets).toEqual(expect.not.arrayContaining([`${CHUNK_NAME}.js`]));
         expect(assets).toEqual(expect.not.arrayContaining([`${CHUNK_NAME}.js.map`]));
+        done();
+    });
+});
+
+it('Does not delete the chunk files when \'output.chunk.keep\' is \'true\'', (done) => {
+    webpack({
+        entry: path.resolve(__dirname, 'webpack/index.js'),
+        mode: 'development',
+        devtool: 'hidden-source-map',
+        plugins: [
+            new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/single.svg'), {
+                output: {
+                    chunk: {
+                        keep: true,
+                        name: CHUNK_NAME
+                    }
+                }
+            })
+        ]
+    }, (err, stats) => {
+        const assets = stats.toJson().assets.map((asset) => asset.name);
+        expect(assets).toEqual(expect.arrayContaining([`${CHUNK_NAME}.js`]));
+        expect(assets).toEqual(expect.arrayContaining([`${CHUNK_NAME}.js.map`]));
         done();
     });
 });
