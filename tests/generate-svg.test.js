@@ -157,10 +157,10 @@ it('Use prefix as function', async () => {
     expect(svg).toBe(output);
 });
 
-it('Should not transfer non-xmlns:* attributes to the root SVG', async () => {
-    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/attributes-no-transfer-root.svg'), 'utf-8').trim();
+it('Should not transfer non-valid attributes to the root SVG', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/attributes-no-transfer-invalid-root.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.resolve(__dirname, 'input/svg/attributes-no-transfer-root.svg')
+        path.resolve(__dirname, 'input/svg/attributes-no-transfer-invalid-root.svg')
     ], {
         output: {
             svgo: false
@@ -176,11 +176,14 @@ it('Should not transfer non-xmlns:* attributes to the root SVG', async () => {
     expect(svg).toBe(output);
 });
 
-it('Should transfer the preserveAspectRatio attribute', async () => {
-    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/attributes-preserveaspectratio.svg'), 'utf-8').trim();
+it('Should transfer valid root attribute', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/attributes-transfer-valid-attributes.svg'), 'utf-8').trim();
     const svg = await generateSVG([
-        path.resolve(__dirname, 'input/svg/attributes-preserveaspectratio.svg')
+        path.resolve(__dirname, 'input/svg/attributes-transfer-valid-attributes.svg')
     ], {
+        output: {
+            svgo: false
+        },
         sprite: {
             generate: {
                 symbol: true,
