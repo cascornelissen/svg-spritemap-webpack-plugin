@@ -115,7 +115,16 @@ Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo).
 The `sprite` object contains the configuration for the generated sprites in the output spritemap.
 
 #### `sprite.prefix` – `'sprite-'`
-Prefix added to sprite `id` in the spritemap. It will be used for the class/spritename in the generated styles as well. It's possible to pass a function for more advanced situations, the full path to the current sprite will be passed as the first argument.
+Prefix added to sprite `id` in the spritemap. It's possible to pass a function for more advanced situations, the full path to the current sprite will be passed as the first argument.
+
+This value will also be used for the class/spritename in the generated styles, the exact implementation and usage differs between style implementations follows:
+
+- `.css`  
+  Used as a prefix for the classname.
+- `.scss`/`.sass`  
+  Stripped from the variable name since the Sass implementation is based on [maps](https://sass-lang.com/documentation/values/maps).
+- `.less`  
+  Used as a prefix for the variable.
 
 #### `sprite.idify` – `require('html4-id')`
 Function that will be used to transform the filename of each sprite into a valid HTML `id`. The default function uses [`html4-id`](https://www.npmjs.com/package/html4-id) to generate a valid HTML4 id which has quite a [few restrictions](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) and since HTML5 allows pretty much anything as long as there's no whitespace it's possible to change this function. Passing `false` will result in the filename getting used as-is.
