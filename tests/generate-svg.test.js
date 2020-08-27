@@ -211,8 +211,34 @@ it('Deletes the chunk files', (done) => {
         ]
     }, (err, stats) => {
         const assets = stats.toJson().assets.map((asset) => asset.name);
-        expect(assets).toEqual(expect.not.arrayContaining([`${CHUNK_NAME}.js`]));
-        expect(assets).toEqual(expect.not.arrayContaining([`${CHUNK_NAME}.js.map`]));
+        expect(assets).toHaveLength(3);
+        done();
+    });
+});
+
+it('Deletes the chunk files when chunks are split', (done) => {
+    webpack({
+        entry: path.resolve(__dirname, 'webpack/index.js'),
+        mode: 'development',
+        devtool: 'hidden-source-map',
+        optimization: {
+            splitChunks: {
+                minSize: 1024,
+                maxSize: 2048
+            }
+        },
+        plugins: [
+            new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/single.svg'), {
+                output: {
+                    chunk: {
+                        name: CHUNK_NAME
+                    }
+                }
+            })
+        ]
+    }, (err, stats) => {
+        const assets = stats.toJson().assets.map((asset) => asset.name);
+        expect(assets).toHaveLength(3);
         done();
     });
 });
