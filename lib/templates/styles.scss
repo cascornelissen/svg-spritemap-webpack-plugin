@@ -64,12 +64,12 @@ $/* VAR_VARIABLES */: (
     background: url($sprite) center no-repeat;
 
     @if $include-size {
-		$size: map-get($/* VAR_SIZES */, $name);
-		@if $use-background-size {
-			background-size: map-get($size, width) map-get($size, height);
-		} @else {
-			width: map-get($size, width);
-			height: map-get($size, height);
-		}
+        $size: map-get($/* VAR_SIZES */, $name);
+        @if $use-background-size {
+            background-size: map-get($size, width) map-get($size, height);
+        } @else {
+            width: map-get($size, width);
+            height: map-get($size, height);
+        }
     }
 }
