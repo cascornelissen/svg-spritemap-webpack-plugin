@@ -36,6 +36,18 @@ describe('CSS', () => {
         }).content.trim()).toBe(output);
     });
 
+    it('Generates styles with passed attributes', async () => {
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes.css'), 'utf-8').trim();
+        const spritemap = await generateSVG([
+            path.resolve(__dirname, 'input/svg/single.svg')
+        ]);
+
+        expect(generateStyles(spritemap, {
+            extension: 'css',
+            keepAttributes: true
+        }).content.trim()).toBe(output);
+    });
+
     it('Generates styles with fragments', async () => {
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-fragments.css'), 'utf-8').trim();
         const spritemap = await generateSVG([
@@ -60,6 +72,18 @@ describe('SCSS', () => {
 
         expect(generateStyles(spritemap, {
             extension: 'scss'
+        }).content.trim()).toBe(output);
+    });
+
+    it('Generates styles with passed attributes', async () => {
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes.scss'), 'utf-8').trim();
+        const spritemap = await generateSVG([
+            path.resolve(__dirname, 'input/svg/single.svg')
+        ]);
+
+        expect(generateStyles(spritemap, {
+            extension: 'scss',
+            keepAttributes: true
         }).content.trim()).toBe(output);
     });
 
@@ -99,6 +123,18 @@ describe('LESS', () => {
 
         expect(generateStyles(spritemap, {
             extension: 'less'
+        }).content.trim()).toBe(output);
+    });
+
+    it('Generates styles with passed attributes', async () => {
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes.less'), 'utf-8').trim();
+        const spritemap = await generateSVG([
+            path.resolve(__dirname, 'input/svg/single.svg')
+        ]);
+
+        expect(generateStyles(spritemap, {
+            extension: 'less',
+            keepAttributes: true
         }).content.trim()).toBe(output);
     });
 

@@ -52,6 +52,7 @@ new SVGSpritemapPlugin(string | string[], {
     styles?: boolean | string | {
         filename?: string,
         format?: 'data' | 'fragment',
+        keepAttributes?: boolean,
         variables?: {
             sprites?: string,
             sizes?: string,
@@ -204,6 +205,9 @@ The value for the `styles` option should end in a supported style extension and 
       background-image: url(@sprite-phone);
   }
   ```
+
+#### `styles.keepAttributes` – `false`
+Whether to include the original SVG attributes in the generated styles.
 
 #### `styles.format` – `'data'`
 Format of the styles that will be generated, the following values are valid:
