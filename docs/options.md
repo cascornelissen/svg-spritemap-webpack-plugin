@@ -58,7 +58,7 @@ new SVGSpritemapPlugin(string | string[], {
             variables?: string,
             mixin?: string
         },
-        callback?: function(content) | false,
+        callback?: function(content)
     }
 });
 ```
