@@ -82,7 +82,13 @@ warnings.forEach((warning) => {
             ]
         }, (error, stats) => {
             const { warnings: messages = [] } = stats.toJson();
-            expect(messages.filter((message) => message.includes(warning.message))).toHaveLength(1);
+
+            if (global.__WEBPACK_VERSION__.startsWith('4.')) {
+                expect(messages.filter((message) => message.includes(warning.message))).toHaveLength(1);
+            } else {
+                expect(messages.filter((message) => message.message.includes(warning.message))).toHaveLength(1);
+            }
+
             done();
         });
     });
@@ -101,8 +107,15 @@ it('Should includes warnings coming back from the styles formatter', (done) => {
         ]
     }, (error, stats) => {
         const { warnings: messages = [] } = stats.toJson();
-        expect(messages.filter((message) => message.includes('Mismatching default values'))).toHaveLength(1);
-        expect(messages.filter((message) => message.includes('Variables will not work when using styles.format \'fragments\''))).toHaveLength(1);
+
+        if (global.__WEBPACK_VERSION__.startsWith('4.')) {
+            expect(messages.filter((message) => message.includes('Mismatching default values'))).toHaveLength(1);
+            expect(messages.filter((message) => message.includes('Variables will not work when using styles.format \'fragments\''))).toHaveLength(1);
+        } else {
+            expect(messages.filter((message) => message.message.includes('Mismatching default values'))).toHaveLength(1);
+            expect(messages.filter((message) => message.message.includes('Variables will not work when using styles.format \'fragments\''))).toHaveLength(1);
+        }
+
         done();
     });
 });
