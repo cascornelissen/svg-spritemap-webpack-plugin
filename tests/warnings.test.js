@@ -1,5 +1,4 @@
 import path from 'path';
-import webpack from 'webpack';
 
 // Library
 import SVGSpritemapPlugin from '../lib/';
@@ -76,7 +75,7 @@ const warnings = [{
 
 warnings.forEach((warning) => {
     it(`Should show a helpful warning with configuration \`${JSON.stringify(warning.options)}\``, (done) => {
-        webpack({
+        global.__WEBPACK__({
             mode: 'development',
             plugins: [
                 new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/variables-basic.svg'), warning.options)
@@ -90,7 +89,7 @@ warnings.forEach((warning) => {
 });
 
 it('Should includes warnings coming back from the styles formatter', (done) => {
-    webpack({
+    global.__WEBPACK__({
         mode: 'development',
         plugins: [
             new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/variables-default-value-mismatch.svg'), {

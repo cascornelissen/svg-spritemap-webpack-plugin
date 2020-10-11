@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import webpack from 'webpack';
 
 // Library
 import generateSVG from '../lib/generate-svg';
@@ -196,7 +195,7 @@ it('Should transfer valid root attribute', async () => {
 });
 
 it('Deletes the chunk files', (done) => {
-    webpack({
+    global.__WEBPACK__({
         entry: path.resolve(__dirname, 'webpack/index.js'),
         mode: 'development',
         devtool: 'hidden-source-map',
@@ -217,7 +216,7 @@ it('Deletes the chunk files', (done) => {
 });
 
 it('Deletes the chunk files when chunks are split', (done) => {
-    webpack({
+    global.__WEBPACK__({
         entry: path.resolve(__dirname, 'webpack/index.js'),
         mode: 'development',
         devtool: 'hidden-source-map',
@@ -244,7 +243,7 @@ it('Deletes the chunk files when chunks are split', (done) => {
 });
 
 it('Does not delete the chunk files when \'output.chunk.keep\' is \'true\'', (done) => {
-    webpack({
+    global.__WEBPACK__({
         entry: path.resolve(__dirname, 'webpack/index.js'),
         mode: 'development',
         devtool: 'hidden-source-map',

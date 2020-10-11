@@ -1,8 +1,4 @@
 import formatOptions from '../lib/options-formatter';
-import fs from "fs";
-import path from "path";
-import webpack from 'webpack';
-import SVGSpritemapPlugin from '../lib';
 
 describe('Input rewriting', () => {
     it('Transforms a string pattern to an array with the single pattern', () => {

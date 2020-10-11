@@ -1,12 +1,11 @@
+import fs from "fs";
 import path from 'path';
-import webpack from 'webpack';
 
 // Library
 import SVGSpritemapPlugin from '../lib/';
-import fs from "fs";
 
 it('Should not add anything when no SVGs are found and generateSVG() returns nothing', (done) => {
-    webpack({
+    global.__WEBPACK__({
         entry: path.resolve(__dirname, './webpack/index.js'),
         plugins: [
             new SVGSpritemapPlugin([], {})
@@ -22,7 +21,7 @@ it('Should not add anything when no SVGs are found and generateSVG() returns not
 it('Should not optimize the spritemap when the \'output.svgo\' option is \'false\'', (done) => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/single-without-svgo.svg'), 'utf-8').trim();
 
-    webpack({
+    global.__WEBPACK__({
         entry: path.resolve(__dirname, './webpack/index.js'),
         plugins: [
             new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/single.svg'), {
