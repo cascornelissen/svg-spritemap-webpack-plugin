@@ -217,7 +217,7 @@ Name for the SCSS variable that is used for the Sass map containing [user-define
 #### `styles.variables.mixin` – `'sprite'`
 Name for the SCSS variable that is used for the Sass mixin.
 
-#### `styles.callback` – `'callback'`
+#### `styles.callback` – `'undefined'`
 Provide a callback function to process the content before it is saved.
 ````
 // ES6 example
