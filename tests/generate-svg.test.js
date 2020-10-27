@@ -210,14 +210,7 @@ it('Deletes the chunk files', (done) => {
         ]
     }, (err, stats) => {
         const assets = stats.toJson().assets.map((asset) => asset.name);
-
-        if (global.__WEBPACK_VERSION__.startsWith('4.')) {
-            // Sourcemaps (*.map) files were included in stats assets until webpack 4
-            expect(assets).toHaveLength(3);
-        } else {
-            expect(assets).toHaveLength(2);
-        }
-
+        expect(assets).toHaveLength(3);
         done();
     });
 });
@@ -244,14 +237,7 @@ it('Deletes the chunk files when chunks are split', (done) => {
         ]
     }, (err, stats) => {
         const assets = stats.toJson().assets.map((asset) => asset.name);
-
-        if (global.__WEBPACK_VERSION__.startsWith('4.')) {
-            // Sourcemaps (*.map) files were included in stats assets until webpack 4
-            expect(assets).toHaveLength(3);
-        } else {
-            expect(assets).toHaveLength(2);
-        }
-
+        expect(assets).toHaveLength(3);
         done();
     });
 });
@@ -274,7 +260,6 @@ it('Does not delete the chunk files when \'output.chunk.keep\' is \'true\'', (do
     }, (err, stats) => {
         const assets = stats.toJson().assets.map((asset) => asset.name);
         expect(assets).toEqual(expect.arrayContaining([`${CHUNK_NAME}.js`]));
-        expect(assets).toEqual(expect.arrayContaining([`${CHUNK_NAME}.js.map`]));
         done();
     });
 });
