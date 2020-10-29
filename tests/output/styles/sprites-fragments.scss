@@ -68,6 +68,11 @@ $variables: (
 
     @if $include-size {
         $size: map-get($sizes, $name);
-        background-size: map-get($size, width) map-get($size, height);
+        @if $include-size == true {
+            background-size: map-get($size, width) map-get($size, height);
+        } @else if $include-size == 'box' {
+            width: map-get($size, width);
+            height: map-get($size, height);
+        }
     }
 }
