@@ -209,8 +209,13 @@ it('Deletes the chunk files', (done) => {
             })
         ]
     }, (err, stats) => {
-        const assets = stats.toJson().assets.map((asset) => asset.name);
-        expect(assets).toHaveLength(3);
+        const assets = stats.toJson().assets.map((asset) => {
+            return asset.name;
+        }).filter((name) => {
+            // Webpack 4 includes .map files in assets array while > 5 does not
+            return !name.endsWith('.map');
+        });
+        expect(assets).toHaveLength(2);
         done();
     });
 });
@@ -236,8 +241,13 @@ it('Deletes the chunk files when chunks are split', (done) => {
             })
         ]
     }, (err, stats) => {
-        const assets = stats.toJson().assets.map((asset) => asset.name);
-        expect(assets).toHaveLength(3);
+        const assets = stats.toJson().assets.map((asset) => {
+            return asset.name;
+        }).filter((name) => {
+            // Webpack 4 includes .map files in assets array while > 5 does not
+            return !name.endsWith('.map');
+        });
+        expect(assets).toHaveLength(2);
         done();
     });
 });
