@@ -129,12 +129,6 @@ it('Adds the width and height attribute to the root SVG when required', async ()
     expect(svg).toBe(output);
 });
 
-it('Throws when the width/height of an SVG can not be calculated', () => {
-    expect(generateSVG([
-        path.resolve(__dirname, 'input/svg/invalid-svg.svg')
-    ])).rejects.toMatch('Invalid SVG');
-});
-
 it('Use prefix as function', async () => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/prefixed.svg'), 'utf-8').trim();
     const svg = await generateSVG([
