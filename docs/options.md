@@ -20,7 +20,7 @@ new SVGSpritemapPlugin([
 ```
 
 **Advanced usage**  
-Passing an object as the second argument allows you to change specific options, this `options` object can be described in a [Flow](https://flow.org/en/docs)-esque way as follows:
+Passing an object as the second argument allows you to change specific options, this `options` object can be described in a [TypeScript](https://www.typescriptlang.org/) interface as follows:
 
 ```js
 new SVGSpritemapPlugin(string | string[], {
@@ -40,7 +40,7 @@ new SVGSpritemapPlugin(string | string[], {
         svgo?: boolean | object
     },
     sprite?: {
-        prefix?: string | function(file) | false,
+        prefix?: string | (file) => string | false,
         gutter?: number | false,
         generate?: {
             title?: boolean,
@@ -59,7 +59,7 @@ new SVGSpritemapPlugin(string | string[], {
             variables?: string,
             mixin?: string
         },
-        callback?: function(content)
+        callback?: (content) => string
     }
 });
 ```
@@ -230,9 +230,9 @@ Name for the SCSS variable that is used for the Sass map containing [user-define
 #### `styles.variables.mixin` – `'sprite'`
 Name for the SCSS variable that is used for the Sass mixin.
 
-#### `styles.callback` – `'undefined'`
-Provide a callback function to process the content before it is saved.
-````
-// ES6 example
-content => '[class*="sprite-"] { background-size: cover; }' + content
-````
+#### `styles.callback` – `undefined`
+Provide a callback function to process the styles content before it is saved.
+
+```es6
+(content) => `[class*="sprite-"] { background-size: cover; } ${content}`
+```

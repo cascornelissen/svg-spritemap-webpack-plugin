@@ -16,6 +16,7 @@ npm install svg-spritemap-webpack-plugin --save-dev
 ## Usage
 **Webpack configuration**  
 This plugin can be added to webpack like any other, [documentation on all configuration options](/docs/options.md) is available.
+
 ```js
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 
@@ -34,6 +35,7 @@ When there's a file `phone.svg` in the source directory and the `prefix` option 
     <use xlink:href="/path/to/spritemap.svg#sprite-phone"></use>
 </svg>
 ```
+
 
 ## SVG4Everybody
 > [SVG for Everybody](https://github.com/jonathantneal/svg4everybody) adds [SVG External Content](http://css-tricks.com/svg-sprites-use-better-icon-fonts/##Browser+Support) support to [all browsers](http://caniuse.com/svg).
