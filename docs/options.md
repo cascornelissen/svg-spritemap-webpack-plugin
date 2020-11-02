@@ -58,7 +58,8 @@ new SVGSpritemapPlugin(string | string[], {
             sizes?: string,
             variables?: string,
             mixin?: string
-        }
+        },
+        callback?: function(content)
     }
 });
 ```
@@ -228,3 +229,10 @@ Name for the SCSS variable that is used for the Sass map containing [user-define
 
 #### `styles.variables.mixin` – `'sprite'`
 Name for the SCSS variable that is used for the Sass mixin.
+
+#### `styles.callback` – `'undefined'`
+Provide a callback function to process the content before it is saved.
+````
+// ES6 example
+content => '[class*="sprite-"] { background-size: cover; }' + content
+````
