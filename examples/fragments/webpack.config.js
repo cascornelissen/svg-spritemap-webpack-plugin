@@ -17,7 +17,9 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin(),
-        new MiniCssExtractPlugin('styles.css'),
+        new MiniCssExtractPlugin({
+            filename: 'styles.css'
+        }),
         new SVGSpritemapPlugin('src/**/*.svg', {
             output: {
                 svg: {
