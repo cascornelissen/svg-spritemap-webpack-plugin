@@ -7,11 +7,16 @@ module.exports = {
     module: {
         rules: [{
             test: /\.scss$/,
-            use: [
-                MiniCssExtractPlugin.loader,
-                'css-loader',
-                'sass-loader'
-            ]
+            use: [{
+                loader: MiniCssExtractPlugin.loader
+            }, {
+                loader: 'css-loader',
+                options: {
+                    url: false
+                }
+            }, {
+                loader: 'sass-loader'
+            }]
         }]
     },
 
@@ -34,7 +39,7 @@ module.exports = {
                     use: true,
 
                     // Generate <view> tags within the svg to use in css via fragment identifier url
-                    // and add -fragment suffix for the identifier to prevent naming colissions with the symbol identifier
+                    // and add -fragment suffix for the identifier to prevent naming collisions with the symbol identifier
                     view: '-fragment',
 
                     // Generate <symbol> tags within the SVG to use in HTML via <use> tag
@@ -42,7 +47,7 @@ module.exports = {
                 },
             },
             styles: {
-                // Specifiy that we want to use URLs with fragment identifiers in a styles file as well
+                // Specify that we want to use URLs with fragment identifiers in a styles file as well
                 format: 'fragment',
 
                 // Path to the styles file, note that this method uses the `output.publicPath` webpack option

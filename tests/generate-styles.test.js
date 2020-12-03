@@ -13,9 +13,10 @@ it('Returns undefined when no spritemap is provided', () => {
 });
 
 it('Throws when an unsupported styles extension is provided', async () => {
-    const spritemap = await generateSVG([
-        path.resolve(__dirname, 'input/svg/single.svg')
-    ]);
+    const spritemap = await generateSVG([{
+        path: path.resolve(__dirname, 'input/svg/single.svg'),
+        content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+    }]);
 
     expect(() => {
         generateStyles(spritemap, {
@@ -27,9 +28,10 @@ it('Throws when an unsupported styles extension is provided', async () => {
 describe('CSS', () => {
     it('Generates styles', async () => {
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.css'), 'utf-8').trim();
-        const spritemap = await generateSVG([
-            path.resolve(__dirname, 'input/svg/single.svg')
-        ]);
+        const spritemap = await generateSVG([{
+            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }]);
 
         expect(generateStyles(spritemap, {
             extension: 'css'
@@ -38,9 +40,10 @@ describe('CSS', () => {
 
     it('Generates styles with passed attributes', async () => {
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes.css'), 'utf-8').trim();
-        const spritemap = await generateSVG([
-            path.resolve(__dirname, 'input/svg/single.svg')
-        ]);
+        const spritemap = await generateSVG([{
+            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }]);
 
         expect(generateStyles(spritemap, {
             extension: 'css',
@@ -50,9 +53,10 @@ describe('CSS', () => {
 
     it('Generates styles with fragments', async () => {
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-fragments.css'), 'utf-8').trim();
-        const spritemap = await generateSVG([
-            path.resolve(__dirname, 'input/svg/single.svg')
-        ]);
+        const spritemap = await generateSVG([{
+            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }]);
 
         expect(generateStyles(spritemap, {
             extension: 'css',
@@ -66,9 +70,10 @@ describe('CSS', () => {
 describe('SCSS', () => {
     it('Generates styles', async () => {
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.scss'), 'utf-8').trim();
-        const spritemap = await generateSVG([
-            path.resolve(__dirname, 'input/svg/single.svg')
-        ]);
+        const spritemap = await generateSVG([{
+            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }]);
 
         expect(generateStyles(spritemap, {
             extension: 'scss'
@@ -77,9 +82,10 @@ describe('SCSS', () => {
 
     it('Generates styles with passed attributes', async () => {
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes.scss'), 'utf-8').trim();
-        const spritemap = await generateSVG([
-            path.resolve(__dirname, 'input/svg/single.svg')
-        ]);
+        const spritemap = await generateSVG([{
+            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }]);
 
         expect(generateStyles(spritemap, {
             extension: 'scss',
@@ -89,9 +95,10 @@ describe('SCSS', () => {
 
     it('Generates styles with fragments', async () => {
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-fragments.scss'), 'utf-8').trim();
-        const spritemap = await generateSVG([
-            path.resolve(__dirname, 'input/svg/single.svg')
-        ]);
+        const spritemap = await generateSVG([{
+            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }]);
 
         expect(generateStyles(spritemap, {
             extension: 'scss',
@@ -104,9 +111,10 @@ describe('SCSS', () => {
     it('Includes a warning when an default value mismatch is found', async () => {
         const sprite = 'variables-default-value-mismatch';
         const warning = new VariablesWithInvalidDefaultsWarning(sprite, 'a', ['#f00', '#00f']);
-        const spritemap = await generateSVG([
-            path.resolve(__dirname, `input/svg/${sprite}.svg`)
-        ]);
+        const spritemap = await generateSVG([{
+            path: path.resolve(__dirname, `input/svg/${sprite}.svg`),
+            content: fs.readFileSync(path.resolve(__dirname, `input/svg/${sprite}.svg`), 'utf-8')
+        }]);
 
         expect(generateStyles(spritemap, {
             extension: 'scss'
@@ -117,9 +125,10 @@ describe('SCSS', () => {
 describe('LESS', () => {
     it('Generates styles', async () => {
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.less'), 'utf-8').trim();
-        const spritemap = await generateSVG([
-            path.resolve(__dirname, 'input/svg/single.svg')
-        ]);
+        const spritemap = await generateSVG([{
+            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }]);
 
         expect(generateStyles(spritemap, {
             extension: 'less'
@@ -128,9 +137,10 @@ describe('LESS', () => {
 
     it('Generates styles with passed attributes', async () => {
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes.less'), 'utf-8').trim();
-        const spritemap = await generateSVG([
-            path.resolve(__dirname, 'input/svg/single.svg')
-        ]);
+        const spritemap = await generateSVG([{
+            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }]);
 
         expect(generateStyles(spritemap, {
             extension: 'less',
@@ -140,9 +150,10 @@ describe('LESS', () => {
 
     it('Generates styles with fragments', async () => {
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-fragments.less'), 'utf-8').trim();
-        const spritemap = await generateSVG([
-            path.resolve(__dirname, 'input/svg/single.svg')
-        ]);
+        const spritemap = await generateSVG([{
+            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }]);
 
         expect(generateStyles(spritemap, {
             extension: 'less',
