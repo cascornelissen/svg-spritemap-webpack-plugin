@@ -12,12 +12,12 @@ it('Should calculate the Y position correctly', () => {
     expect(calculateY([1, 2, 3], 2)).toEqual(12);
 });
 
-it('Should not add any entries to the files and directories cache when no matches are found', () => {
-    const plugin = new SVGSpritemapPlugin('pattern/that/does-not-match/anything');
+it('Should always add base directories to the directories cache, even when no files are found', () => {
+    const plugin = new SVGSpritemapPlugin('pattern/that/**/does-not-match/anything');
     plugin.updateDependencies();
 
     expect(plugin.files).toEqual([]);
-    expect(plugin.directories).toEqual([]);
+    expect(plugin.directories).toEqual(['pattern/that/']);
 });
 
 it('Does not update the styles file when the content has not been updated', () => {

@@ -8,10 +8,11 @@ import SVGSpritemapPlugin from '../lib/';
 // Constants
 const CHUNK_NAME = 'spritemap';
 
-it('Returns undefined when no files are specified', async () => {
+it('Returns an empty SVG when no files are specified', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/empty.svg'), 'utf-8').trim();
     const svg = await generateSVG();
 
-    expect(svg).toBeUndefined();
+    expect(svg).toEqual(output);
 });
 
 it('Transforms a single file correctly', async () => {
@@ -21,7 +22,7 @@ it('Transforms a single file correctly', async () => {
         content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
     }]);
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Transforms multiple files correctly', async () => {
@@ -34,7 +35,7 @@ it('Transforms multiple files correctly', async () => {
         content: fs.readFileSync(path.resolve(__dirname, 'input/svg/multiple-b.svg'), 'utf-8')
     }]);
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Transforms files with an incorrect \'viewBox\' attribute correctly', async () => {
@@ -44,7 +45,7 @@ it('Transforms files with an incorrect \'viewBox\' attribute correctly', async (
         content: fs.readFileSync(path.resolve(__dirname, 'input/svg/viewbox.svg'), 'utf-8')
     }]);
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Does not optimize sprites when the \'output.svgo\' option is `false`', async () => {
@@ -58,7 +59,7 @@ it('Does not optimize sprites when the \'output.svgo\' option is `false`', async
         }
     });
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Does not overwrite an existing title tag', async () => {
@@ -68,7 +69,7 @@ it('Does not overwrite an existing title tag', async () => {
         content: fs.readFileSync(path.resolve(__dirname, 'input/svg/title-tag.svg'), 'utf-8')
     }]);
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Does not generate a title element when \'options.generate.title\' is `false`', async () => {
@@ -84,7 +85,7 @@ it('Does not generate a title element when \'options.generate.title\' is `false`
         }
     });
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Generates with use tag when \'options.generate.use\' is `true`', async () => {
@@ -105,7 +106,7 @@ it('Generates with use tag when \'options.generate.use\' is `true`', async () =>
         }
     });
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Generates with view tag when \'options.generate.view\' is `true`', async () => {
@@ -121,7 +122,7 @@ it('Generates with view tag when \'options.generate.view\' is `true`', async () 
         }
     });
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Adds the width and height attribute to the root SVG when required', async () => {
@@ -137,7 +138,7 @@ it('Adds the width and height attribute to the root SVG when required', async ()
         }
     });
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Use prefix as function', async () => {
@@ -159,7 +160,7 @@ it('Use prefix as function', async () => {
         }
     });
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Should not transfer non-valid attributes to the root SVG', async () => {
@@ -179,7 +180,7 @@ it('Should not transfer non-valid attributes to the root SVG', async () => {
         }
     });
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Should transfer valid root attribute', async () => {
@@ -199,7 +200,7 @@ it('Should transfer valid root attribute', async () => {
         }
     });
 
-    expect(svg).toBe(output);
+    expect(svg).toEqual(output);
 });
 
 it('Deletes the chunk files', (done) => {

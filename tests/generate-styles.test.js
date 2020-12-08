@@ -35,7 +35,7 @@ describe('CSS', () => {
 
         expect(generateStyles(spritemap, {
             extension: 'css'
-        }).content.trim()).toBe(output);
+        }).content.trim()).toEqual(output);
     });
 
     it('Generates styles with passed attributes', async () => {
@@ -48,7 +48,7 @@ describe('CSS', () => {
         expect(generateStyles(spritemap, {
             extension: 'css',
             keepAttributes: true
-        }).content.trim()).toBe(output);
+        }).content.trim()).toEqual(output);
     });
 
     it('Generates styles with fragments', async () => {
@@ -63,7 +63,7 @@ describe('CSS', () => {
             format: {
                 type: 'fragment'
             }
-        }).content.trim()).toBe(output);
+        }).content.trim()).toEqual(output);
     });
 });
 
@@ -77,7 +77,7 @@ describe('SCSS', () => {
 
         expect(generateStyles(spritemap, {
             extension: 'scss'
-        }).content.trim()).toBe(output);
+        }).content.trim()).toEqual(output);
     });
 
     it('Generates styles with passed attributes', async () => {
@@ -90,7 +90,7 @@ describe('SCSS', () => {
         expect(generateStyles(spritemap, {
             extension: 'scss',
             keepAttributes: true
-        }).content.trim()).toBe(output);
+        }).content.trim()).toEqual(output);
     });
 
     it('Generates styles with fragments', async () => {
@@ -105,7 +105,7 @@ describe('SCSS', () => {
             format: {
                 type: 'fragment'
             }
-        }).content.trim()).toBe(output);
+        }).content.trim()).toEqual(output);
     });
 
     it('Includes a warning when an default value mismatch is found', async () => {
@@ -132,7 +132,7 @@ describe('LESS', () => {
 
         expect(generateStyles(spritemap, {
             extension: 'less'
-        }).content.trim()).toBe(output);
+        }).content.trim()).toEqual(output);
     });
 
     it('Generates styles with passed attributes', async () => {
@@ -145,7 +145,7 @@ describe('LESS', () => {
         expect(generateStyles(spritemap, {
             extension: 'less',
             keepAttributes: true
-        }).content.trim()).toBe(output);
+        }).content.trim()).toEqual(output);
     });
 
     it('Generates styles with fragments', async () => {
@@ -160,7 +160,7 @@ describe('LESS', () => {
             format: {
                 type: 'fragment'
             }
-        }).content.trim()).toBe(output);
+        }).content.trim()).toEqual(output);
     });
 });
 

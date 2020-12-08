@@ -14,7 +14,7 @@ describe('General', () => {
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-all.svg'), 'utf-8')
         }]);
 
-        expect(stripVariables(svg)).toBe(output);
+        expect(stripVariables(svg)).toEqual(output);
     });
 
     it('Detects default value mismatches', async () => {
