@@ -8,11 +8,10 @@ import SVGSpritemapPlugin from '../lib/';
 // Constants
 const CHUNK_NAME = 'spritemap';
 
-it('Returns an empty SVG when no files are specified', async () => {
-    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/empty.svg'), 'utf-8').trim();
+it('Returns undefined when no files are specified', async () => {
     const svg = await generateSVG();
 
-    expect(svg).toEqual(output);
+    expect(svg).toBeUndefined();
 });
 
 it('Transforms a single file correctly', async () => {
