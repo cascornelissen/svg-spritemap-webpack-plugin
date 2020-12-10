@@ -17,7 +17,7 @@ it('Should always add base directories to the directories cache, even when no fi
     plugin.updateDependencies();
 
     expect(plugin.files).toEqual([]);
-    expect(plugin.directories).toEqual(['pattern/that/']);
+    expect(plugin.directories).toEqual([path.resolve('pattern/that/')]);
 });
 
 it('Does not update the styles file when the content has not been updated', () => {
