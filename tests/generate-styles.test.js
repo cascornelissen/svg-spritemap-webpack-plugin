@@ -9,7 +9,7 @@ import SVGSpritemapPlugin from '../lib';
 import { VariablesWithInvalidDefaultsWarning } from '../lib/errors';
 
 it('Returns undefined when no spritemap is provided', () => {
-    expect(generateStyles()).toBeUndefined();
+    expect(generateStyles()).toEqual({});
 });
 
 it('Throws when an unsupported styles extension is provided', async () => {
