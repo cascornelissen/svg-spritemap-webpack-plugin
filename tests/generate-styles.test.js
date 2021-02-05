@@ -27,34 +27,41 @@ it('Throws when an unsupported styles extension is provided', async () => {
 
 describe('CSS', () => {
     it('Generates styles', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.css'), 'utf-8').trim();
         const spritemap = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
         }]);
 
         expect(generateStyles(spritemap, {
             extension: 'css'
-        }).content.trim()).toEqual(output);
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
     });
 
     it('Generates styles with passed attributes', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes.css'), 'utf-8').trim();
         const spritemap = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
         }]);
 
         expect(generateStyles(spritemap, {
             extension: 'css',
             keepAttributes: true
-        }).content.trim()).toEqual(output);
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
     });
 
     it('Generates styles with fragments', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-fragments.css'), 'utf-8').trim();
         const spritemap = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
         }]);
 
@@ -63,40 +70,49 @@ describe('CSS', () => {
             format: {
                 type: 'fragment'
             }
-        }).content.trim()).toEqual(output);
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
     });
 });
 
 describe('SCSS', () => {
     it('Generates styles', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.scss'), 'utf-8').trim();
         const spritemap = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
         }]);
 
         expect(generateStyles(spritemap, {
             extension: 'scss'
-        }).content.trim()).toEqual(output);
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
     });
 
     it('Generates styles with passed attributes', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes.scss'), 'utf-8').trim();
         const spritemap = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
         }]);
 
         expect(generateStyles(spritemap, {
             extension: 'scss',
             keepAttributes: true
-        }).content.trim()).toEqual(output);
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
     });
 
     it('Generates styles with fragments', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-fragments.scss'), 'utf-8').trim();
         const spritemap = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
         }]);
 
@@ -105,53 +121,65 @@ describe('SCSS', () => {
             format: {
                 type: 'fragment'
             }
-        }).content.trim()).toEqual(output);
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
     });
 
     it('Includes a warning when an default value mismatch is found', async () => {
         const sprite = 'variables-default-value-mismatch';
+        const input = path.resolve(__dirname, `input/svg/${sprite}.svg`);
         const warning = new VariablesWithInvalidDefaultsWarning(sprite, 'a', ['#f00', '#00f']);
         const spritemap = await generateSVG([{
-            path: path.resolve(__dirname, `input/svg/${sprite}.svg`),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, `input/svg/${sprite}.svg`), 'utf-8')
         }]);
 
         expect(generateStyles(spritemap, {
             extension: 'scss'
-        }).warnings).toEqual(expect.arrayContaining([warning]));
+        }, [{
+            path: input
+        }]).warnings).toEqual(expect.arrayContaining([warning]));
     });
 });
 
 describe('LESS', () => {
     it('Generates styles', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites.less'), 'utf-8').trim();
         const spritemap = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
         }]);
 
         expect(generateStyles(spritemap, {
             extension: 'less'
-        }).content.trim()).toEqual(output);
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
     });
 
     it('Generates styles with passed attributes', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes.less'), 'utf-8').trim();
         const spritemap = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
         }]);
 
         expect(generateStyles(spritemap, {
             extension: 'less',
             keepAttributes: true
-        }).content.trim()).toEqual(output);
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
     });
 
     it('Generates styles with fragments', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
         const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-fragments.less'), 'utf-8').trim();
         const spritemap = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/single.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
         }]);
 
@@ -160,7 +188,9 @@ describe('LESS', () => {
             format: {
                 type: 'fragment'
             }
-        }).content.trim()).toEqual(output);
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
     });
 });
 

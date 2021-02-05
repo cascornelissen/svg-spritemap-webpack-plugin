@@ -29,53 +29,65 @@ describe('General', () => {
 
 describe('Sass maps in styles', () => {
     it('Parses basic variables', async () => {
+        const input = path.resolve(__dirname, 'input/svg/variables-basic.svg');
         const svg = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/variables-basic.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-basic.svg'), 'utf-8')
         }]);
 
         const styles = generateStyles(svg, {
             extension: 'scss'
-        }).content.trim();
+        }, [{
+            path: input
+        }]).content.trim();
 
         expect(styles).toEqual(expect.stringContaining(`'a': '#f00'`));
     });
 
     it('Parses variable with empty default value', async () => {
+        const input = path.resolve(__dirname, 'input/svg/variables-default-value-empty.svg');
         const svg = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/variables-default-value-empty.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-default-value-empty.svg'), 'utf-8')
         }]);
 
         const styles = generateStyles(svg, {
             extension: 'scss'
-        }).content.trim();
+        }, [{
+            path: input
+        }]).content.trim();
 
         expect(styles).toEqual(expect.stringContaining(`'a': ''`));
     });
 
     it('Parses re-used variables', async () => {
+        const input = path.resolve(__dirname, 'input/svg/variables-multiple.svg');
         const svg = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/variables-multiple.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-multiple.svg'), 'utf-8')
         }]);
 
         const styles = generateStyles(svg, {
             extension: 'scss'
-        }).content.trim();
+        }, [{
+            path: input
+        }]).content.trim();
 
         expect(styles).toEqual(expect.stringContaining(`'b': '2'`));
     });
 
     it('Parses variable short notation', async () => {
+        const input = path.resolve(__dirname, 'input/svg/variables-shorthand.svg');
         const svg = await generateSVG([{
-            path: path.resolve(__dirname, 'input/svg/variables-shorthand.svg'),
+            path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-shorthand.svg'), 'utf-8')
         }]);
 
         const styles = generateStyles(svg, {
             extension: 'scss'
-        }).content.trim();
+        }, [{
+            path: input
+        }]).content.trim();
 
         expect(styles).toEqual(expect.stringContaining(`'stroke': '#00f'`));
     });
