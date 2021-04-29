@@ -134,6 +134,10 @@ Whether to also prefix any selectors that are generated in the styles file, if e
 #### `sprite.idify` – `require('html4-id')`
 Function that will be used to transform the filename of each sprite into a valid HTML `id`. The default function uses [`html4-id`](https://www.npmjs.com/package/html4-id) to generate a valid HTML4 id which has quite a [few restrictions](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) and since HTML5 allows pretty much anything as long as there's no whitespace it's possible to change this function. Passing `false` will result in the filename getting used as-is.
 
+Function parameters:
+- `filename` - The name of the file without the extension (e.g. `calendar`)
+- `filepath` - The full path of the file (e.g. `/path/to/calendar.svg`)
+
 ```es6
 // Generate HTML5 id's
 (filename) => filename.replace(/[\s]+/g, '-');

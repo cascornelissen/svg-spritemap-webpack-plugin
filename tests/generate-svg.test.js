@@ -162,6 +162,23 @@ it('Use prefix as function', async () => {
     expect(svg).toEqual(output);
 });
 
+it('Generates custom IDs correctly when \'options.sprite.idify\' is defined', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/single-with-custom-ids.svg'), 'utf-8').trim();
+    const svg = await generateSVG([{
+        path: path.resolve(__dirname, 'input/svg/single.svg'),
+        content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+    }], {
+        sprite: {
+            idify: (filename, filepath) => {
+                const parentDirectory = path.basename(path.dirname(filepath));
+                return `custom__${parentDirectory}__${filename}`;
+            }
+        }
+    });
+
+    expect(svg).toEqual(output);
+});
+
 it('Should not transfer non-valid attributes to the root SVG', async () => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/attributes-no-transfer-invalid-root.svg'), 'utf-8').trim();
     const svg = await generateSVG([{
