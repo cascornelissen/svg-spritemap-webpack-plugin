@@ -1,6 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const SVGSpritemapPlugin = require('../../lib');
+const SVGSpritemapPlugin = require('../..');
 
 module.exports = {
     module: {

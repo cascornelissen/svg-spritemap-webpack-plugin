@@ -1,4 +1,4 @@
-const SVGSpritemapPlugin = require('../../lib');
+const SVGSpritemapPlugin = require('../..');
 
 module.exports = {
     plugins: [
