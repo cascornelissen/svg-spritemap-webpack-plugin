@@ -1,8 +1,11 @@
+import webpack from 'webpack';
+
+// Library
 import SVGSpritemapPlugin from '../lib/';
 
 it('Supports an entry type of \'string\'', () => {
     expect(() => {
-        global.__WEBPACK__({
+        webpack({
             entry: './webpack/index.js',
             plugins: [
                 new SVGSpritemapPlugin({
@@ -17,7 +20,7 @@ it('Supports an entry type of \'string\'', () => {
 
 it('Supports an entry type of \'array\'', () => {
     expect(() => {
-        global.__WEBPACK__({
+        webpack({
             entry: ['./webpack/index.js'],
             plugins: [
                 new SVGSpritemapPlugin({
@@ -32,7 +35,7 @@ it('Supports an entry type of \'array\'', () => {
 
 it('Supports an entry type of \'object\' with string values', () => {
     expect(() => {
-        global.__WEBPACK__({
+        webpack({
             entry: {
                 a: './webpack/index.js'
             },
@@ -49,7 +52,7 @@ it('Supports an entry type of \'object\' with string values', () => {
 
 it('Supports an entry type of \'object\' with array values', () => {
     expect(() => {
-        global.__WEBPACK__({
+        webpack({
             entry: {
                 a: ['./webpack/index.js']
             },
@@ -66,7 +69,7 @@ it('Supports an entry type of \'object\' with array values', () => {
 
 it('Throws when the entry to which the svg4everybody helper will be added is of an unsupported type', () => {
     expect(() => {
-        global.__WEBPACK__({
+        webpack({
             entry: () => {},
             plugins: [
                 new SVGSpritemapPlugin({
@@ -81,7 +84,7 @@ it('Throws when the entry to which the svg4everybody helper will be added is of 
 
 it('Throws when an entry to which the svg4everybody helper will be added is of an unsupported type ', () => {
     expect(() => {
-        global.__WEBPACK__({
+        webpack({
             entry: () => {},
             plugins: [
                 new SVGSpritemapPlugin({
@@ -96,7 +99,7 @@ it('Throws when an entry to which the svg4everybody helper will be added is of a
 
 it('Throws when a sub-entry to which the svg4everybody helper will be added is of an unsupported type', () => {
     expect(() => {
-        global.__WEBPACK__({
+        webpack({
             entry: {
                 a: () => {}
             },

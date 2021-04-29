@@ -1,4 +1,5 @@
 import path from 'path';
+import webpack from 'webpack';
 
 // Library
 import SVGSpritemapPlugin from '../lib/';
@@ -75,7 +76,7 @@ const warnings = [{
 
 warnings.forEach((warning) => {
     it(`Should show a helpful warning with configuration \`${JSON.stringify(warning.options)}\``, (done) => {
-        global.__WEBPACK__({
+        webpack({
             mode: 'development',
             plugins: [
                 new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/variables-basic.svg'), warning.options)
@@ -83,11 +84,7 @@ warnings.forEach((warning) => {
         }, (error, stats) => {
             const { warnings: messages = [] } = stats.toJson();
 
-            if (global.__WEBPACK_VERSION__.startsWith('4.')) {
-                expect(messages.filter((message) => message.includes(warning.message))).toHaveLength(1);
-            } else {
-                expect(messages.filter((message) => message.message.includes(warning.message))).toHaveLength(1);
-            }
+            expect(messages.filter((message) => message.message.includes(warning.message))).toHaveLength(1);
 
             done();
         });
@@ -95,7 +92,7 @@ warnings.forEach((warning) => {
 });
 
 it('Should includes warnings coming back from the styles formatter', (done) => {
-    global.__WEBPACK__({
+    webpack({
         mode: 'development',
         plugins: [
             new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/variables-default-value-mismatch.svg'), {
@@ -108,13 +105,8 @@ it('Should includes warnings coming back from the styles formatter', (done) => {
     }, (error, stats) => {
         const { warnings: messages = [] } = stats.toJson();
 
-        if (global.__WEBPACK_VERSION__.startsWith('4.')) {
-            expect(messages.filter((message) => message.includes('Mismatching default values'))).toHaveLength(1);
-            expect(messages.filter((message) => message.includes('Variables will not work when using styles.format \'fragments\''))).toHaveLength(1);
-        } else {
-            expect(messages.filter((message) => message.message.includes('Mismatching default values'))).toHaveLength(1);
-            expect(messages.filter((message) => message.message.includes('Variables will not work when using styles.format \'fragments\''))).toHaveLength(1);
-        }
+        expect(messages.filter((message) => message.message.includes('Mismatching default values'))).toHaveLength(1);
+        expect(messages.filter((message) => message.message.includes('Variables will not work when using styles.format \'fragments\''))).toHaveLength(1);
 
         done();
     });
