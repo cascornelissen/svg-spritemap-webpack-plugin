@@ -19,6 +19,9 @@ module.exports = {
             filename: 'styles.css'
         }),
         new SVGSpritemapPlugin('src/**/*.svg', {
+            sprite: {
+                prefixStylesSelectors: true
+            },
             styles: path.join(__dirname, 'src/less/sprites.less')
         })
     ]
