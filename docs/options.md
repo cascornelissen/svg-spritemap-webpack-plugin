@@ -131,8 +131,8 @@ This value will also be used for the class/spritename in the generated styles, t
 #### `sprite.prefixStylesSelectors` – `false`
 Whether to also prefix any selectors that are generated in the styles file, if enabled.
 
-#### `sprite.idify` – `require('html4-id')`
-Function that will be used to transform the filename of each sprite into a valid HTML `id`. The default function uses [`html4-id`](https://www.npmjs.com/package/html4-id) to generate a valid HTML4 id which has quite a [few restrictions](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) and since HTML5 allows pretty much anything as long as there's no whitespace it's possible to change this function. Passing `false` will result in the filename getting used as-is.
+#### `sprite.idify` – `idify`
+Function that will be used to transform the filename of each sprite into a valid HTML `id`. The default function strips all whitespace as this is the only restriction according to the HTML5 specification. Passing `false` will result in the filename getting used as-is.
 
 ```es6
 // Generate HTML5 id's
