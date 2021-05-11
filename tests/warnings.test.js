@@ -72,6 +72,17 @@ const warnings = [{
         }
     },
     message: 'Using styles.format with value \'fragment\' in combination with sprite.generate.view with value false will result in CSS fragments not working correctly'
+}, {
+    options: {
+        output: {
+            filename: 'spritemap.[hash].svg'
+        },
+        styles: {
+            filename: 'test.scss',
+            format: 'fragment'
+        }
+    },
+    message: 'Using styles.format with value \'fragment\' in combination with [hash] in output.filename will results in incorrect fragment URLs'
 }];
 
 warnings.forEach((warning) => {
