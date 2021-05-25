@@ -26,22 +26,15 @@ $/* VAR_VARIABLES */: (
 }
 
 @function sprite-svg-uri($value) {
-    $encoded: '';
-    $slice: 2000;
-    $index: 0;
+    $output: $value;
 
-    @for $i from 1 through ceil(str-length($value) / $slice) {
-        $chunk: str-slice($value, $index, $index + $slice - 1);
-        $chunk: sprite-str-replace($chunk, '"', "'");
-        $chunk: sprite-str-replace($chunk, '<', '%3C');
-        $chunk: sprite-str-replace($chunk, '>', '%3E');
-        $chunk: sprite-str-replace($chunk, '&', '%26');
-        $chunk: sprite-str-replace($chunk, '#', '%23');
-        $encoded: #{$encoded}#{$chunk};
-        $index: $index + $slice;
-    }
+    $output: sprite-str-replace($output, '"', "'");
+    $output: sprite-str-replace($output, '<', '%3C');
+    $output: sprite-str-replace($output, '>', '%3E');
+    $output: sprite-str-replace($output, '&', '%26');
+    $output: sprite-str-replace($output, '#', '%23');
 
-    @return $encoded;
+    @return $output;
 }
 
 @mixin /* VAR_MIXIN */($name, $user-variables: (), $include-size: false) {
