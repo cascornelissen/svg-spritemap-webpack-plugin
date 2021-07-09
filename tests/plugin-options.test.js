@@ -4,11 +4,11 @@ describe('Input validation', () => {
     it('Accepts an empty prefix', () => {
         const output = formatOptions({
             sprite: {
-                prefix: ""
+                prefix: ''
             }
         });
 
-        expect(output.sprite.prefix).toEqual("");
+        expect(output.sprite.prefix).toEqual('');
     })
 });
 
