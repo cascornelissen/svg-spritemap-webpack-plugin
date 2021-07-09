@@ -1,5 +1,17 @@
 import formatOptions from '../lib/options-formatter';
 
+describe('Input validation', () => {
+    it('Accepts an empty prefix', () => {
+        const output = formatOptions({
+            sprite: {
+                prefix: ""
+            }
+        });
+
+        expect(output.sprite.prefix).toEqual("");
+    })
+});
+
 describe('Input rewriting', () => {
     it('Transforms a string pattern to an array with the single pattern', () => {
         const pattern = 'a';
