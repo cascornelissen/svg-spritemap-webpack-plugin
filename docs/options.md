@@ -25,7 +25,8 @@ Passing an object as the second argument allows you to change specific options, 
 ```js
 new SVGSpritemapPlugin(string | string[], {
     input?: {
-        options?: object
+        options?: object,
+        allowDuplicates?: boolean,
     },
     output?: {
         filename?: string,
@@ -76,6 +77,8 @@ The `input` object contains the configuration for the input of the plugin.
 #### `input.options` – `{}`
 Options object to pass to [`glob`](http://npmjs.com/package/glob) to find the sprites.
 
+#### `input.allowDuplicates` – `false`
+Allow the usage of the same input SVG multiple times. This option work well together with the `sprite.idify` option to set a different name in the output file.
 
 ### Output
 The `output` object contains the configuration for the main output (SVG) of the plugin.

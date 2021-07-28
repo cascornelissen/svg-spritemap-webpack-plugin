@@ -282,3 +282,34 @@ it('Does not delete the chunk files when \'output.chunk.keep\' is \'true\'', (do
         done();
     });
 });
+
+it('Should allow to use the same input SVG when \'input.allowDuplicates\' is \'true\'', async (done) => {
+    let index = 0;
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/duplicates.svg'), 'utf-8').trim();
+
+    webpack({
+        entry: path.resolve(__dirname, 'webpack/index.js'),
+        mode: 'development',
+        devtool: false,
+        plugins: [
+            new SVGSpritemapPlugin([
+                path.resolve(__dirname, 'input/svg/single.svg'),
+                path.resolve(__dirname, 'input/svg/single.svg'),
+                path.resolve(__dirname, 'input/svg/single.svg')
+            ], {
+                input: {
+                    allowDuplicates: true
+                },
+                sprite: {
+                    idify: (filename) => {
+                        index++
+                        return `${filename}-${index}`;
+                    }
+                }
+            })
+        ]
+    }, (err, stats) => {
+        expect(stats.compilation.assets['spritemap.svg'].size()).toEqual(output.length);
+        done();
+    });
+});
