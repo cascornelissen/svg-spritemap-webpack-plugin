@@ -284,9 +284,6 @@ it('Does not delete the chunk files when \'output.chunk.keep\' is \'true\'', (do
 });
 
 it('Should allow to use the same input SVG when \'input.allowDuplicates\' is \'true\'', async (done) => {
-    let index = 0;
-    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/duplicates.svg'), 'utf-8').trim();
-
     webpack({
         entry: path.resolve(__dirname, 'webpack/index.js'),
         mode: 'development',
@@ -299,17 +296,11 @@ it('Should allow to use the same input SVG when \'input.allowDuplicates\' is \'t
             ], {
                 input: {
                     allowDuplicates: true
-                },
-                sprite: {
-                    idify: (filename) => {
-                        index++
-                        return `${filename}-${index}`;
-                    }
                 }
             })
         ]
     }, (err, stats) => {
-        expect(stats.compilation.assets['spritemap.svg'].size()).toEqual(output.length);
+        expect(stats.compilation.assets['spritemap.svg']).not.toBeUndefined();
         done();
     });
 });
