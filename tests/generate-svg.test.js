@@ -283,7 +283,7 @@ it('Does not delete the chunk files when \'output.chunk.keep\' is \'true\'', (do
     });
 });
 
-it('Should allow to use the same input SVG when \'input.allowDuplicates\' is \'true\'', async (done) => {
+it('Should allow to use the same input SVG when \'input.allowDuplicates\' is \'true\'', (done) => {
     webpack({
         entry: path.resolve(__dirname, 'webpack/index.js'),
         mode: 'development',
