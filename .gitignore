@@ -1,6 +1,7 @@
 /node_modules
 /coverage
 /dist
+/.vscode
 
 # Generated files
 /svg4everybody-helper.js

@@ -1,7 +1,7 @@
 # Options
 The `SVGSpritemapPlugin()` supports 2 arguments as input, the first being a [`glob`](https://www.npmjs.com/package/glob) pattern that will be used to find the sprites, the second is an optional object containing additional configuration options.
 
-**Simple usage**  
+**Simple usage**
 Adding the plugin without passing any options will result in all the defaults being used.
 
 ```js
@@ -19,7 +19,7 @@ new SVGSpritemapPlugin([
 ]);
 ```
 
-**Advanced usage**  
+**Advanced usage**
 Passing an object as the second argument allows you to change specific options, this `options` object can be described in a [TypeScript](https://www.typescriptlang.org/) interface as follows:
 
 ```js
@@ -31,7 +31,8 @@ new SVGSpritemapPlugin(string | string[], {
     output?: {
         filename?: string,
         svg?: {
-            sizes?: boolean
+            sizes?: boolean,
+            class?: string,
         },
         chunk?: {
             name?: string,
@@ -89,6 +90,9 @@ Filename of the generated file (located at the webpack `output.path`), `[hash]` 
 #### `output.svg.sizes`
 Whether to include the `width` and `height` attributes on the root SVG element. The default value for this option is based on the value of the `sprite.generate.use` option but when specified will always overwrite it.
 
+#### `output.svg.class`
+Custom `class` to include on the root SVG element. By default no class will be added.
+
 #### `output.chunk.name` – `'spritemap'`
 Name of the chunk that will be generated.
 
@@ -98,21 +102,21 @@ Whether to keep the chunk after it's been emitted by webpack.
 #### `output.svg4everybody` – `false`
 Whether to include the [`SVG4Everybody`](https://www.npmjs.com/package/svg4everybody#usage) helper in your entries.
 
-- `false`  
+- `false`
   Don't add the helper.
-- `true`  
+- `true`
   Add the helper with a configuration object of `{}`.
-- `{ ... }`  
+- `{ ... }`
   Add the helper with a custom options object.
 
 #### `output.svgo` – `true`
 Options object to pass to [`SVG Optimizer`](http://npmjs.com/package/svgo).
 
-- `false`  
+- `false`
   Disable the optimizer.
-- `true`  
+- `true`
   Enable optimizer with the default SVG Optimizer config.
-- `{ ... }`  
+- `{ ... }`
   Enable optimizer with a custom options object.
 
 
@@ -124,11 +128,11 @@ Prefix added to sprite `id` in the spritemap. It's possible to pass a function f
 
 This value will also be used for the class/spritename in the generated styles, the exact implementation and usage differs between style implementations follows:
 
-- `.css`  
+- `.css`
   Used as a prefix for the classname.
-- `.scss`/`.sass`  
+- `.scss`/`.sass`
   Stripped from the variable name since the Sass implementation is based on [maps](https://sass-lang.com/documentation/values/maps).
-- `.less`  
+- `.less`
   Used as a prefix for the variable.
 
 #### `sprite.prefixStylesSelectors` – `false`
@@ -166,11 +170,11 @@ Filename for the generated styles file (CSS, SCSS, LESS). This allows for using 
 
 The file that's generated will be placed in a different location depending on the value specified.
 
-- `'filename.ext'`  
+- `'filename.ext'`
   Add the styles file to the webpack assets, this will result in the file being written to the webpack `output.path`, `[hash]` and `[contenthash]` are supported.
-- `'/path/to/filename.ext'`  
+- `'/path/to/filename.ext'`
   Write the styles file to a specific directory.
-- `'~filename.ext'`  
+- `'~filename.ext'`
   Write the styles file to the plugin directory. This allows for importing it from a JavaScript bundle or Sass very easily:
 
   ```js
@@ -184,9 +188,9 @@ The file that's generated will be placed in a different location depending on th
 
 The value for the `styles` option should end in a supported style extension and the generated file will have language-specific content:
 
-- `.css`  
+- `.css`
   Generates a class-based stylesheet where the classnames are equal to the spritename (including prefix) containing the sprite as a `background-image`.
-- `.scss`/`.sass`  
+- `.scss`/`.sass`
   Generates a [Sass map](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps) containing the spritenames (excluding prefix) as keys and the sprite as values, comes with a `sprite()` [mixin](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins).
 
   ```scss
@@ -198,9 +202,9 @@ The value for the `styles` option should end in a supported style extension and 
       background-image: url(map-get($sprites, 'phone'));
   }
   ```
-  
+
   Basic support for [variables using a custom syntax](/docs/variables.md) is available when using Sass, this feature allows developers to restyle their sprites on the fly using the `sprite()` mixin.
-- `.less`  
+- `.less`
   Generates [LESS variables](http://lesscss.org/features/#variables-feature-overview) for each sprite based on the spritename (including prefix) with the sprite as value, comes with a `.sprite()` [mixin](http://lesscss.org/features/#mixins-feature).
 
   ```less
@@ -219,9 +223,9 @@ Whether to include the original SVG attributes in the generated styles.
 #### `styles.format` – `'data'`
 Format of the styles that will be generated, the following values are valid:
 
-- `'data'`  
+- `'data'`
   Generates [data URIs](https://www.npmjs.com/package/mini-svg-data-uri) as background `url()`s.
-- `'fragment'`  
+- `'fragment'`
   Generates URLs with [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/) as background `url()`s. This requires the `sprite.generate.view` option to be enabled and uses the webpack option [`output.publicPath`](https://webpack.js.org/configuration/output/#output-publicpath) to build a URL to the file. This type of setup requires some additional configuration, [see example](../examples/fragments) for more information.
 
 #### `styles.variables.sprites` – `'sprites'`
