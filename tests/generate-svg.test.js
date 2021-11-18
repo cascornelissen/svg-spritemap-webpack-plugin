@@ -141,15 +141,19 @@ it('Adds the width and height attribute to the root SVG when required', async ()
     expect(svg).toEqual(output);
 });
 
-it('Adds custom class to the root SVG when specified', async () => {
-    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/class.svg'), 'utf-8').trim();
+it('Adds custom attributes to the root SVG when specified', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/custom-attributes.svg'), 'utf-8').trim();
     const svg = await generateSVG([{
         path: path.resolve(__dirname, 'input/svg/single.svg'),
         content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
     }], {
         output: {
             svg: {
-                class: 'test-custom-class'
+                attributes: {
+                    class: 'test-custom-class',
+                    id: 'test-custom-id',
+                    'data-test': 'test-custom-data-attr'
+                }
             }
         }
     });
