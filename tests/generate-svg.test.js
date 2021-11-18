@@ -152,7 +152,8 @@ it('Adds custom attributes to the root SVG when specified', async () => {
                 attributes: {
                     class: 'test-custom-class',
                     id: 'test-custom-id',
-                    'data-test': 'test-custom-data-attr'
+                    'data-test': 'test-custom-data-attr',
+                    hidden: true
                 }
             }
         }
