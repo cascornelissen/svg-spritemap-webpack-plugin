@@ -49,13 +49,31 @@ it('Transforms files with an incorrect \'viewBox\' attribute correctly', async (
 });
 
 it('Does not optimize sprites when the \'output.svgo\' option is `false`', async () => {
-    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/single-without-svgo.svg'), 'utf-8').trim();
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/without-svgo.svg'), 'utf-8').trim();
     const svg = await generateSVG([{
-        path: path.resolve(__dirname, 'input/svg/single.svg'),
-        content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        path: path.resolve(__dirname, 'input/svg/without-svgo.svg'),
+        content: fs.readFileSync(path.resolve(__dirname, 'input/svg/without-svgo.svg'), 'utf-8')
     }], {
         output: {
             svgo: false
+        }
+    });
+
+    expect(svg).toEqual(output);
+});
+
+it('Can selectively disable SVGO plugins', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/custom-svgo.svg'), 'utf-8').trim();
+    const svg = await generateSVG([{
+        path: path.resolve(__dirname, 'input/svg/without-svgo.svg'),
+        content: fs.readFileSync(path.resolve(__dirname, 'input/svg/without-svgo.svg'), 'utf-8')
+    }], {
+        output: {
+            svgo: {
+                plugins: [
+                    { name: 'removeDesc', active: false }
+                ]
+            }
         }
     });
 
