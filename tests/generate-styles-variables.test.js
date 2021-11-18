@@ -4,7 +4,11 @@ import path from 'path';
 // Library
 import generateSVG from '../lib/generate-svg';
 import generateStyles from '../lib/generate-styles';
+import formatOptions from '../lib/options-formatter';
 import { stripVariables, findDefaultValueMismatches } from '../lib/variable-parser';
+
+// Constants
+const DEFAULT_OPTIONS = formatOptions();
 
 describe('General', () => {
     it('Strips variables from spritemap SVG', async () => {
@@ -12,7 +16,7 @@ describe('General', () => {
         const svg = await generateSVG([{
             path: path.resolve(__dirname, 'input/svg/variables-all.svg'),
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-all.svg'), 'utf-8')
-        }]);
+        }], DEFAULT_OPTIONS);
 
         expect(stripVariables(svg)).toEqual(output);
     });
@@ -21,7 +25,7 @@ describe('General', () => {
         const svg = await generateSVG([{
             path: path.resolve(__dirname, 'input/svg/variables-default-value-mismatch.svg'),
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-default-value-mismatch.svg'), 'utf-8')
-        }]);
+        }], DEFAULT_OPTIONS);
 
         expect(findDefaultValueMismatches(svg)).toHaveLength(1);
     });
@@ -33,7 +37,7 @@ describe('Sass maps in styles', () => {
         const svg = await generateSVG([{
             path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-basic.svg'), 'utf-8')
-        }]);
+        }], DEFAULT_OPTIONS);
 
         const styles = generateStyles(svg, {
             extension: 'scss'
@@ -49,7 +53,7 @@ describe('Sass maps in styles', () => {
         const svg = await generateSVG([{
             path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-default-value-empty.svg'), 'utf-8')
-        }]);
+        }], DEFAULT_OPTIONS);
 
         const styles = generateStyles(svg, {
             extension: 'scss'
@@ -65,7 +69,7 @@ describe('Sass maps in styles', () => {
         const svg = await generateSVG([{
             path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-multiple.svg'), 'utf-8')
-        }]);
+        }], DEFAULT_OPTIONS);
 
         const styles = generateStyles(svg, {
             extension: 'scss'
@@ -81,7 +85,7 @@ describe('Sass maps in styles', () => {
         const svg = await generateSVG([{
             path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-shorthand.svg'), 'utf-8')
-        }]);
+        }], DEFAULT_OPTIONS);
 
         const styles = generateStyles(svg, {
             extension: 'scss'
