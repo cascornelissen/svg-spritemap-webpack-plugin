@@ -12,7 +12,7 @@ const CHUNK_NAME = 'spritemap';
 const DEFAULT_OPTIONS = formatOptions();
 
 it('Returns undefined when no files are specified', async () => {
-    const svg = await generateSVG([], DEFAULT_OPTIONS);
+    const svg = await generateSVG(undefined, DEFAULT_OPTIONS);
 
     expect(svg).toBeUndefined();
 });
@@ -72,9 +72,10 @@ it('Can selectively disable SVGO plugins', async () => {
     }], formatOptions({
         output: {
             svgo: {
-                plugins: [
-                    { name: 'removeDesc', active: false }
-                ]
+                plugins: [{
+                    name: 'removeDesc',
+                    active: false
+                }]
             }
         }
     }));
