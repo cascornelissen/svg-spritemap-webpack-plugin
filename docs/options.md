@@ -31,7 +31,8 @@ new SVGSpritemapPlugin(string | string[], {
     output?: {
         filename?: string,
         svg?: {
-            sizes?: boolean
+            sizes?: boolean,
+            attributes?: object
         },
         chunk?: {
             name?: string,
@@ -88,6 +89,9 @@ Filename of the generated file (located at the webpack `output.path`), `[hash]` 
 
 #### `output.svg.sizes`
 Whether to include the `width` and `height` attributes on the root SVG element. The default value for this option is based on the value of the `sprite.generate.use` option but when specified will always overwrite it.
+
+#### `output.svg.attributes` -- `{}`
+Custom attributes to add to the root SVG element. This should be an object, with `key` attribute names, and `value` attribute values, e.g. `{ id: 'my-svg-id' }`. By default no attributes will be added.
 
 #### `output.chunk.name` – `'spritemap'`
 Name of the chunk that will be generated.
