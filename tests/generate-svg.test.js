@@ -346,3 +346,28 @@ it('Should allow to use the same input SVG when \'input.allowDuplicates\' is \'t
         done();
     });
 });
+
+it('Should include spritemap inside generated chunk', (done) => {
+    webpack({
+        entry: path.resolve(__dirname, './webpack/index.js'),
+        plugins: [
+            new SVGSpritemapPlugin(path.resolve(__dirname, 'input/svg/single.svg'), {
+                output: {
+                    filename: 'spritemap.svg',
+                    chunk: {
+                        name: 'icons',
+                    },
+                },
+                sprite: {
+                    prefix: false
+                }
+            })
+        ]
+    }, (error, stats) => {
+        const chunk = stats.compilation.namedChunks.get('icons');
+
+        expect(chunk.files.has('icons.js')).toBeTruthy();
+        expect(chunk.files.has('spritemap.svg')).toBeTruthy();
+        done();
+    });
+});
