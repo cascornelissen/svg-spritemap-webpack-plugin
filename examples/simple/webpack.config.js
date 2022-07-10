@@ -2,6 +2,6 @@ const SVGSpritemapPlugin = require('../..');
 
 module.exports = {
     plugins: [
-        new SVGSpritemapPlugin('src/**/*.svg')
+        new SVGSpritemapPlugin('src/sprites/*.svg')
     ]
 };

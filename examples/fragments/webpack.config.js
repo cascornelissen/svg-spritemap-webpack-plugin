@@ -25,7 +25,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'styles.css'
         }),
-        new SVGSpritemapPlugin('src/**/*.svg', {
+        new SVGSpritemapPlugin('src/sprites/*.svg', {
             output: {
                 svg: {
                     // Disable `width` and `height` attributes on the root SVG element

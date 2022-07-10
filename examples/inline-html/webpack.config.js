@@ -4,7 +4,7 @@ const SVGSpritemapPlugin = require('../..');
 
 module.exports = {
     plugins: [
-        new SVGSpritemapPlugin('src/**/*.svg'),
+        new SVGSpritemapPlugin('src/sprites/*.svg'),
         new HtmlWebpackPlugin({
             title: 'Example: inline-html',
             template: path.resolve(__dirname, 'src/index.ejs')
