@@ -100,6 +100,15 @@ const warnings = [{
         }
     },
     message: 'Using \'includeDimensions\' only applies to CSS output - ignoring setting'
+}, {
+    options: {
+        styles: {
+            filename: 'test.css',
+            includeDimensions: true,
+            format: 'dimensions'
+        }
+    },
+    message: 'Using \'includeDimensions\' only applies to a \'format\' setting of \'data\' or \'fragment\' - ignoring setting'
 }];
 
 warnings.forEach((warning) => {
