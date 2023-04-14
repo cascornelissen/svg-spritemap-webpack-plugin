@@ -1,6 +1,7 @@
 /node_modules
 /coverage
 /dist
+.DS_Store
 
 # Generated files
 /svg4everybody-helper.js

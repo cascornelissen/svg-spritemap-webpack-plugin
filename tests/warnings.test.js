@@ -83,6 +83,23 @@ const warnings = [{
         }
     },
     message: 'Using styles.format with value \'fragment\' in combination with [hash] in output.filename will results in incorrect fragment URLs'
+}, {
+    options: {
+        styles: {
+            filename: 'test.scss',
+            format: 'dimensions'
+        }
+    },
+    message: 'Using styles.format with value \'dimensions\' is only compatible with CSS file formats - defaulting to styles.format \'data\''
+}, {
+    options: {
+        styles: {
+            filename: 'test.scss',
+            includeDimensions: true,
+            format: 'data'
+        }
+    },
+    message: 'Using \'includeDimensions\' only applies to CSS output - ignoring setting'
 }];
 
 warnings.forEach((warning) => {

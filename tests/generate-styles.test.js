@@ -78,6 +78,40 @@ describe('CSS', () => {
             path: input
         }]).content.trim()).toEqual(output);
     });
+
+    it('Generates styles with dimensions', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-dimensions.css'), 'utf-8').trim();
+        const spritemap = await generateSVG([{
+            path: input,
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }], DEFAULT_OPTIONS);
+
+        expect(generateStyles(spritemap, {
+            extension: 'css',
+            includeDimensions: true,
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
+    });
+
+    it('Generates dimensions only', async () => {
+        const input = path.resolve(__dirname, 'input/svg/single.svg');
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/dimensions.css'), 'utf-8').trim();
+        const spritemap = await generateSVG([{
+            path: input,
+            content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
+        }], DEFAULT_OPTIONS);
+
+        expect(generateStyles(spritemap, {
+            extension: 'css',
+            format: {
+                type: 'dimensions'
+            }
+        }, [{
+            path: input
+        }]).content.trim()).toEqual(output);
+    });
 });
 
 describe('SCSS', () => {
@@ -98,7 +132,7 @@ describe('SCSS', () => {
 
     it('Generates styles with passed attributes', async () => {
         const input = path.resolve(__dirname, 'input/svg/single.svg');
-        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes.scss'), 'utf-8').trim();
+        const output = fs.readFileSync(path.resolve(__dirname, 'output/styles/sprites-attributes-px.scss'), 'utf-8').trim();
         const spritemap = await generateSVG([{
             path: input,
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/single.svg'), 'utf-8')
@@ -106,7 +140,8 @@ describe('SCSS', () => {
 
         expect(generateStyles(spritemap, {
             extension: 'scss',
-            keepAttributes: true
+            keepAttributes: true,
+            units: 'px',
         }, [{
             path: input
         }]).content.trim()).toEqual(output);

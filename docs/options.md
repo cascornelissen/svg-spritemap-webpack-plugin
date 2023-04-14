@@ -53,8 +53,10 @@ new SVGSpritemapPlugin(string | string[], {
     },
     styles?: boolean | string | {
         filename?: string,
-        format?: 'data' | 'fragment',
+        format?: 'data' | 'fragment' | 'dimensions',
         keepAttributes?: boolean,
+        includeDimensions?: boolean,
+        units?: 'rem' | 'px',
         variables?: {
             sprites?: string,
             sizes?: string,
@@ -216,10 +218,6 @@ The value for the `styles` option should end in a supported style extension and 
       background-image: url(@sprite-phone);
   }
   ```
-
-#### `styles.keepAttributes` – `false`
-Whether to include the original SVG attributes in the generated styles.
-
 #### `styles.format` – `'data'`
 Format of the styles that will be generated, the following values are valid:
 
@@ -227,6 +225,35 @@ Format of the styles that will be generated, the following values are valid:
   Generates [data URIs](https://www.npmjs.com/package/mini-svg-data-uri) as background `url()`s.
 - `'fragment'`  
   Generates URLs with [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/) as background `url()`s. This requires the `sprite.generate.view` option to be enabled and uses the webpack option [`output.publicPath`](https://webpack.js.org/configuration/output/#output-publicpath) to build a URL to the file. This type of setup requires some additional configuration, [see example](../examples/fragments) for more information.
+- `'dimensions'` (only with a CSS output)
+  Generates only dimension information about the sprites in your sprite map. For example:
+
+  ```CSS
+  .sprite-foo { width: 1.5rem; height: 1.5rem; }
+  ```
+
+#### `styles.keepAttributes` – `false`
+Whether to include the original SVG attributes in the generated styles.
+
+#### `styles.includeDimensions` – `false` (only with a CSS output)
+Whether to include the individual SVG dimensions in the generated styles.
+
+For example, with the default `false`:
+
+```CSS
+.sprite-foo { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z'/%3e%3c/svg%3e"); }
+```
+
+And, if set to `true`:
+
+```CSS
+.sprite-foo { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z'/%3e%3c/svg%3e"); width: 1.5rem; height: 1.5rem; }
+```
+
+Useful if you know you're going to be displaying the sprite at their original sizes.
+
+#### `styles.units` – `'rem'`
+CSS units for outputted dimensions, defaults to `rem` with `px` also being available.
 
 #### `styles.variables.sprites` – `'sprites'`
 Name for the SCSS variable that is used for the Sass map containing sprites.
