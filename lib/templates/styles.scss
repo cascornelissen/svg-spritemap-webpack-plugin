@@ -62,15 +62,18 @@ $/* VAR_VARIABLES */: (
 
     @if $include-size {
         $size: map-get($/* VAR_SIZES */, $name);
+        $width: map-get($size, width);
+        $height: map-get($size, height);
+
         @if $include-size == true {
           @if $mode == 'mask' {
-            mask-size: map-get($size, width) map-get($size, height);
+            mask-size: $width $height;
           } @else {
-            background-size: map-get($size, width) map-get($size, height);
+            background-size: $width $height;
           }
         } @else if $include-size == 'box' {
-            width: map-get($size, width);
-            height: map-get($size, height);
+            width: $width;
+            height: $height;
         }
     }
 }
