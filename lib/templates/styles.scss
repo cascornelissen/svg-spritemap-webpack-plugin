@@ -54,7 +54,11 @@ $/* VAR_VARIABLES */: (
         @warn 'Sprite \'#{$name}\' does not contain any variables';
     }
 
-    background: url($sprite) center no-repeat;
+    @if $mode == 'mask' {
+      mask: url($sprite) center no-repeat;
+    } @else {
+      background: url($sprite) center no-repeat;
+    }
 
     @if $include-size {
         $size: map-get($/* VAR_SIZES */, $name);
