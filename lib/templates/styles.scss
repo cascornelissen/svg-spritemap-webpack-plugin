@@ -40,6 +40,10 @@ $/* VAR_VARIABLES */: (
 @mixin /* VAR_MIXIN */($name, $user-variables: (), $include-size: false, $mode: 'background') {
     $sprite: map-get($/* VAR_SPRITES */, $name);
 
+    @if $sprite == null {
+      @error 'Sprite \'#{$name}\' does not exists';
+    }
+
     // Inject variables
     $default-variables: map-get($/* VAR_VARIABLES */, $name);
     @if type-of($default-variables) == 'map' {
