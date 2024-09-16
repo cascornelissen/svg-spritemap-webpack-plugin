@@ -37,7 +37,7 @@ $/* VAR_VARIABLES */: (
     @return $output;
 }
 
-@mixin /* VAR_MIXIN */($name, $user-variables: (), $include-size: false) {
+@mixin /* VAR_MIXIN */($name, $user-variables: (), $include-size: false, $mode: 'background') {
     $sprite: map-get($/* VAR_SPRITES */, $name);
 
     // Inject variables
