@@ -37,11 +37,11 @@ $/* VAR_VARIABLES */: (
     @return $output;
 }
 
-@mixin /* VAR_MIXIN */($name, $user-variables: (), $include-size: false, $mode: 'background') {
+@mixin /* VAR_MIXIN */($name, $user-variables: (), $include-size: false, $attribute: 'background') {
     $sprite: map-get($/* VAR_SPRITES */, $name);
 
     @if $sprite == null {
-      @error 'Sprite \'#{$name}\' does not exists';
+        @error 'Sprite \'#{$name}\' does not exists';
     }
 
     // Inject variables
@@ -58,11 +58,7 @@ $/* VAR_VARIABLES */: (
         @warn 'Sprite \'#{$name}\' does not contain any variables';
     }
 
-    @if $mode == 'mask' {
-      mask: url($sprite) center no-repeat;
-    } @else {
-      background: url($sprite) center no-repeat;
-    }
+    #{$attribute}: url($sprite) center no-repeat;
 
     @if $include-size {
         $size: map-get($/* VAR_SIZES */, $name);
@@ -70,11 +66,7 @@ $/* VAR_VARIABLES */: (
         $height: map-get($size, height);
 
         @if $include-size == true {
-          @if $mode == 'mask' {
-            mask-size: $width $height;
-          } @else {
-            background-size: $width $height;
-          }
+            #{$attribute}-size: $width $height;
         } @else if $include-size == 'box' {
             width: $width;
             height: $height;

@@ -9,5 +9,5 @@ $ ../../node_modules/.bin/webpack
 Since a couple of these examples require additional dependencies, make sure to install them:
 
 ```shell
-$ npm install mini-css-extract-plugin css-loader style-loader sass-loader node-sass less-loader less html-webpack-plugin webpack-dev-server --no-save
+$ npm install mini-css-extract-plugin css-loader style-loader sass-loader sass less-loader less html-webpack-plugin webpack-dev-server --no-save
 ```

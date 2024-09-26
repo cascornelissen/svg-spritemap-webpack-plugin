@@ -40,8 +40,12 @@ $variables: (
     @return $output;
 }
 
-@mixin sprite($name, $user-variables: (), $include-size: false) {
+@mixin sprite($name, $user-variables: (), $include-size: false, $attribute: 'background') {
     $sprite: map-get($sprites, $name);
+
+    @if $sprite == null {
+        @error 'Sprite \'#{$name}\' does not exists';
+    }
 
     // Inject variables
     $default-variables: map-get($variables, $name);
@@ -57,15 +61,18 @@ $variables: (
         @warn 'Sprite \'#{$name}\' does not contain any variables';
     }
 
-    background: url($sprite) center no-repeat;
+    #{$attribute}: url($sprite) center no-repeat;
 
     @if $include-size {
         $size: map-get($sizes, $name);
+        $width: map-get($size, width);
+        $height: map-get($size, height);
+
         @if $include-size == true {
-            background-size: map-get($size, width) map-get($size, height);
+            #{$attribute}-size: $width $height;
         } @else if $include-size == 'box' {
-            width: map-get($size, width);
-            height: map-get($size, height);
+            width: $width;
+            height: $height;
         }
     }
 }
