@@ -37,7 +37,7 @@ $/* VAR_VARIABLES */: (
     @return $output;
 }
 
-@mixin /* VAR_MIXIN */($name, $user-variables: (), $include-size: false, $attribute: 'background') {
+@mixin /* VAR_MIXIN */($name, $user-variables: (), $include-size: false, $property: 'background') {
     $sprite: map-get($/* VAR_SPRITES */, $name);
 
     @if $sprite == null {
@@ -58,7 +58,7 @@ $/* VAR_VARIABLES */: (
         @warn 'Sprite \'#{$name}\' does not contain any variables';
     }
 
-    #{$attribute}: url($sprite) center no-repeat;
+    #{$property}: url($sprite) center no-repeat;
 
     @if $include-size {
         $size: map-get($/* VAR_SIZES */, $name);
@@ -66,7 +66,7 @@ $/* VAR_VARIABLES */: (
         $height: map-get($size, height);
 
         @if $include-size == true {
-            #{$attribute}-size: $width $height;
+            #{$property}-size: $width $height;
         } @else if $include-size == 'box' {
             width: $width;
             height: $height;

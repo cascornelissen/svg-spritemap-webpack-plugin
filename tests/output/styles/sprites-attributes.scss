@@ -40,7 +40,7 @@ $variables: (
     @return $output;
 }
 
-@mixin sprite($name, $user-variables: (), $include-size: false, $attribute: 'background') {
+@mixin sprite($name, $user-variables: (), $include-size: false, $property: 'background') {
     $sprite: map-get($sprites, $name);
 
     @if $sprite == null {
@@ -61,7 +61,7 @@ $variables: (
         @warn 'Sprite \'#{$name}\' does not contain any variables';
     }
 
-    #{$attribute}: url($sprite) center no-repeat;
+    #{$property}: url($sprite) center no-repeat;
 
     @if $include-size {
         $size: map-get($sizes, $name);
@@ -69,7 +69,7 @@ $variables: (
         $height: map-get($size, height);
 
         @if $include-size == true {
-            #{$attribute}-size: $width $height;
+            #{$property}-size: $width $height;
         } @else if $include-size == 'box' {
             width: $width;
             height: $height;
