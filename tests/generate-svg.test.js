@@ -146,6 +146,25 @@ it('Generates with view tag when \'options.generate.view\' is `true`', async () 
     expect(svg).toEqual(output);
 });
 
+it('Keeps height and width attribute when \'sprite.generate.keepDimension\' option is `true`', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/keep-dimensions.svg'), 'utf-8').trim();
+    const svg = await generateSVG([{
+        path: path.resolve(__dirname, 'input/svg/keep-dimensions.svg'),
+        content: fs.readFileSync(path.resolve(__dirname, 'input/svg/keep-dimensions.svg'), 'utf-8')
+    }], formatOptions({
+        output: {
+            svgo: false
+        },
+        sprite: {
+            generate: {
+                keepDimensions: true
+            },
+        }
+    }));
+
+    expect(svg).toEqual(output);
+});
+
 it('Adds the width and height attribute to the root SVG when required', async () => {
     const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/sizes.svg'), 'utf-8').trim();
     const svg = await generateSVG([{
@@ -370,21 +389,4 @@ it('Should include spritemap inside generated chunk', (done) => {
         expect(chunk.files.has('spritemap.svg')).toBeTruthy();
         done();
     });
-});
-
-it('Keeps height and width attribute when \'sprite.generate.keepDimension\' option is `true`', async () => {
-    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/keep-dimensions.svg'), 'utf-8').trim();
-    const svg = await generateSVG([{
-        path: path.resolve(__dirname, 'input/svg/keep-dimensions.svg'),
-        content: fs.readFileSync(path.resolve(__dirname, 'input/svg/keep-dimensions.svg'), 'utf-8')
-    }], formatOptions({
-        output: {
-            svgo: false
-        },
-        sprite: {
-            generate: { keepDimension: true },
-        }
-    }));
-
-    expect(svg).toEqual(output);
 });
