@@ -371,3 +371,20 @@ it('Should include spritemap inside generated chunk', (done) => {
         done();
     });
 });
+
+it('Keeps height and width attribute when \'sprite.generate.keepDimension\' option is `true`', async () => {
+    const output = fs.readFileSync(path.resolve(__dirname, 'output/svg/keep-dimensions.svg'), 'utf-8').trim();
+    const svg = await generateSVG([{
+        path: path.resolve(__dirname, 'input/svg/keep-dimensions.svg'),
+        content: fs.readFileSync(path.resolve(__dirname, 'input/svg/keep-dimensions.svg'), 'utf-8')
+    }], formatOptions({
+        output: {
+            svgo: false
+        },
+        sprite: {
+            generate: { keepDimension: true },
+        }
+    }));
+
+    expect(svg).toEqual(output);
+});
