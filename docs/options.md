@@ -161,7 +161,7 @@ Whether to include a `<use>` element for each sprite within the generated sprite
 #### `sprite.generate.view` - `false`
 Whether to include a `<view>` element for each sprite within the generated spritemap to allow referencing via [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/). Passing a string will use the value as a postfix for the `id` attribute.
 
-#### `sprite.generate.keepDimensions` - `false`
+#### `sprite.generate.dimensions` - `false`
 Whether to keep each SVG `height` and `width` attributes and add them to the generated symbol. Requires `output.svgo` to be `false` or selectively disabled [SVGO `removeDimensions` plugin](https://svgo.dev/docs/plugins/removeDimensions/).
 
 ### Styles

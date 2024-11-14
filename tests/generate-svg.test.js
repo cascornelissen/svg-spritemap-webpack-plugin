@@ -157,7 +157,7 @@ it('Keeps height and width attribute when \'sprite.generate.keepDimension\' opti
         },
         sprite: {
             generate: {
-                keepDimensions: true
+                dimensions: true
             },
         }
     }));
