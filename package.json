@@ -44,7 +44,7 @@
     "dependencies": {
         "@xmldom/xmldom": "^0.8.10",
         "glob": "^8.1.0",
-        "joi": "^17.6.0",
+        "joi": "^17.13.3",
         "loader-utils": "^3.2.0",
         "lodash": "^4.17.21",
         "mini-svg-data-uri": "^1.4.4",
