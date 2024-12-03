@@ -62,7 +62,7 @@
         "cross-env": "^7.0.3",
         "del": "^6.1.1",
         "jest": "^28.1.1",
-        "webpack": "^5.73.0",
+        "webpack": "^5.96.1",
         "webpack-cli": "^4.10.0"
     },
     "peerDependencies": {
