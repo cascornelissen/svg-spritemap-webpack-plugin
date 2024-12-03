@@ -42,7 +42,7 @@
         "node": ">= 10.13.0"
     },
     "dependencies": {
-        "@xmldom/xmldom": "^0.8.2",
+        "@xmldom/xmldom": "^0.8.10",
         "glob": "^8.0.3",
         "joi": "^17.6.0",
         "loader-utils": "^3.2.0",
