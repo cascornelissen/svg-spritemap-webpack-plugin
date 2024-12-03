@@ -43,7 +43,7 @@
     },
     "dependencies": {
         "@xmldom/xmldom": "^0.8.10",
-        "glob": "^8.0.3",
+        "glob": "^8.1.0",
         "joi": "^17.6.0",
         "loader-utils": "^3.2.0",
         "lodash": "^4.17.21",
