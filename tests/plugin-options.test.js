@@ -85,12 +85,12 @@ it('Merges supplied options into the options object', () => {
     expect(output.output.filename).toBe(filename);
 });
 
-it('Throws when the SVGO cleanupIDs plugin gets overwritten', () => {
+it('Throws when the SVGO cleanupIds plugin gets overwritten', () => {
     expect(() => {
         formatOptions({
             svgo: {
                 plugins: [{
-                    cleanupIDs: true
+                    cleanupIds: true
                 }]
             }
         });
