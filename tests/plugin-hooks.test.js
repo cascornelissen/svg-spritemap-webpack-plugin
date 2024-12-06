@@ -1,8 +1,12 @@
-import path from 'path';
+import { fileURLToPath } from 'url';
+import path from 'node:path';
 import webpack from 'webpack';
 
 // Library
 import SVGSpritemapPlugin from '../lib/';
+
+// Constants
+const __dirname = new URL(import.meta.url + '/..').pathname;
 
 it('Should not optimize the spritemap when the \'output.svgo\' option is \'false\'', (done) => {
     webpack({

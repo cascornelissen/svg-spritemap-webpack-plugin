@@ -1,16 +1,17 @@
-import fs from 'fs';
-import del from 'del';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
+import { deleteSync } from 'del';
 
 // Library
 import generateSVG from '../lib/generate-svg';
 import generateStyles from '../lib/generate-styles';
 import formatOptions from '../lib/options-formatter';
-import SVGSpritemapPlugin from '../lib';
+import SVGSpritemapPlugin from '../lib/';
 import { VariablesWithInvalidDefaultsWarning } from '../lib/errors';
 
 // Constants
 const DEFAULT_OPTIONS = formatOptions();
+const __dirname = new URL(import.meta.url + '/..').pathname;
 
 it('Returns undefined when no spritemap is provided', () => {
     expect(generateStyles()).toEqual({});
@@ -206,7 +207,7 @@ it('Creates a directory that does not exist and write styles spritemap content',
         styles: stylesPath
     });
 
-    del.sync('./tests/output/path-to/');
+    deleteSync('./tests/output/path-to/');
     instance.writeStylesToDisk(styles, type);
 
     expect(fs.readFileSync(stylesPath).toString()).toBe(styles);

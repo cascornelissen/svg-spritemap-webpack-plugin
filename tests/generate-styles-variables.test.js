@@ -1,14 +1,15 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 // Library
 import generateSVG from '../lib/generate-svg';
 import generateStyles from '../lib/generate-styles';
 import formatOptions from '../lib/options-formatter';
-import { stripVariables, findDefaultValueMismatches } from '../lib/variable-parser';
+import variableParser from '../lib/variable-parser';
 
 // Constants
 const DEFAULT_OPTIONS = formatOptions();
+const __dirname = new URL(import.meta.url + '/..').pathname;
 
 describe('General', () => {
     it('Strips variables from spritemap SVG', async () => {
@@ -18,7 +19,7 @@ describe('General', () => {
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-all.svg'), 'utf-8')
         }], DEFAULT_OPTIONS);
 
-        expect(stripVariables(svg)).toEqual(output);
+        expect(variableParser.stripVariables(svg)).toEqual(output);
     });
 
     it('Detects default value mismatches', async () => {
@@ -27,7 +28,7 @@ describe('General', () => {
             content: fs.readFileSync(path.resolve(__dirname, 'input/svg/variables-default-value-mismatch.svg'), 'utf-8')
         }], DEFAULT_OPTIONS);
 
-        expect(findDefaultValueMismatches(svg)).toHaveLength(1);
+        expect(variableParser.findDefaultValueMismatches(svg)).toHaveLength(1);
     });
 });
 

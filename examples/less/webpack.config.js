@@ -1,8 +1,8 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const SVGSpritemapPlugin = require('../..');
+import path from 'node:path';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import SVGSpritemapPlugin from '../..';
 
-module.exports = {
+export default {
     module: {
         rules: [{
             test: /\.less$/,

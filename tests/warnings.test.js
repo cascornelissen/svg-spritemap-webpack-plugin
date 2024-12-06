@@ -1,8 +1,11 @@
-import path from 'path';
+import path from 'node:path';
 import webpack from 'webpack';
 
 // Library
 import SVGSpritemapPlugin from '../lib/';
+
+// Constants
+const __dirname = new URL(import.meta.url + '/..').pathname;
 
 const warnings = [{
     options: {
