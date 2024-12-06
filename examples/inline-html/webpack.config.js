@@ -1,8 +1,8 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const SVGSpritemapPlugin = require('../..');
+import path from 'node:path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import SVGSpritemapPlugin from '../..';
 
-module.exports = {
+export default {
     plugins: [
         new SVGSpritemapPlugin('src/sprites/*.svg'),
         new HtmlWebpackPlugin({

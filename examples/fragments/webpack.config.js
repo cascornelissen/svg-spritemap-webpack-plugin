@@ -1,9 +1,9 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const SVGSpritemapPlugin = require('../..');
+import path from 'node:path';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import SVGSpritemapPlugin from '../..';
 
-module.exports = {
+export default {
     module: {
         rules: [{
             test: /\.scss$/,

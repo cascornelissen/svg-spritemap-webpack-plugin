@@ -1,6 +1,6 @@
-const SVGSpritemapPlugin = require('../..');
+import SVGSpritemapPlugin from '../..';
 
-module.exports = {
+export defautl {
     plugins: [
         new SVGSpritemapPlugin('src/sprites/*.svg')
     ]

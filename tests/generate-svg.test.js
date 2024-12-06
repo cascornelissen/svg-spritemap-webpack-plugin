@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import webpack from 'webpack';
 
 // Library
@@ -10,6 +10,7 @@ import SVGSpritemapPlugin from '../lib/';
 // Constants
 const CHUNK_NAME = 'spritemap';
 const DEFAULT_OPTIONS = formatOptions();
+const __dirname = new URL(import.meta.url + '/..').pathname;
 
 it('Returns undefined when no files are specified', async () => {
     const svg = await generateSVG(undefined, DEFAULT_OPTIONS);
