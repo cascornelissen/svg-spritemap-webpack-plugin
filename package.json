@@ -52,7 +52,7 @@
         "mkdirp": "^3.0.1",
         "svg-element-attributes": "^2.1.0",
         "svg4everybody": "^2.1.9",
-        "svgo": "^3.3.2",
+        "svgo": "^4.0.0-rc.1",
         "webpack-merge": "^6.0.1",
         "webpack-sources": "^3.2.3"
     },
