@@ -5,7 +5,7 @@ import path from 'node:path';
 import generateSVG from '../lib/generate-svg';
 import generateStyles from '../lib/generate-styles';
 import formatOptions from '../lib/options-formatter';
-import variableParser from '../lib/variable-parser';
+import variableParser from '../lib/variable-parser.js';
 
 // Constants
 const DEFAULT_OPTIONS = formatOptions();
