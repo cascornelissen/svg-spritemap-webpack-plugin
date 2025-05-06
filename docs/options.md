@@ -22,46 +22,53 @@ new SVGSpritemapPlugin([
 **Advanced usage**  
 Passing an object as the second argument allows you to change specific options, this `options` object can be described in a [TypeScript](https://www.typescriptlang.org/) interface as follows:
 
-```js
-new SVGSpritemapPlugin(string | string[], {
+```ts
+new SVGSpritemapPlugin(pattern: string | string[], options: {
     input?: {
-        options?: object,
-        allowDuplicates?: boolean,
+        options?: Record<string, any>,
+        allowDuplicates?: boolean
     },
     output?: {
         filename?: string,
         svg?: {
             sizes?: boolean,
-            attributes?: object
+            attributes?: Record<string, string>
         },
         chunk?: {
             name?: string,
             keep?: boolean
         },
-        svg4everybody?: boolean | object,
-        svgo?: boolean | object
+        svg4everybody?: boolean | Record<string, any>,
+        svgo?: boolean | Record<string, any>
     },
     sprite?: {
-        prefix?: string | (file) => string | false,
-        gutter?: number | false,
+        prefix?: string | (filename: string) => string | false,
+        idify?: (filename: string) => string | false,
+        gutter?: number,
         generate?: {
             title?: boolean,
-            symbol?: boolean | string,
+            dimensions?: boolean,
             use?: boolean,
+            symbol?: boolean | string,
             view?: boolean | string
         }
     },
-    styles?: boolean | string | {
+    styles?: boolean | {
         filename?: string,
         format?: 'data' | 'fragment',
-        keepAttributes?: boolean,
+        attributes?: {
+            keep?: boolean
+        },
+        selectors?: {
+            prefix?: boolean
+        },
         variables?: {
             sprites?: string,
             sizes?: string,
             variables?: string,
             mixin?: string
         },
-        callback?: (content) => string
+        callback?: (content: string) => string
     }
 });
 ```
@@ -79,7 +86,7 @@ The `input` object contains the configuration for the input of the plugin.
 Options object to pass to [`glob`](http://npmjs.com/package/glob) to find the sprites.
 
 #### `input.allowDuplicates` – `false`
-Allow the usage of the same input SVG multiple times. This option work well together with the `sprite.idify` option to set a different name in the output file.
+Allow the usage of the same input SVG multiple times. This option works well together with the `sprite.idify` option to set a different name in the output file.
 
 ### Output
 The `output` object contains the configuration for the main output (SVG) of the plugin.
@@ -91,7 +98,7 @@ Filename of the generated file (located at the webpack `output.path`), `[hash]` 
 Whether to include the `width` and `height` attributes on the root SVG element. The default value for this option is based on the value of the `sprite.generate.use` option but when specified will always overwrite it.
 
 #### `output.svg.attributes` -- `{}`
-Custom attributes to add to the root SVG element. This should be an object, with `key` attribute names, and `value` attribute values, e.g. `{ id: 'my-svg-id' }`. By default no attributes will be added.
+Custom attributes to add to the root SVG element. This should be an object, with `key` attribute names, and `value` attribute values, e.g. `{ id: 'my-svg-id' }`. By default, no attributes will be added.
 
 #### `output.chunk.name` – `'spritemap'`
 Name of the chunk that will be generated.
@@ -135,9 +142,6 @@ This value will also be used for the class/spritename in the generated styles, t
 - `.less`  
   Used as a prefix for the variable.
 
-#### `sprite.prefixStylesSelectors` – `false`
-Whether to also prefix any selectors that are generated in the styles file, if enabled.
-
 #### `sprite.idify` – `idify`
 Function that will be used to transform the filename of each sprite into a valid HTML `id`. The default function strips all whitespace as this is the only restriction according to the HTML5 specification. Passing `false` will result in the filename getting used as-is.
 
@@ -147,7 +151,7 @@ Function that will be used to transform the filename of each sprite into a valid
 ```
 
 #### `sprite.gutter` – `0`
-Amount of pixels added between each sprite to prevent overlap.
+Number of pixels added between each sprite to prevent overlap.
 
 #### `sprite.generate.title` - `true`
 Whether to generate a `<title>` element containing the filename if no title is provided in the SVG.
@@ -168,7 +172,7 @@ Whether to keep each SVG `height` and `width` attributes and add them to the gen
 The `styles` object contains the configuration for the generated styles, it's disabled (`false`) by default. A string can be used as the value which will then be used for the `styles.filename` option.
 
 #### `styles.filename` – `'~sprites.css'`
-Filename for the generated styles file (CSS, SCSS, LESS). This allows for using the sprites within a CSS-file instead of through a `<svg>` element in HTML. Although the latter method is preferred, situations may arise where extra HTML elements are not feasible.
+Filename for the generated styles file (CSS, SCSS, LESS). This allows for using the sprites within a CSS file instead of through a `<svg>` element in HTML. Although the latter method is preferred, situations may arise where extra HTML elements are not feasible.
 
 The file that's generated will be placed in a different location depending on the value specified.
 
@@ -180,12 +184,12 @@ The file that's generated will be placed in a different location depending on th
   Write the styles file to the plugin directory. This allows for importing it from a JavaScript bundle or Sass very easily:
 
   ```js
-  // Import it from a JavaScript bundle (styles: '~sprites.css')
-  require('svg-spritemap-webpack-plugin/sprites.css');
+  // Import it from a JavaScript bundle (styles: '~sprite.css')
+  import 'svg-spritemap-webpack-plugin/sprite.css';
   ```
   ```scss
-  // Import it from Sass (styles: '~sprites.scss')
-  @import '~svg-spritemap-webpack-plugin/sprites';
+  // Import it from Sass (styles: '~sprite.scss')
+  @use '~svg-spritemap-webpack-plugin/sprite.scss';
   ```
 
 The value for the `styles` option should end in a supported style extension and the generated file will have language-specific content:
@@ -196,12 +200,15 @@ The value for the `styles` option should end in a supported style extension and 
   Generates a [Sass map](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps) containing the spritenames (excluding prefix) as keys and the sprite as values, comes with a `sprite()` [mixin](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins).
 
   ```scss
+  @use 'sass:map';
+  @use '~svg-spritemap-webpack-plugin/sprite';
+  
   .example {
       // Using the included sprite() mixin
-      @include sprite('phone');
+      @include sprite.get('phone');
 
       // Using the SVG from the map directly
-      background-image: url(map-get($sprites, 'phone'));
+      background-image: url(map.get($sprites, 'phone'));
   }
   ```
   
@@ -225,9 +232,6 @@ The value for the `styles` option should end in a supported style extension and 
   }
   ```
 
-#### `styles.keepAttributes` – `false`
-Whether to include the original SVG attributes in the generated styles.
-
 #### `styles.format` – `'data'`
 Format of the styles that will be generated, the following values are valid:
 
@@ -235,6 +239,12 @@ Format of the styles that will be generated, the following values are valid:
   Generates [data URIs](https://www.npmjs.com/package/mini-svg-data-uri) as background `url()`s.
 - `'fragment'`  
   Generates URLs with [fragment identifiers](https://css-tricks.com/svg-fragment-identifiers-work/) as background `url()`s. This requires the `sprite.generate.view` option to be enabled and uses the webpack option [`output.publicPath`](https://webpack.js.org/configuration/output/#output-publicpath) to build a URL to the file. This type of setup requires some additional configuration, [see example](../examples/fragments) for more information.
+
+#### `styles.attributes.keep` – `false`
+Whether to include the original SVG attributes in the generated styles.
+
+#### `sprite.selectors.prefix` – `false`
+Whether to also prefix any selectors that are generated in the styles file, if enabled.
 
 #### `styles.variables.sprites` – `'sprites'`
 Name for the SCSS variable that is used for the Sass map containing sprites.
@@ -245,7 +255,7 @@ Name for the SCSS variable that is used for the Sass map containing size informa
 #### `styles.variables.variables` – `'variables'`
 Name for the SCSS variable that is used for the Sass map containing [user-defined variables](variables.md).
 
-#### `styles.variables.mixin` – `'sprite'`
+#### `styles.variables.mixin` – `'get'`
 Name for the SCSS variable that is used for the Sass mixin.
 
 #### `styles.callback` – `undefined`

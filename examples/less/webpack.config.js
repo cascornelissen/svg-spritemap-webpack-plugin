@@ -1,8 +1,7 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const SVGSpritemapPlugin = require('../..');
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import SVGSpritemapPlugin from '../../index.js';
 
-module.exports = {
+export default {
     module: {
         rules: [{
             test: /\.less$/,
@@ -13,16 +12,17 @@ module.exports = {
             ]
         }]
     },
-
     plugins: [
+        new SVGSpritemapPlugin('src/sprites/*.svg', {
+            styles: {
+                filename: 'src/less/sprite.less',
+                selectors: {
+                    prefix: true
+                }
+            }
+        }),
         new MiniCssExtractPlugin({
             filename: 'styles.css'
-        }),
-        new SVGSpritemapPlugin('src/sprites/*.svg', {
-            sprite: {
-                prefixStylesSelectors: true
-            },
-            styles: path.join(__dirname, 'src/less/sprites.less')
         })
     ]
 };

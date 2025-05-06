@@ -1,13 +1,13 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const SVGSpritemapPlugin = require('../..');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import SVGSpritemapPlugin from '../../index.js';
 
-module.exports = {
+export default {
+    entry: 'data:text/javascript,',
     plugins: [
         new SVGSpritemapPlugin('src/sprites/*.svg'),
         new HtmlWebpackPlugin({
             title: 'Example: inline-html',
-            template: path.resolve(__dirname, 'src/index.ejs')
+            template: 'src/index.ejs'
         })
     ]
 };

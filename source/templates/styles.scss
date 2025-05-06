@@ -1,0 +1,79 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+
+$/* VAR_SPRITES */: (
+    /* SPRITES */
+);
+
+$/* VAR_SIZES */: (
+    /* SIZES */
+);
+
+$/* VAR_VARIABLES */: (
+    /* VARIABLES */
+);
+
+// https://github.com/waldemarfm/sass-svg-uri/blob/v1.0.0/_svg-uri.scss
+@function sprite-string-replace($string, $search, $replace: '') {
+    $index: string.index($string, $search);
+
+    @if meta.type-of($replace) == 'null' {
+        $replace: '';
+    }
+
+    @if ( $index ) {
+        @return string.slice($string, 1, $index - 1) + $replace + sprite-string-replace(string.slice($string, $index + string.length($search)), $search, $replace);
+    }
+
+    @return $string;
+}
+
+@function sprite-svg-uri($value) {
+    $output: $value;
+
+    $output: sprite-string-replace($output, '"', "'");
+    $output: sprite-string-replace($output, '<', '%3C');
+    $output: sprite-string-replace($output, '>', '%3E');
+    $output: sprite-string-replace($output, '&', '%26');
+    $output: sprite-string-replace($output, '#', '%23');
+
+    @return $output;
+}
+
+@mixin /* VAR_MIXIN */($name, $user-variables: (), $include-size: false, $property: 'background') {
+    $sprite: map.get($/* VAR_SPRITES */, $name);
+
+    @if $sprite == null {
+        @error 'Sprite \'#{$name}\' does not exists';
+    }
+
+    // Inject variables
+    $default-variables: map.get($/* VAR_VARIABLES */, $name);
+    @if meta.type-of($default-variables) == 'map' {
+        @each $key, $value in map.merge($default-variables, $user-variables) {
+            @if ( not map.has-key($default-variables, $key) ) {
+                @warn 'Sprite \'#{$name}\' does not support variable named \'#{$key}\'';
+            }
+
+            $sprite: sprite-string-replace($sprite, '___#{$key}___', sprite-svg-uri(string.quote(#{$value})));
+        }
+    } @else if meta.type-of($user-variables) == 'map' {
+        @warn 'Sprite \'#{$name}\' does not contain any variables';
+    }
+
+    #{$property}: url($sprite) center no-repeat;
+
+    @if $include-size {
+        $size: map.get($/* VAR_SIZES */, $name);
+        $width: map.get($size, width);
+        $height: map.get($size, height);
+
+        @if $include-size == true {
+            #{$property}-size: $width $height;
+        } @else if $include-size == 'box' {
+            width: $width;
+            height: $height;
+        }
+    }
+}

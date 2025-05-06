@@ -1,7 +1,7 @@
-@import './sprites';
+@use './sprite';
 
 html {
-    @include sprite('1', (
+    @include sprite.get('1', (
         example-1: #f00,
         color: #00f
     ));

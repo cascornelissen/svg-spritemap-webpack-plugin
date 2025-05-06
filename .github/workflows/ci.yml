@@ -1,0 +1,60 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+    setup:
+        runs-on: ubuntu-latest
+        outputs:
+            cache-hit: ${{ steps.cache-deps.outputs.cache-hit }}
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: 'npm'
+            - id: cache-deps
+              uses: actions/cache@v4
+              with:
+                  path: ~/.npm
+                  key: npm-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+                  restore-keys: |
+                      npm-cache-${{ runner.os }}-
+            - run: npm clean-install --no-audit --no-fund
+              if: steps.cache-deps.outputs.cache-hit != 'true'
+
+    build:
+        runs-on: ubuntu-latest
+        needs: setup
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: 'npm'
+            - run: npm clean-install --no-audit --no-fund --prefer-offline
+            - run: npm run build
+
+    lint:
+        runs-on: ubuntu-latest
+        needs: setup
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: 'npm'
+            - run: npm clean-install --no-audit --no-fund --prefer-offline
+            - run: npm run lint
+
+    test:
+        runs-on: ubuntu-latest
+        needs: setup
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: 'npm'
+            - run: npm clean-install --no-audit --no-fund --prefer-offline
+            - run: npm run test

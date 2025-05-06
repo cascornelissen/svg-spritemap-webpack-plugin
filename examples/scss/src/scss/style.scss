@@ -1,5 +1,5 @@
-@import './sprites';
+@use './sprite';
 
 html {
-    @include sprite('1');
+    @include sprite.get('1');
 }
