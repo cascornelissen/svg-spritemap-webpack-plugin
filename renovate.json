@@ -1,0 +1,3 @@
+{
+    "extends": ["gitlab>onefinity/renovate//configurations/front-end"]
+}
