@@ -78,7 +78,7 @@
         "husky": "^9.1.7",
         "less": "^4.4.0",
         "less-loader": "^12.3.0",
-        "mini-css-extract-plugin": "^2.9.2",
+        "mini-css-extract-plugin": "^2.9.3",
         "rimraf": "^6.0.1",
         "sass": "^1.89.2",
         "sass-loader": "^16.0.5",
