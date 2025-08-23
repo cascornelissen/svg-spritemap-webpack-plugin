@@ -69,7 +69,7 @@
     "devDependencies": {
         "@babel/preset-env": "^7.28.3",
         "@onefinity/eslint-config": "^3.6.1",
-        "@types/loader-utils": "^2.0.6",
+        "@types/loader-utils": "^3.0.0",
         "@types/lodash-es": "^4.17.12",
         "cross-env": "^10.0.0",
         "css-loader": "^7.1.2",
