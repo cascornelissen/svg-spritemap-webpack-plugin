@@ -49,7 +49,8 @@
         "index.js",
         "index.d.ts",
         "source/**/*.js",
-        "source/**/*.d.ts"
+        "source/**/*.d.ts",
+        "source/templates/**/*"
     ],
     "engines": {
         "node": "^20.11.0 || ^21.2.0 || >= 22.0.0"
