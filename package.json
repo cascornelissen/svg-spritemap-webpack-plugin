@@ -65,7 +65,7 @@
         "svg-element-attributes": "^2.1.0",
         "webpack-merge": "^6.0.1",
         "webpack-sources": "^3.3.3",
-        "zod": "^4.1.5"
+        "zod": "^4.1.8"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.28.3",
