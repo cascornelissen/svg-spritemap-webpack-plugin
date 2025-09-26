@@ -46,6 +46,32 @@ describe('Options', () => {
         });
     });
 
+    it('removes sprite prefix when sprite.prefix option is set to false', (context, done) => {
+        webpack({
+            ...options,
+            plugins: [
+                new SVGSpritemapPlugin('tests/input/svg/single.svg', {
+                    sprite: {
+                        prefix: false
+                    }
+                })
+            ]
+        }, (errors, stats) => {
+            if (!stats) {
+                return;
+            }
+
+            stats.compilation.compiler.outputFileSystem?.readFile(path.join(stats.compilation.outputOptions.path ?? '', 'spritemap.svg'), (error, data) => {
+                if (error) {
+                    throw error;
+                }
+
+                assert.match(data?.toString() ?? '', /id="single"/);
+                done();
+            });
+        });
+    });
+
     it('generates styles when enabled', (context, done) => {
         webpack({
             ...options,

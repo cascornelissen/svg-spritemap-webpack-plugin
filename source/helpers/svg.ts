@@ -284,10 +284,10 @@ const generateName = (location: string, options: Options): string => {
 };
 
 const generateIdentifier = (location: string, options: Options) => {
-    return [
+    return compact([
         generatePrefix(location, options),
         generateName(location, options)
-    ].join('');
+    ]).join('');
 };
 
 const generateSprite = (content: string) => {
