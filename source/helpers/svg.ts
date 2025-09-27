@@ -71,7 +71,7 @@ export const generateSVG = (sources: Record<string, string>, options: Options, w
         const attributes = getDocumentElementAttributes(documentElement, ['viewbox', 'width', 'height', 'id', 'xmlns', SPRITE_LOCATION_ATTRIBUTE]);
 
         for (const [name, value] of Object.entries(attributes)) {
-            if (name.toLowerCase().startsWith('xmlns:')) {
+            if (!name.toLowerCase().startsWith('xmlns:')) {
                 continue;
             }
 
