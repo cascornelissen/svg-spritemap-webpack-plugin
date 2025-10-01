@@ -23,7 +23,7 @@ import { Output, Options, Patterns, StylesType } from './types.js';
 class SVGSpritemapPlugin {
     patterns: Patterns;
     options: Options;
-    sources: Record<string, string> = {};
+    sources: Record<number, string[]> = {};
     warnings: webpack.WebpackError[] = [];
 
     filenames: Record<Output, string | undefined> = {
@@ -124,9 +124,9 @@ class SVGSpritemapPlugin {
             return;
         }
 
-        this.sources = Object.fromEntries(await Promise.all(this.dependencies.files.map(async (location) => {
-            return [location, await fs.promises.readFile(location, 'utf8')];
-        }))) as Record<string, string>;
+        this.sources = Object.fromEntries(await Promise.all(this.dependencies.files.map(async (location, index) => {
+            return [index, [location, await fs.promises.readFile(location, 'utf8')]];
+        }))) as Record<number, string[]>;
 
         if (!Object.keys(this.sources).length) {
             this.warnings.push(new webpack.WebpackError(`No SVG files found in the specified patterns: ${this.patterns.join(', ')}`));

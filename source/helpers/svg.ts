@@ -18,7 +18,7 @@ import { Options } from '../types.js';
 export const SVG_PARSER = new xmldom.DOMParser();
 export const SVG_SERIALIZER = new xmldom.XMLSerializer();
 
-export const generateSVG = (sources: Record<string, string>, options: Options, warnings: webpack.WebpackError[]) => {
+export const generateSVG = (sources: Record<number, string[]>, options: Options, warnings: webpack.WebpackError[]) => {
     const sizes: Record<string, number[]> = {
         width: [],
         height: [],
@@ -31,7 +31,7 @@ export const generateSVG = (sources: Record<string, string>, options: Options, w
 
     const document = new xmldom.DOMImplementation().createDocument('http://www.w3.org/2000/svg', '');
     const svg = document.createElement('svg');
-    const items = compact(Object.entries(sources).map(([location, source]) => {
+    const items = compact(Object.entries(sources).map(([index, [location, source]]) => {
         return {
             location,
             id: generateIdentifier(location, options),
