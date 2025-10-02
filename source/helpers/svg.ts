@@ -3,7 +3,7 @@ import webpack from 'webpack';
 import xmldom from '@xmldom/xmldom';
 import { merge } from 'webpack-merge';
 import { optimize, Config } from 'svgo';
-import { compact, isEmpty, map, sum } from 'lodash-es';
+import { compact, map, sum } from 'lodash-es';
 import { svgElementAttributes } from 'svg-element-attributes';
 
 // Helpers
@@ -13,31 +13,31 @@ import { addVariablesNamespace, hasVariables } from './variables.js';
 import { SPRITE_NAME_ATTRIBUTE, SPRITE_LOCATION_ATTRIBUTE, VAR_NAMESPACE, VAR_NAMESPACE_VALUE } from '../constants.js';
 
 // Types
-import { Options } from '../types.js';
+import { Options, Source } from '../types.js';
 
 export const SVG_PARSER = new xmldom.DOMParser();
 export const SVG_SERIALIZER = new xmldom.XMLSerializer();
 
-export const generateSVG = (sources: Record<string, string>, options: Options, warnings: webpack.WebpackError[]) => {
+export const generateSVG = (sources: Source[], options: Options, warnings: webpack.WebpackError[]) => {
     const sizes: Record<string, number[]> = {
         width: [],
         height: [],
         gutter: []
     };
 
-    if (isEmpty(sources)) {
+    if (!sources.length) {
         return;
     }
 
     const document = new xmldom.DOMImplementation().createDocument('http://www.w3.org/2000/svg', '');
     const svg = document.createElement('svg');
-    const items = compact(Object.entries(sources).map(([location, source]) => {
+    const items = compact(sources.map((source) => {
         return {
-            location,
-            id: generateIdentifier(location, options),
-            name: generateName(location, options),
-            title: generateTitle(location),
-            content: generateSprite(source)
+            location: source.location,
+            id: generateIdentifier(source.location, options),
+            name: generateName(source.location, options),
+            title: generateTitle(source.location),
+            content: generateSprite(source.content)
         };
     }));
 

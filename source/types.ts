@@ -6,6 +6,11 @@ import { OPTIONS_SCHEMA } from './constants.js';
 
 export type Patterns = string[];
 
+export interface Source {
+    location: string;
+    content: string;
+}
+
 export interface Options extends z.infer<typeof OPTIONS_SCHEMA> {}
 
 export interface OptionsWithStyles extends Omit<Options, 'styles'> {

@@ -18,12 +18,11 @@ import { formatOptions, isOptionsWithStyles } from './helpers/options.js';
 import { PLUGIN } from './constants.js';
 
 // Types
-import { Output, Options, Patterns, StylesType } from './types.js';
+import { Output, Options, Patterns, StylesType, Source } from './types.js';
 
 class SVGSpritemapPlugin {
     patterns: Patterns;
     options: Options;
-    sources: Record<string, string> = {};
     warnings: webpack.WebpackError[] = [];
 
     filenames: Record<Output, string | undefined> = {
@@ -124,11 +123,14 @@ class SVGSpritemapPlugin {
             return;
         }
 
-        this.sources = Object.fromEntries(await Promise.all(this.dependencies.files.map(async (location) => {
-            return [location, await fs.promises.readFile(location, 'utf8')];
-        }))) as Record<string, string>;
+        const sources: Source[] = await Promise.all(this.dependencies.files.map(async (location) => {
+            return {
+                location,
+                content: await fs.promises.readFile(location, 'utf8')
+            };
+        }));
 
-        if (!Object.keys(this.sources).length) {
+        if (!sources.length) {
             this.warnings.push(new webpack.WebpackError(`No SVG files found in the specified patterns: ${this.patterns.join(', ')}`));
         }
 
@@ -148,7 +150,7 @@ class SVGSpritemapPlugin {
             this.warnings.push(new webpack.WebpackError('Both sprite.generate.symbol and sprite.generate.view are set to true which will cause identifier conflicts, use a string value (postfix) for either of these options'));
         }
 
-        this.output.spritemap = generateSVG(this.sources, this.options, this.warnings);
+        this.output.spritemap = generateSVG(sources, this.options, this.warnings);
     };
 
     private generateStyles = (compilation: webpack.Compilation) => {
