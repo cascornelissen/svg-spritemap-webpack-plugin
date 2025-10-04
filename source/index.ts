@@ -270,7 +270,7 @@ class SVGSpritemapPlugin {
             return oldFilename;
         }
 
-        const contenthash = loaderUtils.getHashDigest(asset.source.buffer(), 'sha1', 'hex', compilation.options.output.hashDigestLength ?? 16);
+        const contenthash = loaderUtils.getHashDigest(asset.source.buffer(), 'sha1', 'hex', compilation.options.output.hashDigestLength);
         const newFilename = Object.entries({
             '[hash]': compilation.hash,
             '[contenthash]': contenthash

@@ -61,7 +61,7 @@ describe('Options', () => {
                 return;
             }
 
-            stats.compilation.compiler.outputFileSystem?.readFile(path.join(stats.compilation.outputOptions.path ?? '', 'spritemap.svg'), (error, data) => {
+            stats.compilation.compiler.outputFileSystem?.readFile(path.join(stats.compilation.outputOptions.path, 'spritemap.svg'), (error, data) => {
                 if (error) {
                     throw error;
                 }
