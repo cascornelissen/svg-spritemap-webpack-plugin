@@ -9,7 +9,7 @@ jobs:
             cache-hit: ${{ steps.cache-deps.outputs.cache-hit }}
         steps:
             - uses: actions/checkout@v5
-            - uses: actions/setup-node@v5
+            - uses: actions/setup-node@v6
               with:
                   node-version: 22.20.0
                   cache: 'npm'
@@ -28,7 +28,7 @@ jobs:
         needs: setup
         steps:
             - uses: actions/checkout@v5
-            - uses: actions/setup-node@v5
+            - uses: actions/setup-node@v6
               with:
                   node-version: 22.20.0
                   cache: 'npm'
@@ -40,7 +40,7 @@ jobs:
         needs: setup
         steps:
             - uses: actions/checkout@v5
-            - uses: actions/setup-node@v5
+            - uses: actions/setup-node@v6
               with:
                   node-version: 22.20.0
                   cache: 'npm'
@@ -52,7 +52,7 @@ jobs:
         needs: setup
         steps:
             - uses: actions/checkout@v5
-            - uses: actions/setup-node@v5
+            - uses: actions/setup-node@v6
               with:
                   node-version: 22.20.0
                   cache: 'npm'
