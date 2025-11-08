@@ -84,7 +84,7 @@
         "sass": "^1.93.3",
         "sass-loader": "^16.0.6",
         "tsx": "^4.20.6",
-        "type-fest": "^5.1.0",
+        "type-fest": "^5.2.0",
         "webpack": "^5.102.1",
         "webpack-cli": "^6.0.1"
     },
