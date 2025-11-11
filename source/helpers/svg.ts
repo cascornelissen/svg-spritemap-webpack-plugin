@@ -31,11 +31,11 @@ export const generateSVG = (sources: Source[], options: Options, warnings: webpa
 
     const document = new xmldom.DOMImplementation().createDocument('http://www.w3.org/2000/svg', '');
     const svg = document.createElement('svg');
-    const items = compact(sources.map((source) => {
+    const items = compact(sources.map((source, index) => {
         return {
             location: source.location,
-            id: generateIdentifier(source.location, options),
-            name: generateName(source.location, options),
+            id: generateIdentifier(source.location, options, index),
+            name: generateName(source.location, options, index),
             title: generateTitle(source.location),
             content: generateSprite(source.content)
         };
@@ -273,20 +273,20 @@ const generateTitle = (location: string) => {
     return path.basename(location, path.extname(location));
 };
 
-const generateName = (location: string, options: Options): string => {
+const generateName = (location: string, options: Options, index: number): string => {
     const title = generateTitle(location);
 
     if (!options.sprite.idify) {
         return title;
     }
 
-    return options.sprite.idify(title);
+    return options.sprite.idify(title, index);
 };
 
-const generateIdentifier = (location: string, options: Options) => {
+const generateIdentifier = (location: string, options: Options, index: number) => {
     return compact([
         generatePrefix(location, options),
-        generateName(location, options)
+        generateName(location, options, index)
     ]).join('');
 };
 
