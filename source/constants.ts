@@ -3,7 +3,6 @@ import { identity } from 'lodash-es';
 
 // Helpers
 import { idify } from './helpers/idify.js';
-import { zFunction } from './helpers/validation.js';
 
 // Types
 import { Options } from './types.js';
@@ -47,11 +46,17 @@ export const OPTIONS_SCHEMA = z.strictObject({
         prefix: z.union([
             z.string(),
             z.literal(false),
-            zFunction
+            z.function({
+                input: [z.string()],
+                output: z.string()
+            })
         ]),
         idify: z.union([
             z.literal(false),
-            zFunction
+            z.function({
+                input: [z.string()],
+                output: z.string()
+            })
         ]),
         gutter: z.number(),
         generate: z.object({
@@ -86,7 +91,10 @@ export const OPTIONS_SCHEMA = z.strictObject({
             variables: z.string(),
             mixin: z.string()
         }),
-        callback: zFunction
+        callback: z.function({
+            input: [z.string()],
+            output: z.string()
+        })
     })
 });
 
