@@ -53,7 +53,7 @@ const writeStylesToDisk = (content: string | undefined, options: OptionsWithStyl
 
     const location = {
         [StylesType.Directory]: options.styles.filename,
-        [StylesType.Module]: path.resolve(import.meta.dirname, '../', options.styles.filename.replace('~', ''))
+        [StylesType.Module]: path.resolve(import.meta.dirname, '../../', options.styles.filename.replace('~', ''))
     }[type];
 
     const exists = fs.existsSync(location);
