@@ -11,7 +11,11 @@
         ".": {
             "types": "./index.d.ts",
             "default": "./index.js"
-        }
+        },
+        "./*.css": "./*.css",
+        "./*.less": "./*.less",
+        "./*.sass": "./*.sass",
+        "./*.scss": "./*.scss"
     },
     "author": {
         "name": "Cas Cornelissen",
