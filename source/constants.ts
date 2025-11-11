@@ -54,7 +54,7 @@ export const OPTIONS_SCHEMA = z.strictObject({
         idify: z.union([
             z.literal(false),
             z.function({
-                input: [z.string()],
+                input: [z.string(), z.number()],
                 output: z.string()
             })
         ]),
