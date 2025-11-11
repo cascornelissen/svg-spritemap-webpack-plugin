@@ -217,7 +217,7 @@ class SVGSpritemapPlugin {
                 this.dependencies.directories.push(root);
             }
 
-            glob.sync(pattern, this.options.input.options).map((match) => {
+            glob.sync(pattern, this.options.input.options).sort().map((match) => {
                 const pathname = path.resolve(match);
                 const stats = fs.lstatSync(pathname);
 
@@ -234,9 +234,6 @@ class SVGSpritemapPlugin {
             this.dependencies.files = uniq(this.dependencies.files);
             this.dependencies.directories = uniq(this.dependencies.directories);
         }
-
-        this.dependencies.files.sort();
-        this.dependencies.directories.sort();
     };
 
     private updateContextDependencies = (compilation: webpack.Compilation) => {
