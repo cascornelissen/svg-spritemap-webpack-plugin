@@ -85,7 +85,7 @@
         "less-loader": "^12.3.0",
         "mini-css-extract-plugin": "^2.9.4",
         "rimraf": "^6.1.0",
-        "sass": "^1.93.3",
+        "sass": "^1.94.0",
         "sass-loader": "^16.0.6",
         "tsx": "^4.20.6",
         "type-fest": "^5.2.0",
