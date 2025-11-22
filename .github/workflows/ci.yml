@@ -8,7 +8,7 @@ jobs:
         outputs:
             cache-hit: ${{ steps.cache-deps.outputs.cache-hit }}
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
             - uses: actions/setup-node@v6
               with:
                   node-version: 24.11.1
@@ -27,7 +27,7 @@ jobs:
         runs-on: ubuntu-latest
         needs: setup
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
             - uses: actions/setup-node@v6
               with:
                   node-version: 24.11.1
@@ -39,7 +39,7 @@ jobs:
         runs-on: ubuntu-latest
         needs: setup
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
             - uses: actions/setup-node@v6
               with:
                   node-version: 24.11.1
@@ -51,7 +51,7 @@ jobs:
         runs-on: ubuntu-latest
         needs: setup
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
             - uses: actions/setup-node@v6
               with:
                   node-version: 24.11.1
