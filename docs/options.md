@@ -43,7 +43,7 @@ new SVGSpritemapPlugin(pattern: string | string[], options: {
     },
     sprite?: {
         prefix?: string | (filename: string) => string | false,
-        idify?: (filename: string) => string | false,
+        idify?: (filename: string, index: number) => string | false,
         gutter?: number,
         generate?: {
             title?: boolean,
@@ -147,7 +147,7 @@ Function that will be used to transform the filename of each sprite into a valid
 
 ```es6
 // Generate HTML5 id's
-(filename) => filename.replace(/[\s]+/g, '-');
+(filename, index) => filename.replace(/[\s]+/g, '-');
 ```
 
 #### `sprite.gutter` – `0`
