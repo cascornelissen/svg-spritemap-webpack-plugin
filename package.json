@@ -63,13 +63,13 @@
         "@xmldom/xmldom": "^0.9.8",
         "glob": "^13.0.0",
         "loader-utils": "^3.3.1",
-        "lodash-es": "^4.17.21",
+        "lodash-es": "^4.17.22",
         "mini-svg-data-uri": "^1.4.4",
         "mkdirp": "^3.0.1",
         "svg-element-attributes": "^2.1.0",
         "webpack-merge": "^6.0.1",
         "webpack-sources": "^3.3.3",
-        "zod": "^4.1.13"
+        "zod": "^4.2.1"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.28.5",
@@ -81,14 +81,14 @@
         "del": "^8.0.1",
         "html-webpack-plugin": "^5.6.5",
         "husky": "^9.1.7",
-        "less": "^4.4.2",
+        "less": "^4.5.1",
         "less-loader": "^12.3.0",
         "mini-css-extract-plugin": "^2.9.4",
         "rimraf": "^6.1.2",
-        "sass": "^1.94.2",
+        "sass": "^1.97.1",
         "sass-loader": "^16.0.6",
         "tsx": "^4.21.0",
-        "type-fest": "^5.3.0",
+        "type-fest": "^5.3.1",
         "webpack": "^5.103.0",
         "webpack-cli": "^6.0.1"
     },
