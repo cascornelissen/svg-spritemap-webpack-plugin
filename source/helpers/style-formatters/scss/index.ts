@@ -82,7 +82,7 @@ const formatter: StyleFormatter = (symbols, options, compilation) => {
             return [
                 indent(),
                 sprite
-            ].join(' ');
+            ].join('');
         }).join(',\n').trim()
     }, {
         name: 'SIZES',
@@ -90,7 +90,7 @@ const formatter: StyleFormatter = (symbols, options, compilation) => {
             return [
                 indent(),
                 size
-            ].join(' ');
+            ].join('');
         }).join(',\n').trim()
     }, {
         name: 'VARIABLES',
@@ -98,7 +98,7 @@ const formatter: StyleFormatter = (symbols, options, compilation) => {
             return [
                 indent(),
                 variable
-            ].join(' ');
+            ].join('');
         }).join(',\n').trim()
     }].reduce((output, replacement) => {
         return output.replaceAll(`/* ${replacement.name} */`, replacement.value || '/* EMPTY */');
