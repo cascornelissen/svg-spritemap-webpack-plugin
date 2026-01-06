@@ -243,7 +243,7 @@ Format of the styles that will be generated, the following values are valid:
 #### `styles.attributes.keep` – `false`
 Whether to include the original SVG attributes in the generated styles.
 
-#### `sprite.selectors.prefix` – `false`
+#### `styles.selectors.prefix` – `false`
 Whether to also prefix any selectors that are generated in the styles file, if enabled.
 
 #### `styles.variables.sprites` – `'sprites'`
