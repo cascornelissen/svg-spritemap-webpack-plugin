@@ -69,7 +69,7 @@
         "svg-element-attributes": "^2.1.0",
         "webpack-merge": "^6.0.1",
         "webpack-sources": "^3.3.3",
-        "zod": "^4.3.4"
+        "zod": "^4.3.5"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.28.5",
@@ -85,7 +85,7 @@
         "less-loader": "^12.3.0",
         "mini-css-extract-plugin": "^2.9.4",
         "rimraf": "^6.1.2",
-        "sass": "^1.97.1",
+        "sass": "^1.97.2",
         "sass-loader": "^16.0.6",
         "tsx": "^4.21.0",
         "type-fest": "^5.3.1",
