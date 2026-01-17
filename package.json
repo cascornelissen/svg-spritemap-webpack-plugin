@@ -72,7 +72,7 @@
         "zod": "^4.3.5"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.28.5",
+        "@babel/preset-env": "^7.28.6",
         "@onefinity/eslint-config": "^3.6.1",
         "@types/loader-utils": "^3.0.0",
         "@types/lodash-es": "^4.17.12",
