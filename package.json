@@ -47,7 +47,7 @@
         "test": "tsx --experimental-test-coverage --test 'source/test.ts'",
         "prepack": "npm run lint && npm run test && npm run build",
         "postpack": "rimraf --glob 'index.{js,d.ts}' 'source/*.{js,d.ts}' 'source/helpers/**/*.{js,d.ts}'",
-        "prepare": "husky"
+        "prepare": "husky && npm run build"
     },
     "files": [
         "index.js",
