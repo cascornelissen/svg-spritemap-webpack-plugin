@@ -131,4 +131,27 @@ describe('Options', () => {
             done();
         });
     });
+
+    it('adds spritemap to named chunk', (context, done) => {
+        webpack({
+            ...options,
+            plugins: [
+                new SVGSpritemapPlugin('tests/input/svg/single.svg', {
+                    output: {
+                        chunk: {
+                            name: 'icons'
+                        }
+                    },
+                    sprite: {
+                        prefix: false
+                    }
+                })
+            ]
+        }, (errors, stats) => {
+            assert.strictEqual(errors, null);
+            assert.ok(stats?.compilation.namedChunks.get('icons')?.files.has('spritemap.svg'), 'spritemap.svg should be in icons chunk');
+
+            done();
+        });
+    });
 });
