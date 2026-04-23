@@ -75,7 +75,7 @@
         "@types/loader-utils": "^3.0.0",
         "@types/lodash-es": "^4.17.12",
         "css-loader": "^7.1.4",
-        "html-webpack-plugin": "^5.6.6",
+        "html-webpack-plugin": "^5.6.7",
         "husky": "^9.1.7",
         "less": "^4.6.4",
         "less-loader": "^12.3.2",
@@ -85,7 +85,7 @@
         "sass-loader": "^16.0.7",
         "tsx": "^4.21.0",
         "type-fest": "^5.5.0",
-        "webpack": "^5.106.1",
+        "webpack": "^5.106.2",
         "webpack-cli": "^7.0.2"
     },
     "peerDependencies": {
