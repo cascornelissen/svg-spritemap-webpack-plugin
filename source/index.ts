@@ -219,7 +219,7 @@ class SVGSpritemapPlugin {
                 this.dependencies.directories.push(root);
             }
 
-            glob.sync(pattern, this.options.input.options).sort().map((match) => {
+            glob.sync(pattern, this.options.input.options).toSorted().map((match) => {
                 const pathname = path.resolve(match);
                 const stats = fs.lstatSync(pathname);
 

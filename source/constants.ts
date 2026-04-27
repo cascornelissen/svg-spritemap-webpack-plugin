@@ -10,7 +10,7 @@ import { Options } from './types.js';
 export const VAR_NAMESPACE = 'var';
 export const VAR_NAMESPACE_VALUE = 'https://github.com/cascornelissen/svg-spritemap-webpack-plugin/';
 export const VAR_NAMESPACE_REGEX = new RegExp(`xmlns:${VAR_NAMESPACE}=(['"])[^'"]*(['"])`, 'gi');
-export const VAR_REGEX = new RegExp(`${VAR_NAMESPACE}:([^\\s.]+)\\.?(\\S*)="(.*?(?="))"`, 'gi');
+export const VAR_REGEX = new RegExp(String.raw`${VAR_NAMESPACE}:([^\s.]+)\.?(\S*)="(.*?(?="))"`, 'gi');
 export const SPRITE_NAME_ATTRIBUTE = 'data-svg-spritemap-webpack-plugin-name';
 export const SPRITE_LOCATION_ATTRIBUTE = 'data-svg-spritemap-webpack-plugin-location';
 

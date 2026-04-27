@@ -57,7 +57,7 @@
         "source/templates/**/*"
     ],
     "engines": {
-        "node": "^20.11.0 || ^21.2.0 || >= 22.0.0"
+        "node": "^20.11.0 || ^21.2.0 || ^22.16.0"
     },
     "dependencies": {
         "@xmldom/xmldom": "^0.9.8",
@@ -71,7 +71,7 @@
         "zod": "^4.3.6"
     },
     "devDependencies": {
-        "@onefinity/eslint-config": "^3.6.1",
+        "@onefinity/eslint-config": "^3.7.0",
         "@types/loader-utils": "^3.0.0",
         "@types/lodash-es": "^4.17.12",
         "css-loader": "^7.1.4",

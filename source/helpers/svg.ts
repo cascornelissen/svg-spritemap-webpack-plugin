@@ -191,7 +191,7 @@ export const cleanSVG = (content: string): string => {
         SPRITE_NAME_ATTRIBUTE,
         SPRITE_LOCATION_ATTRIBUTE
     ].reduce((content, attribute) => {
-        return content.replaceAll(new RegExp(`\\s*${attribute}="[^"]*"`, 'g'), '');
+        return content.replaceAll(new RegExp(String.raw`\s*${attribute}="[^"]*"`, 'g'), '');
     }, content);
 };
 
