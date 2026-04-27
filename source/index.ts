@@ -96,12 +96,21 @@ class SVGSpritemapPlugin {
             }
 
             const source = compilation.getAsset(this.filenames.spritemap)?.source.source().toString();
+            const chunk = compilation.namedChunks.get(this.options.output.chunk.name);
 
             if (!source) {
                 return;
             }
 
-            compilation.addChunk(this.options.output.chunk.name).files.add(this.filenames.spritemap);
+            if (chunk) {
+                chunk.files.add(this.filenames.spritemap);
+            } else {
+                const chunk = compilation.addChunk(this.options.output.chunk.name);
+
+                chunk.ids = [];
+                chunk.files.add(this.filenames.spritemap);
+            }
+
             compilation.updateAsset(this.filenames.spritemap, new webpack.sources.RawSource(optimizeSVG(source, this.options)), {
                 minimized: !!this.options.output.svgo
             });

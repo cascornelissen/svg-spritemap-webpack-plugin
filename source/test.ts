@@ -154,4 +154,33 @@ describe('Options', () => {
             done();
         });
     });
+
+    it('reuses existing chunk instead of creating duplicates', (context, done) => {
+        webpack({
+            ...options,
+            plugins: [{
+                apply(compiler: webpack.Compiler) {
+                    compiler.hooks.thisCompilation.tap('TestPlugin', (compilation) => {
+                        compilation.hooks.processAssets.tap({
+                            name: 'TestPlugin',
+                            stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL
+                        }, () => {
+                            compilation.addChunk('icons');
+                        });
+                    });
+                }
+            }, new SVGSpritemapPlugin('tests/input/svg/single.svg', {
+                output: {
+                    chunk: {
+                        name: 'icons'
+                    }
+                }
+            })]
+        }, (errors, stats) => {
+            assert.strictEqual(errors, null);
+            assert.ok(stats?.compilation.namedChunks.get('icons')?.files.has('spritemap.svg'), 'spritemap.svg should be in icons chunk');
+
+            done();
+        });
+    });
 });
