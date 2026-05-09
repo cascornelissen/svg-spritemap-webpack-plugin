@@ -68,7 +68,7 @@
         "mkdirp": "^3.0.1",
         "svg-element-attributes": "^2.1.0",
         "webpack-merge": "^6.0.1",
-        "zod": "^4.3.6"
+        "zod": "^4.4.3"
     },
     "devDependencies": {
         "@onefinity/eslint-config": "^3.7.1",
