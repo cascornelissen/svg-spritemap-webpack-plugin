@@ -1,7 +1,7 @@
 import { groupBy, uniq, uniqBy } from 'lodash-es';
 
 // Constants
-import { VAR_NAMESPACE, VAR_NAMESPACE_REGEX, VAR_NAMESPACE_VALUE, VAR_REGEX } from '../constants.js';
+import { VAR_NAMESPACE, VAR_NAMESPACE_PATTERN, VAR_NAMESPACE_VALUE, VAR_REGEX } from '../constants.js';
 
 // Types
 import { Variable, VariableDefaultValueMismatch, VariableRewriter } from '../types.js';
@@ -50,7 +50,7 @@ export const findDefaultVariableValueMismatches = (content: string | undefined):
 export const rewriteVariables = (content: string, rewriter: VariableRewriter) => {
     return content.replace(VAR_REGEX, (...match) => {
         return rewriter(matchToVariable(match));
-    }).replace(VAR_NAMESPACE_REGEX, '');
+    }).replaceAll(new RegExp(VAR_NAMESPACE_PATTERN, 'gi'), '');
 };
 
 export const stripVariables = (content: string) => {
@@ -64,7 +64,7 @@ export const hasVariables = (content: string | string[] | undefined) => {
 };
 
 export const addVariablesNamespace = (content: string) => {
-    if (VAR_NAMESPACE_REGEX.test(content)) {
+    if (new RegExp(VAR_NAMESPACE_PATTERN, 'i').test(content)) {
         return content;
     }
 
