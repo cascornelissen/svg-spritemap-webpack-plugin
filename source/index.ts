@@ -24,6 +24,7 @@ class SVGSpritemapPlugin {
     patterns: Patterns;
     options: Options;
     warnings: webpack.WebpackError[] = [];
+    files = new Set<string>();
 
     filenames: Record<Output, string | undefined> = {
         spritemap: undefined,
@@ -120,8 +121,12 @@ class SVGSpritemapPlugin {
     private generateSpritemap = async (compiler: webpack.Compiler) => {
         const sprites = Object.values(this.dependencies).flat();
         const modifiedFiles = compiler.modifiedFiles ? [...compiler.modifiedFiles] : [];
+        const previous = new Set(this.files);
+        const changed = previous.size !== this.dependencies.files.length || this.dependencies.files.some((file) => {
+            return !previous.has(file);
+        });
 
-        if (modifiedFiles.length && !intersection(sprites, modifiedFiles).length) {
+        if (modifiedFiles.length && !changed && !intersection(sprites, modifiedFiles).length) {
             return;
         }
 
@@ -153,6 +158,7 @@ class SVGSpritemapPlugin {
         }
 
         this.output.spritemap = generateSVG(sources, this.options, this.warnings);
+        this.files = new Set(this.dependencies.files);
     };
 
     private generateStyles = (compilation: webpack.Compilation) => {
