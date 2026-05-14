@@ -62,7 +62,7 @@ class SVGSpritemapPlugin {
         compiler.hooks.make.tap(PLUGIN, this.make);
         compiler.hooks.thisCompilation.tap(PLUGIN, this.cleanup);
         compiler.hooks.afterCompile.tap(PLUGIN, this.updateWarnings);
-        compiler.hooks.afterCompile.tap(PLUGIN, this.updateContextDependencies);
+        compiler.hooks.afterCompile.tap(PLUGIN, this.updateWebpackDependencies);
     };
 
     private make = (compilation: webpack.Compilation) => {
@@ -242,9 +242,13 @@ class SVGSpritemapPlugin {
         }
     };
 
-    private updateContextDependencies = (compilation: webpack.Compilation) => {
+    private updateWebpackDependencies = (compilation: webpack.Compilation) => {
         this.dependencies.directories.forEach((directory) => {
             compilation.contextDependencies.add(directory);
+        });
+
+        this.dependencies.files.forEach((file) => {
+            compilation.fileDependencies.add(file);
         });
     };
 
