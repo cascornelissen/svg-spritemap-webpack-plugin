@@ -124,10 +124,9 @@ describe('Options', () => {
         }, (errors, stats) => {
             assert.strictEqual(errors, null);
             stats?.compilation.entries.forEach((entry) => {
-                assert.match(entry.dependencies.at(1)?.getResourceIdentifier() ?? '', /svg4everybody-helper.js$/);
+                assert.match(entry.dependencies.at(1)?.getResourceIdentifier() ?? '', /data:text\/javascript,.*svg4everybody/);
             });
 
-            rimraf.sync(path.resolve(import.meta.dirname, 'svg4everybody-helper.js'));
             done();
         });
     });

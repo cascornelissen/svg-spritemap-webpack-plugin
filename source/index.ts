@@ -194,17 +194,15 @@ class SVGSpritemapPlugin {
             return;
         }
 
-        const template = getTemplate('svg4everybody.js');
-        const output = path.resolve(import.meta.dirname, 'svg4everybody-helper.js');
-
-        fs.writeFileSync(output, template.replace('/* PLACEHOLDER */', JSON.stringify(this.options.output.svg4everybody)), 'utf8');
+        const source = getTemplate('svg4everybody.js').replace('/* PLACEHOLDER */', JSON.stringify(this.options.output.svg4everybody)).trim();
+        const helper = `data:text/javascript,${encodeURIComponent(source)}`;
 
         if (typeof entry === 'object') {
             Object.keys(entry).forEach((name) => {
                 const subentry = entry[name];
 
                 if ('import' in subentry && subentry.import) {
-                    applyEntryPlugin(compiler, context, [...subentry.import, output], name);
+                    applyEntryPlugin(compiler, context, [...subentry.import, helper], name);
                 } else {
                     throw new TypeError(`Unsupported sub-entry type for svg4everybody helper: '${typeof subentry}'`);
                 }
