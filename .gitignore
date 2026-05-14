@@ -1,15 +1,13 @@
 /node_modules
-/coverage
 /examples/*/dist
 /dist
-index.js
-index.d.ts
+/index.js
+/index.d.ts
 source/**/*.js
 source/**/*.d.ts
 !source/templates/svg4everybody.js
 
 # Generated files
-/svg4everybody-helper.js
 /*.css
 /*.scss
 /*.sass
