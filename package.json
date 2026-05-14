@@ -44,7 +44,7 @@
     "scripts": {
         "build": "tsc",
         "lint": "eslint '**/*.ts' --ignore-pattern '**/*.d.ts'",
-        "test": "tsx --experimental-test-coverage --test 'source/test.ts'",
+        "test": "tsx --experimental-test-coverage --test 'source/test.ts' 'source/helpers/test.ts'",
         "prepack": "npm run lint && npm run test && npm run build",
         "postpack": "rimraf --glob 'index.{js,d.ts}' 'source/*.{js,d.ts}' 'source/helpers/**/*.{js,d.ts}'",
         "prepare": "husky && npm run build"
