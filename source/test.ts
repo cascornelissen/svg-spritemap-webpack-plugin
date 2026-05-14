@@ -72,22 +72,34 @@ describe('Options', () => {
         });
     });
 
-    it('generates styles when enabled', (context, done) => {
-        webpack({
-            ...options,
-            plugins: [
-                new SVGSpritemapPlugin('tests/input/svg/single.svg', {
-                    styles: {
-                        filename: 'sprite.scss'
-                    }
-                })
-            ]
-        }, (errors, stats) => {
-            assert.ok(stats?.compilation.emittedAssets.has('sprite.scss'));
-            assert.strictEqual(errors, null);
+    [{
+        filename: 'sprite.scss',
+        expected: /'single':\s*"data:/
+    }, {
+        filename: 'sprite.css',
+        expected: /\.single \{ background-image: url\(['"]?data:/
+    }, {
+        filename: 'sprite.less',
+        expected: /@single:\s*['"]?data:/
+    }].forEach(({ filename, expected }) => {
+        it(`generates ${filename} containing ${expected}`, (context, done) => {
+            webpack({
+                ...options,
+                plugins: [
+                    new SVGSpritemapPlugin('tests/input/svg/single.svg', {
+                        styles: {
+                            filename
+                        }
+                    })
+                ]
+            }, (errors, stats) => {
+                assert.strictEqual(errors, null);
 
-            rimraf.sync(path.resolve(import.meta.dirname, 'sprite.scss'));
-            done();
+                stats?.compilation.compiler.outputFileSystem?.readFile(path.join(stats.compilation.outputOptions.path, filename), (error, data) => {
+                    assert.match(data?.toString() ?? '', expected);
+                    done();
+                });
+            });
         });
     });
 
