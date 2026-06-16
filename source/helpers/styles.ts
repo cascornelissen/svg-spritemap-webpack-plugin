@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import xmldom from '@xmldom/xmldom';
-import webpack from 'webpack';
+import type xmldom from '@xmldom/xmldom';
+import type webpack from 'webpack';
 import { mkdirp } from 'mkdirp';
 
 // Helpers
@@ -9,7 +9,7 @@ import styleFormatters from './style-formatters/index.js';
 import { SVG_PARSER } from './svg.js';
 
 // Types
-import { OptionsWithStyles, StylesType } from '../types.js';
+import { StylesType, type OptionsWithStyles } from '../types.js';
 
 export const generateStyles = (spritemap: string | undefined, options: OptionsWithStyles, warnings: webpack.WebpackError[], compilation: webpack.Compilation) => {
     if (!spritemap) {
@@ -56,13 +56,13 @@ const writeStylesToDisk = (content: string | undefined, options: OptionsWithStyl
         [StylesType.Module]: path.resolve(import.meta.dirname, '../../', options.styles.filename.replace('~', ''))
     }[type];
 
-    const exists = fs.existsSync(location);
+    const isExisting = fs.existsSync(location);
 
-    if (exists && fs.readFileSync(location, 'utf8') === content) {
+    if (isExisting && fs.readFileSync(location, 'utf8') === content) {
         return;
     }
 
-    if (type === StylesType.Directory && !exists) {
+    if (type === StylesType.Directory && !isExisting) {
         const dirname = path.dirname(location);
 
         if (!fs.existsSync(dirname)) {

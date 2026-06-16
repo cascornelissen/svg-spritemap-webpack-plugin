@@ -5,7 +5,7 @@ import { identity } from 'lodash-es';
 import { idify } from './helpers/idify.js';
 
 // Types
-import { Options } from './types.js';
+import { type Options } from './types.js';
 
 export const VAR_NAMESPACE = 'var';
 export const VAR_NAMESPACE_VALUE = 'https://github.com/cascornelissen/svg-spritemap-webpack-plugin/';

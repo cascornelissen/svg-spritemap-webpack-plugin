@@ -1,4 +1,4 @@
-import webpack from 'webpack';
+import type webpack from 'webpack';
 import xmldom from '@xmldom/xmldom';
 import svgToMiniDataURI from 'mini-svg-data-uri';
 import { compact } from 'lodash-es';
@@ -8,7 +8,7 @@ import { rewriteVariables } from '../variables.js';
 import { generatePostfix, generatePrefix, SVG_SERIALIZER } from '../svg.js';
 
 // Types
-import { OptionsWithStyles } from '../../types.js';
+import { type OptionsWithStyles } from '../../types.js';
 
 export const formatSelector = (name: string, location: string, options: OptionsWithStyles) => {
     return compact([
@@ -17,10 +17,10 @@ export const formatSelector = (name: string, location: string, options: OptionsW
     ]).join('');
 };
 
-export const formatURL = (name: string, location: string, svg: xmldom.Element, options: OptionsWithStyles, compilation: webpack.Compilation, rewrite = false) => {
+export const formatURL = (name: string, location: string, svg: xmldom.Element, options: OptionsWithStyles, compilation: webpack.Compilation, shouldRewrite = false) => {
     switch (options.styles.format) {
         case 'data': {
-            if (rewrite) {
+            if (shouldRewrite) {
                 return svgToMiniDataURI(rewriteVariables(SVG_SERIALIZER.serializeToString(svg), (variable) => {
                     return `${variable.attribute}="___${variable.name}___"`;
                 }));

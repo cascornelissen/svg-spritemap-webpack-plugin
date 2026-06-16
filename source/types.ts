@@ -1,8 +1,8 @@
-import { z } from 'zod';
-import { SetRequired } from 'type-fest';
+import { type z } from 'zod';
+import { type SetRequired } from 'type-fest';
 
 // Constants
-import { OPTIONS_SCHEMA } from './constants.js';
+import { type OPTIONS_SCHEMA } from './constants.js';
 
 export type Patterns = string[];
 

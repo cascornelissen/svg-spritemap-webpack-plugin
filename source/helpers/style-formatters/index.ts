@@ -4,7 +4,7 @@ import scssFormatter from './scss/index.js';
 import lessFormatter from './less/index.js';
 
 // Types
-import { StyleFormatter } from './types.js';
+import { type StyleFormatter } from './types.js';
 
 const formatters: Partial<Record<string, StyleFormatter>> = {
     css: cssFormatter,

@@ -2,7 +2,7 @@ import path from 'node:path';
 import webpack from 'webpack';
 import xmldom from '@xmldom/xmldom';
 import { merge } from 'webpack-merge';
-import { optimize, Config } from 'svgo';
+import { optimize, type Config } from 'svgo';
 import { compact, map, sum } from 'lodash-es';
 import { svgElementAttributes } from 'svg-element-attributes';
 
@@ -10,24 +10,24 @@ import { svgElementAttributes } from 'svg-element-attributes';
 import { addVariablesNamespace, hasVariables } from './variables.js';
 
 // Constants
-import { SPRITE_NAME_ATTRIBUTE, SPRITE_LOCATION_ATTRIBUTE, VAR_NAMESPACE, VAR_NAMESPACE_VALUE } from '../constants.js';
+import { SPRITE_LOCATION_ATTRIBUTE, SPRITE_NAME_ATTRIBUTE, VAR_NAMESPACE, VAR_NAMESPACE_VALUE } from '../constants.js';
 
 // Types
-import { Options, Source } from '../types.js';
+import { type Options, type Source } from '../types.js';
 
 export const SVG_PARSER = new xmldom.DOMParser();
 export const SVG_SERIALIZER = new xmldom.XMLSerializer();
 
 export const generateSVG = (sources: Source[], options: Options, warnings: webpack.WebpackError[]) => {
+    if (!sources.length) {
+        return;
+    }
+
     const sizes: Record<string, number[]> = {
         width: [],
         height: [],
         gutter: []
     };
-
-    if (!sources.length) {
-        return;
-    }
 
     const document = new xmldom.DOMImplementation().createDocument('http://www.w3.org/2000/svg', '');
     const svg = document.createElement('svg');
@@ -71,18 +71,14 @@ export const generateSVG = (sources: Source[], options: Options, warnings: webpa
         const attributes = getDocumentElementAttributes(documentElement, ['viewbox', 'width', 'height', 'id', 'xmlns', SPRITE_LOCATION_ATTRIBUTE]);
 
         for (const [name, value] of Object.entries(attributes)) {
-            if (!name.toLowerCase().startsWith('xmlns:')) {
-                continue;
+            if (name.toLowerCase().startsWith('xmlns:')) {
+                svg.setAttribute(name, value);
             }
-
-            svg.setAttribute(name, value);
         }
 
-        let width = Number.parseFloat(getDocumentElementAttribute(documentElement, 'width') ?? '');
-        let height = Number.parseFloat(getDocumentElementAttribute(documentElement, 'height') ?? '');
-        let viewbox = getDocumentElementAttribute(documentElement, 'viewbox')?.split(' ').map((value) => {
-            return Number.parseFloat(value);
-        });
+        let width = Number(getDocumentElementAttribute(documentElement, 'width'));
+        let height = Number(getDocumentElementAttribute(documentElement, 'height'));
+        let viewbox = getDocumentElementAttribute(documentElement, 'viewbox')?.split(' ').map(Number);
 
         if (viewbox?.length !== 4 && (Number.isNaN(width) || Number.isNaN(height))) {
             warnings.push(new webpack.WebpackError(`Sprite '${item.location}' is invalid, it's lacking both a valid viewbox and width/height attributes.`));

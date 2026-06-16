@@ -2,19 +2,20 @@
 import { formatSelector, formatURL, getSymbolSVG } from '../helpers.js';
 
 // Constants
-import { SPRITE_NAME_ATTRIBUTE, SPRITE_LOCATION_ATTRIBUTE } from '../../../constants.js';
+import { SPRITE_LOCATION_ATTRIBUTE, SPRITE_NAME_ATTRIBUTE } from '../../../constants.js';
 
 // Types
-import { StyleFormatter } from '../types.js';
+import { type StyleFormatter } from '../types.js';
 
 const formatter: StyleFormatter = (symbols, options, compilation) => {
     const sprites = symbols.map((symbol) => {
         const name = symbol.getAttribute(SPRITE_NAME_ATTRIBUTE);
-        const location = symbol.getAttribute(SPRITE_LOCATION_ATTRIBUTE);
 
         if (!name) {
             throw new Error(`Sprite name attribute '${SPRITE_NAME_ATTRIBUTE}' is missing on symbol.`);
         }
+
+        const location = symbol.getAttribute(SPRITE_LOCATION_ATTRIBUTE);
 
         if (!location) {
             throw new Error(`Sprite location attribute '${SPRITE_LOCATION_ATTRIBUTE}' is missing on symbol ${name}.`);

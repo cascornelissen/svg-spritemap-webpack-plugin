@@ -1,11 +1,11 @@
 import { merge } from 'webpack-merge';
-import { PartialDeep } from 'type-fest';
+import { type PartialDeep } from 'type-fest';
 
 // Constants
 import { DEFAULT_OPTIONS, OPTIONS_SCHEMA } from '../constants.js';
 
 // Types
-import { Options, OptionsWithStyles } from '../types.js';
+import { type Options, type OptionsWithStyles } from '../types.js';
 
 export const formatOptions = (options: PartialDeep<Options>): Options => {
     const result = OPTIONS_SCHEMA.safeParse(merge(DEFAULT_OPTIONS, options));

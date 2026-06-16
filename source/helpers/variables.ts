@@ -4,7 +4,7 @@ import { groupBy, uniq, uniqBy } from 'lodash-es';
 import { VAR_NAMESPACE, VAR_NAMESPACE_PATTERN, VAR_NAMESPACE_VALUE, VAR_REGEX } from '../constants.js';
 
 // Types
-import { Variable, VariableDefaultValueMismatch, VariableRewriter } from '../types.js';
+import { type Variable, type VariableDefaultValueMismatch, type VariableRewriter } from '../types.js';
 
 const matchToVariable = (match: string[]) => {
     return {
@@ -23,9 +23,9 @@ export const findVariables = (content: string | undefined): Variable[] => {
         return variables;
     }
 
-    return [...content.matchAll(VAR_REGEX)].map((match) => {
+    return content.matchAll(VAR_REGEX).map((match) => {
         return matchToVariable(match);
-    });
+    }).toArray();
 };
 
 export const findUniqueVariables = (content: string | undefined): Variable[] => {
@@ -68,5 +68,7 @@ export const addVariablesNamespace = (content: string) => {
         return content;
     }
 
-    return content.replace(/<svg/i, `<svg xmlns:${VAR_NAMESPACE}="${VAR_NAMESPACE_VALUE}"`);
+    return content.replace(/<svg/i, (match) => {
+        return `${match} xmlns:${VAR_NAMESPACE}="${VAR_NAMESPACE_VALUE}"`;
+    });
 };

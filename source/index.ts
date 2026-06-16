@@ -3,8 +3,8 @@ import path from 'node:path';
 import webpack from 'webpack';
 import loaderUtils from 'loader-utils';
 import { glob } from 'glob';
-import { PartialDeep } from 'type-fest';
-import { intersection, uniq, escapeRegExp } from 'lodash-es';
+import { type PartialDeep } from 'type-fest';
+import { escapeRegExp, intersection, uniq } from 'lodash-es';
 
 // Helpers
 import { getTemplate } from './helpers/template.js';
@@ -18,51 +18,32 @@ import { formatOptions, isOptionsWithStyles } from './helpers/options.js';
 import { PLUGIN } from './constants.js';
 
 // Types
-import { Output, Options, Patterns, StylesType, Source } from './types.js';
+import { Output, StylesType, type Options, type Patterns, type Source } from './types.js';
 
 class SVGSpritemapPlugin {
-    patterns: Patterns;
-    options: Options;
-    warnings: webpack.WebpackError[] = [];
-    files = new Set<string>();
+    private readonly options: Options;
+    private patterns: Patterns;
+    private warnings: webpack.WebpackError[] = [];
+    private files = new Set<string>();
 
-    filenames: Record<Output, string | undefined> = {
+    private filenames: Record<Output, string | undefined> = {
         spritemap: undefined,
         styles: undefined
     };
 
-    output: Record<Output, string | undefined> = {
+    private output: Record<Output, string | undefined> = {
         spritemap: undefined,
         styles: undefined
     };
 
-    cache: Record<Output, string | undefined> = {
+    private cache: Record<Output, string | undefined> = {
         spritemap: undefined,
         styles: undefined
     };
 
-    dependencies: Record<string, string[]> = {
+    private dependencies: Record<string, string[]> = {
         files: [],
         directories: []
-    };
-
-    constructor(patterns: Patterns | Patterns[number] = '**/*.svg', options: PartialDeep<Options> = {}) {
-        this.patterns = Array.isArray(patterns) ? patterns : [patterns];
-        this.options = formatOptions(options);
-
-        this.updateFilenames();
-    }
-
-    apply(compiler: webpack.Compiler) {
-        compiler.hooks.entryOption.tap(PLUGIN, this.injectEntry.bind(this, compiler));
-        compiler.hooks.environment.tap(PLUGIN, this.updateDependencies);
-        compiler.hooks.run.tapPromise(PLUGIN, this.generateSpritemap);
-        compiler.hooks.watchRun.tap(PLUGIN, this.updateDependencies);
-        compiler.hooks.watchRun.tapPromise(PLUGIN, this.generateSpritemap);
-        compiler.hooks.make.tap(PLUGIN, this.make);
-        compiler.hooks.thisCompilation.tap(PLUGIN, this.cleanup);
-        compiler.hooks.afterCompile.tap(PLUGIN, this.updateWarnings);
-        compiler.hooks.afterCompile.tap(PLUGIN, this.updateWebpackDependencies);
     };
 
     private make = (compilation: webpack.Compilation) => {
@@ -97,11 +78,12 @@ class SVGSpritemapPlugin {
             }
 
             const source = compilation.getAsset(this.filenames.spritemap)?.source.source().toString();
-            const chunk = compilation.namedChunks.get(this.options.output.chunk.name);
 
             if (!source) {
                 return;
             }
+
+            const chunk = compilation.namedChunks.get(this.options.output.chunk.name);
 
             if (chunk) {
                 chunk.files.add(this.filenames.spritemap);
@@ -122,11 +104,11 @@ class SVGSpritemapPlugin {
         const sprites = Object.values(this.dependencies).flat();
         const modifiedFiles = compiler.modifiedFiles ? [...compiler.modifiedFiles] : [];
         const previous = new Set(this.files);
-        const changed = previous.size !== this.dependencies.files.length || this.dependencies.files.some((file) => {
+        const isChanged = previous.size !== this.dependencies.files.length || this.dependencies.files.some((file) => {
             return !previous.has(file);
         });
 
-        if (modifiedFiles.length && !changed && !intersection(sprites, modifiedFiles).length) {
+        if (modifiedFiles.length && !isChanged && !intersection(sprites, modifiedFiles).length) {
             return;
         }
 
@@ -194,7 +176,12 @@ class SVGSpritemapPlugin {
             return;
         }
 
-        const source = getTemplate('svg4everybody.js').replace('/* PLACEHOLDER */', JSON.stringify(this.options.output.svg4everybody)).trim();
+        const source = getTemplate('svg4everybody.js').replace(
+            '/* PLACEHOLDER */',
+            () => {
+                return JSON.stringify(this.options.output.svg4everybody);
+            }
+        ).trim();
         const helper = `data:text/javascript,${encodeURIComponent(source)}`;
 
         if (typeof entry === 'object') {
@@ -223,7 +210,7 @@ class SVGSpritemapPlugin {
                 this.dependencies.directories.push(root);
             }
 
-            glob.sync(pattern, this.options.input.options).toSorted().map((match) => {
+            glob.sync(pattern, this.options.input.options).toSorted().forEach((match) => {
                 const pathname = path.resolve(match);
                 const stats = fs.lstatSync(pathname);
 
@@ -282,7 +269,12 @@ class SVGSpritemapPlugin {
             '[hash]': compilation.hash,
             '[contenthash]': contenthash
         }).reduce((filename, [pattern, value]) => {
-            return filename.replaceAll(new RegExp(escapeRegExp(pattern), 'ig'), value ?? pattern);
+            return filename.replaceAll(
+                new RegExp(escapeRegExp(pattern), 'ig'),
+                (match) => {
+                    return value ?? match;
+                }
+            );
         }, oldFilename);
 
         compilation.renameAsset(oldFilename, newFilename);
@@ -325,6 +317,25 @@ class SVGSpritemapPlugin {
             });
         });
     };
+
+    constructor(patterns: Patterns | Patterns[number] = '**/*.svg', options: PartialDeep<Options> = {}) {
+        this.patterns = Array.isArray(patterns) ? patterns : [patterns];
+        this.options = formatOptions(options);
+
+        this.updateFilenames();
+    }
+
+    apply(compiler: webpack.Compiler) {
+        compiler.hooks.entryOption.tap(PLUGIN, this.injectEntry.bind(this, compiler));
+        compiler.hooks.environment.tap(PLUGIN, this.updateDependencies);
+        compiler.hooks.run.tapPromise(PLUGIN, this.generateSpritemap);
+        compiler.hooks.watchRun.tap(PLUGIN, this.updateDependencies);
+        compiler.hooks.watchRun.tapPromise(PLUGIN, this.generateSpritemap);
+        compiler.hooks.make.tap(PLUGIN, this.make);
+        compiler.hooks.thisCompilation.tap(PLUGIN, this.cleanup);
+        compiler.hooks.afterCompile.tap(PLUGIN, this.updateWarnings);
+        compiler.hooks.afterCompile.tap(PLUGIN, this.updateWebpackDependencies);
+    }
 }
 
 export default SVGSpritemapPlugin;

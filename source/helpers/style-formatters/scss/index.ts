@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import { compact } from 'lodash-es';
+import { compact, escapeRegExp } from 'lodash-es';
 
 // Helpers
 import { indent } from '../../string.js';
@@ -12,7 +12,7 @@ import { SVG_SERIALIZER } from '../../svg.js';
 import { SPRITE_LOCATION_ATTRIBUTE, SPRITE_NAME_ATTRIBUTE } from '../../../constants.js';
 
 // Types
-import { StyleFormatter } from '../types.js';
+import { type StyleFormatter } from '../types.js';
 
 const formatter: StyleFormatter = (symbols, options, compilation) => {
     const template = getTemplate('styles.scss');
@@ -101,7 +101,9 @@ const formatter: StyleFormatter = (symbols, options, compilation) => {
             ].join('');
         }).join(',\n').trim()
     }].reduce((output, replacement) => {
-        return output.replaceAll(`/* ${replacement.name} */`, replacement.value || '/* EMPTY */');
+        return output.replaceAll(new RegExp(String.raw`/\* ${escapeRegExp(replacement.name)} \*/`, 'g'), () => {
+            return replacement.value || '/* EMPTY */';
+        });
     }, template);
 
     return options.styles.callback(output);

@@ -2,7 +2,7 @@ import path from 'node:path';
 import assert from 'node:assert';
 import webpack from 'webpack';
 import { rimraf } from 'rimraf';
-import { describe, it, afterEach } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import SVGSpritemapPlugin from './index.js'; // eslint-disable-line @onefinity/eslint-config/import-grouping
 
 afterEach(() => {

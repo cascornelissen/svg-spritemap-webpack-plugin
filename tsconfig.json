@@ -3,7 +3,7 @@
         "target": "es6",
         "module": "nodenext",
         "moduleResolution": "nodenext",
-        "lib": ["es2023"],
+        "lib": ["esnext"],
         "types": ["node"],
         "strict": true,
         "skipLibCheck": true,
