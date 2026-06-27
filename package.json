@@ -71,7 +71,7 @@
         "zod": "^4.4.3"
     },
     "devDependencies": {
-        "@onefinity/eslint-config": "^4.1.0",
+        "@onefinity/eslint-config": "^4.1.1",
         "@types/loader-utils": "^3.0.0",
         "@types/lodash-es": "^4.17.12",
         "@types/node": "^24.12.4",
