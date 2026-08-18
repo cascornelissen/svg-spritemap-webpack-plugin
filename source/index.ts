@@ -108,7 +108,7 @@ class SVGSpritemapPlugin {
             return !previous.has(file);
         });
 
-        if (modifiedFiles.length && !isChanged && !intersection(sprites, modifiedFiles).length) {
+        if (!isChanged && modifiedFiles.length && !intersection(sprites, modifiedFiles).length) {
             return;
         }
 

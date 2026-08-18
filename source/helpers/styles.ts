@@ -62,7 +62,7 @@ const writeStylesToDisk = (content: string | undefined, options: OptionsWithStyl
         return;
     }
 
-    if (type === StylesType.Directory && !isExisting) {
+    if (!isExisting && type === StylesType.Directory) {
         const dirname = path.dirname(location);
 
         if (!fs.existsSync(dirname)) {
