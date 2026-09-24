@@ -86,7 +86,7 @@
         "sass-loader": "^17.0.1",
         "tsx": "^4.23.1",
         "type-fest": "^5.8.0",
-        "webpack": "^5.110.3",
+        "webpack": "^5.111.1",
         "webpack-cli": "^7.2.3"
     },
     "peerDependencies": {
