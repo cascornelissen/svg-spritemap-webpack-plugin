@@ -7,6 +7,9 @@ import { compact } from 'lodash-es';
 import { rewriteVariables } from '../variables.js';
 import { generatePostfix, generatePrefix, SVG_SERIALIZER } from '../svg.js';
 
+// Constants
+import { SPRITE_LOCATION_ATTRIBUTE, SPRITE_NAME_ATTRIBUTE } from '../../constants.js';
+
 // Types
 import { type OptionsWithStyles } from '../../types.js';
 
@@ -48,7 +51,7 @@ export const getSymbolSVG = (symbol: xmldom.Element, options: OptionsWithStyles)
 
     if (options.styles.attributes.keep) {
         [...symbol.attributes].forEach((attribute) => {
-            if (['width', 'height', 'id', 'xmlns'].includes(attribute.name.toLowerCase())) {
+            if (['width', 'height', 'id', 'xmlns', SPRITE_NAME_ATTRIBUTE, SPRITE_LOCATION_ATTRIBUTE].includes(attribute.name.toLowerCase())) {
                 return;
             }
 

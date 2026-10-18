@@ -103,6 +103,32 @@ describe('Options', () => {
         });
     });
 
+    it('excludes plugin attributes from generated styles when styles.attributes.keep is enabled', (context, done) => {
+        webpack({
+            ...options,
+            plugins: [
+                new SVGSpritemapPlugin('tests/input/svg/single.svg', {
+                    styles: {
+                        filename: 'sprite.css',
+                        attributes: {
+                            keep: true
+                        }
+                    }
+                })
+            ]
+        }, (errors, stats) => {
+            assert.strictEqual(errors, null);
+
+            stats?.compilation.compiler.outputFileSystem?.readFile(path.join(stats.compilation.outputOptions.path, 'sprite.css'), (error, data) => {
+                const content = data?.toString() ?? '';
+
+                assert.match(content, /fill='red'/, 'original SVG attributes should be kept');
+                assert.doesNotMatch(content, /data-svg-spritemap-webpack-plugin/, 'plugin attributes should be excluded');
+                done();
+            });
+        });
+    });
+
     it('throws on invalid options', () => {
         assert.throws(() => {
             webpack({
