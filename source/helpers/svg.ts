@@ -68,7 +68,7 @@ export const generateSVG = (sources: Source[], options: Options, warnings: webpa
             continue;
         }
 
-        const attributes = getDocumentElementAttributes(documentElement, ['viewbox', 'width', 'height', 'id', 'xmlns', SPRITE_LOCATION_ATTRIBUTE]);
+        const attributes = getDocumentElementAttributes(documentElement, ['viewbox', 'width', 'height', 'id', 'xmlns', SPRITE_NAME_ATTRIBUTE, SPRITE_LOCATION_ATTRIBUTE]);
 
         for (const [name, value] of Object.entries(attributes)) {
             if (name.toLowerCase().startsWith('xmlns:')) {
