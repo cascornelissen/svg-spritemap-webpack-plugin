@@ -87,7 +87,7 @@
         "tsx": "^4.23.15",
         "type-fest": "^5.10.0",
         "webpack": "^5.112.2",
-        "webpack-cli": "^7.2.3"
+        "webpack-cli": "^7.3.1"
     },
     "peerDependencies": {
         "svg4everybody": "^2.1.9",
