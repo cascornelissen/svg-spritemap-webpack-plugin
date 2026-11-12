@@ -223,10 +223,12 @@ class SVGSpritemapPlugin {
             });
         });
 
-        if (!this.options.input.allowDuplicates) {
-            this.dependencies.files = uniq(this.dependencies.files);
-            this.dependencies.directories = uniq(this.dependencies.directories);
+        if (this.options.input.allowDuplicates) {
+            return;
         }
+
+        this.dependencies.files = uniq(this.dependencies.files);
+        this.dependencies.directories = uniq(this.dependencies.directories);
     };
 
     private updateWebpackDependencies = (compilation: webpack.Compilation) => {
