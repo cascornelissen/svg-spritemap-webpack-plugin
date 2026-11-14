@@ -223,7 +223,7 @@ class SVGSpritemapPlugin {
             });
         });
 
-        if (!this.options.input.allowDuplicates) {
+        if (!this.options.input.allowDuplicates) { // eslint-disable-line unicorn/prefer-early-return
             this.dependencies.files = uniq(this.dependencies.files);
             this.dependencies.directories = uniq(this.dependencies.directories);
         }
